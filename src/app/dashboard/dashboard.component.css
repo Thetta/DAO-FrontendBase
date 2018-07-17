@@ -1,0 +1,17 @@
+/* Toolbar */
+.toolbar-spacer {
+	flex: 1 1 auto;
+}
+
+.toolbar-balance {
+	padding: 0 14px;
+}
+
+/* Sidenav */
+.sidenav-container {
+	position: absolute;
+	left: 0;
+	top: 70px;
+	right: 0;
+	bottom: 0;
+}

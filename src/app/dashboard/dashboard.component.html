@@ -1,0 +1,29 @@
+<div>
+
+	<mat-toolbar color="primary">
+		<span>DevZen DAO</span>
+		<span class="toolbar-spacer"></span>
+		<span class="toolbar-balance">0 ETH</span>
+		<span class="toolbar-balance">0 DZT</span>
+		<span class="toolbar-balance">0 DZTREP</span>
+	</mat-toolbar>
+	
+	<mat-sidenav-container class="sidenav-container">
+		<!-- left menu -->
+		<mat-sidenav mode="side" opened>
+			<mat-list>
+				<a mat-list-item routerLink="home">Главная</a>
+				<a mat-list-item routerLink="outsider-page">Покупатель</a>
+			</mat-list>
+		</mat-sidenav>
+		<!-- content -->
+		<mat-sidenav-content>
+			<router-outlet></router-outlet>
+		</mat-sidenav-content>
+	</mat-sidenav-container>	  
+
+	<p>
+	  dashboard works!
+	</p>	
+
+</div>
