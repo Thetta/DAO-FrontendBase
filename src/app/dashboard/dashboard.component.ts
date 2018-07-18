@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material';
+import { forkJoin } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 
-import { Web3Service } from '../shared';
+import { DevzendaoService, Web3Service } from '../shared';
 
 @Component({
   selector: 'app-dashboard',
@@ -10,26 +12,39 @@ import { Web3Service } from '../shared';
 })
 export class DashboardComponent implements OnInit {
 
+	ethBalance: number = 0;
+
 	constructor(
+		public devZenDaoService: DevzendaoService,
 		public dialog: MatDialog,
 		public web3Service: Web3Service
 	) {}
 
 	ngOnInit() {
-		this.checkConnection();
+		// check that user is connected to ethereum provider and has available accounts
+		this.web3Service.isConnected().subscribe(
+			(isConnected) => {
+				if(isConnected) {
+					this.updateToolbarBalances();
+				} else {
+					this.dialog.open(NoConnectionDialog, { disableClose: true });
+				}
+			},
+			(err) => { console.error(err); }
+		);
 	}
 
-  /**
-   * Checks that user is connected to ethereum provider and has available accounts
-   */
-  checkConnection() {
-	this.web3Service.isConnected().subscribe(
-		(isConnected) => {
-			if(!isConnected) this.dialog.open(NoConnectionDialog, { disableClose: true });
-		},
-		(err) => { console.error(err); }
-	);
-  }
+	/**
+	 * Updates balances in toolbar
+	 */
+	updateToolbarBalances() {
+		this.web3Service.getAccounts().pipe(
+			switchMap(accounts => this.web3Service.getBalance(accounts[0]))
+		).subscribe(
+			(ethBalance) => { this.ethBalance = this.web3Service.fromWei(ethBalance, "ether"); },
+			(err) => { console.error(err); }
+		);
+	}
 
 }
 

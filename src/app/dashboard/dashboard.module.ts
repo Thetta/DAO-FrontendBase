@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
 import { DashboardComponent, NoConnectionDialog } from './dashboard.component';
@@ -13,6 +14,8 @@ import { CustomMatModule } from '../shared';
 		CommonModule,
 		CustomMatModule,
 		DashboardRoutingModule,
+		FormsModule,
+		ReactiveFormsModule,
 		RouterModule
   ],
   declarations: [

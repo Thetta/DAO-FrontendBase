@@ -11,7 +11,21 @@
 .sidenav-container {
 	position: absolute;
 	left: 0;
-	top: 70px;
+	top: 64px;
 	right: 0;
 	bottom: 0;
+}
+
+.mat-sidenav {
+	min-width: 200px;
+}
+
+.mat-sidenav-content {
+	padding: 3% 3%;
+}
+
+/* Sidenav buttons */
+.mat-sidenav button {
+	width: 100%;
+	margin-bottom: 2%;
 }

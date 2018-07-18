@@ -1,0 +1,18 @@
+:host >>> .mat-grid-tile .mat-figure {
+	align-items: end;
+	justify-content: end;
+}
+
+.card-next-episode {
+	width: 100%;
+}
+
+.card-next-episode .episode-row {
+	display: flex;
+    flex-direction: row;
+    padding-bottom: 1%;
+}
+
+.card-next-episode .episode-param {
+	flex-grow: 1;
+}

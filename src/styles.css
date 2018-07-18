@@ -2,3 +2,21 @@
 
 /* setting a prebuilt theme */
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+/* reset styles */
+body {
+	margin: 0;
+}
+
+/* overriding prebuilt theme */
+
+/* toolbar */
+.mat-toolbar.mat-primary {
+	background: #748ffc;
+	font-size: 1em;
+}
+
+/* sidenav content */
+.mat-sidenav-content {
+	background-color: #f3f6f8;
+}

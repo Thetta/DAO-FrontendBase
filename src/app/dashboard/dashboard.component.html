@@ -3,17 +3,21 @@
 	<mat-toolbar color="primary">
 		<span>DevZen DAO</span>
 		<span class="toolbar-spacer"></span>
-		<span class="toolbar-balance">0 ETH</span>
-		<span class="toolbar-balance">0 DZT</span>
-		<span class="toolbar-balance">0 DZTREP</span>
+		<span class="toolbar-balance"><i class="fab fa-ethereum"></i> {{ ethBalance }} ETH</span>
+		<span class="toolbar-balance"><i class="fas fa-money-bill"></i> 0 DZT</span>
+		<span class="toolbar-balance"><i class="fas fa-money-bill-alt"></i> 0 DZTREP</span>
 	</mat-toolbar>
 	
 	<mat-sidenav-container class="sidenav-container">
 		<!-- left menu -->
 		<mat-sidenav mode="side" opened>
 			<mat-list>
-				<a mat-list-item routerLink="home">Главная</a>
-				<a mat-list-item routerLink="outsider-page">Покупатель</a>
+				<div>
+					<button routerLink="home" mat-raised-button>Главная</button>
+				</div>
+				<div>
+					<button routerLink="outsider-page" mat-raised-button>Посетитель</button>
+				</div>
 			</mat-list>
 		</mat-sidenav>
 		<!-- content -->

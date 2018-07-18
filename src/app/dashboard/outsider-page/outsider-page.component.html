@@ -1,3 +1,28 @@
-<p>
-  outsider-page works!
-</p>
+<h2>Посетитель</h2>
+
+<mat-grid-list cols="2">
+	<mat-grid-tile>
+		<mat-card class="card-outsider">
+			<mat-card-content>
+
+				<div>
+					<form class="method-row">
+						<div class="method-desc">Прошла ли 1 неделя</div>
+						<button (click)="runIsOneWeekPassed()" type="button" mat-raised-button color="primary">Выполнить</button>
+					</form>
+				</div>
+
+				<div>
+					<form [formGroup]="formBuyTokens" class="method-row">
+						<div class="method-desc">Купить DZT</div>
+						<mat-form-field>
+							<input formControlName="ethSum" matInput placeholder="Сумма в ETH">
+						</mat-form-field>
+						<button [disabled]="!formBuyTokens.valid" (click)="runBuyTokens()" class="method-btn" type="button" mat-raised-button color="primary">Выполнить</button>
+					</form>
+				</div>
+
+			</mat-card-content>
+		</mat-card>
+	</mat-grid-tile>
+</mat-grid-list>
