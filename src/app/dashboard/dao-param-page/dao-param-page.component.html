@@ -1,0 +1,41 @@
+<h2>Параметры DAO</h2>
+
+<mat-grid-list cols="2">
+	<mat-grid-tile>
+		<mat-card class="card-dao-param">
+			<mat-card-content>
+
+				<div>
+					<form class="form-dao-params" [formGroup]="formDaoParams">
+						<mat-form-field>
+							<input formControlName="mintTokensPerWeekAmount" type="number" matInput placeholder="Кол-во DZT, создаваемых каждую неделю">
+						</mat-form-field>
+						<mat-form-field>
+							<input formControlName="mintReputationTokensPerWeekAmount" type="number" matInput placeholder="Кол-во DZTREP, создаваемых каждую неделю">
+						</mat-form-field>
+						<mat-form-field>
+							<input formControlName="oneTokenPriceInWei" type="number" matInput placeholder="Цена за 1 DZT в ETH">
+						</mat-form-field>
+						<mat-form-field>
+							<input formControlName="oneAdSlotPrice" type="number" matInput placeholder="Цена за 1 рекламный слот в DZT">
+						</mat-form-field>
+						<mat-form-field>
+							<input formControlName="becomeGuestStake" type="number" matInput placeholder="Залог гостя в DZT">
+						</mat-form-field>
+						<mat-form-field>
+							<input formControlName="repTokensReward_Host" type="number" matInput placeholder="Награда организатора за эпизод в DZTREP">
+						</mat-form-field>
+						<mat-form-field>
+							<input formControlName="repTokensReward_Guest" type="number" matInput placeholder="Награда гостя за эпизод в DZTREP">
+						</mat-form-field>
+						<mat-form-field>
+							<input formControlName="repTokensReward_TeamMembers" type="number" matInput placeholder="Награда всех членов команды за эпизод в DZTREP">
+						</mat-form-field>
+						<button [disabled]="!formDaoParams.valid" (click)="runUpdateDaoParams()" class="method-btn" type="button" mat-raised-button color="primary">Сохранить</button>
+					</form>
+				</div>
+
+			</mat-card-content>
+		</mat-card>
+	</mat-grid-tile>
+</mat-grid-list>

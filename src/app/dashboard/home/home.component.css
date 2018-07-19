@@ -4,7 +4,7 @@
 }
 
 .card-next-episode {
-	width: 100%;
+	min-width: 70%;
 }
 
 .card-next-episode .episode-row {

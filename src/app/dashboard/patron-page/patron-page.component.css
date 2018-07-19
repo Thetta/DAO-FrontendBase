@@ -1,0 +1,21 @@
+:host >>> .mat-grid-tile .mat-figure {
+	align-items: end;
+	justify-content: end;
+}
+
+.card-patron {
+	width: 100%;
+}
+
+.method-row {
+	display: flex;
+	align-items: baseline;
+}
+
+.method-row .method-desc {
+	flex-grow: 1;
+}
+
+.method-row .method-btn {
+	margin-left: 5%;
+}

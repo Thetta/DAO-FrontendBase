@@ -3,11 +3,14 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
+import { DaoParamPageComponent } from './dao-param-page';
 import { DashboardComponent, NoConnectionDialog } from './dashboard.component';
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { HomeComponent } from './home';
 import { OutsiderPageComponent } from './outsider-page';
+import { PatronPageComponent } from './patron-page';
 import { CustomMatModule } from '../shared';
+import { TeamPageComponent } from './team-page';
 
 @NgModule({
   imports: [
@@ -19,10 +22,13 @@ import { CustomMatModule } from '../shared';
 		RouterModule
   ],
   declarations: [
+		DaoParamPageComponent,
 	  	DashboardComponent,
 		HomeComponent,
 		NoConnectionDialog,
-		OutsiderPageComponent
+		OutsiderPageComponent,
+		PatronPageComponent,
+		TeamPageComponent
   ],
   exports: [
 	  	DashboardComponent

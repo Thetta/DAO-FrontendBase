@@ -1,0 +1,28 @@
+<h2>Патрон</h2>
+
+<mat-grid-list cols="2">
+	<mat-grid-tile>
+		<mat-card class="card-patron">
+			<mat-card-content>
+
+				<div>
+					<form [formGroup]="formRunAdsInTheNextEpisode" class="method-row">
+						<div class="method-desc">Купить рекламное место</div>
+						<mat-form-field>
+							<input formControlName="adText" matInput placeholder="Текст рекламы">
+						</mat-form-field>
+						<button [disabled]="!formRunAdsInTheNextEpisode.valid" (click)="runAdsInTheNextEpisode()" class="method-btn" type="button" mat-raised-button color="primary">Выполнить</button>
+					</form>
+				</div>
+
+				<div>
+					<form class="method-row">
+						<div class="method-desc">Стать следующим гостем</div>
+						<button (click)="runBecomeTheNextShowGuest()" class="method-btn" type="button" mat-raised-button color="primary">Выполнить</button>
+					</form>
+				</div>
+
+			</mat-card-content>
+		</mat-card>
+	</mat-grid-tile>
+</mat-grid-list>

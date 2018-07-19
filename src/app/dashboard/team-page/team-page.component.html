@@ -1,0 +1,71 @@
+<h2>Команда</h2>
+
+<mat-grid-list cols="2">
+	<mat-grid-tile>
+		<mat-card class="card-team">
+			<mat-card-content>
+
+				<div>
+					<form [formGroup]="formWithdrawEther" class="method-row">
+						<div class="method-desc">Вывод всех ETH</div>
+						<mat-form-field>
+							<input formControlName="output" matInput placeholder="Адрес">
+						</mat-form-field>
+						<button [disabled]="!formWithdrawEther.valid" (click)="runWithdrawEther()" class="method-btn" type="button" mat-raised-button color="primary">Выполнить</button>
+					</form>
+				</div>
+
+				<div>
+					<form [formGroup]="formSelectNextHost" class="method-row">
+						<div class="method-desc">Следующий организатор</div>
+						<mat-form-field>
+							<input formControlName="host" matInput placeholder="Адрес">
+						</mat-form-field>
+						<button [disabled]="!formSelectNextHost.valid" (click)="runSelectNextHost()" class="method-btn" type="button" mat-raised-button color="primary">Выполнить</button>
+					</form>
+				</div>
+
+				<div>
+					<form class="method-row">
+						<div class="method-desc">Сжечь DZT гостя</div>
+						<button (click)="runBurnGuestStake()" class="method-btn" type="button" mat-raised-button color="primary">Выполнить</button>
+					</form>
+				</div>
+
+				<div>
+					<form [formGroup]="formChangeTheGuest" class="method-row">
+						<div class="method-desc">Сменить гостя</div>
+						<mat-form-field>
+							<input formControlName="guest" matInput placeholder="Адрес">
+						</mat-form-field>
+						<button [disabled]="!formChangeTheGuest.valid" (click)="runChangeTheGuest()" class="method-btn" type="button" mat-raised-button color="primary">Выполнить</button>
+					</form>
+				</div>
+
+				<div>
+					<form [formGroup]="formEmergencyChangeTheGuest" class="method-row">
+						<div class="method-desc">Экстренно сменить гостя</div>
+						<mat-form-field>
+							<input formControlName="guest" matInput placeholder="Адрес">
+						</mat-form-field>
+						<button [disabled]="!formEmergencyChangeTheGuest.valid" (click)="runEmergencyChangeTheGuest()" class="method-btn" type="button" mat-raised-button color="primary">Выполнить</button>
+					</form>
+				</div>
+
+				<div>
+					<form [formGroup]="formMoveToNextEpisode" class="method-row">
+						<div class="method-desc">Запустить следующий эпизод</div>
+						<mat-form-field>
+							<mat-select formControlName="guestHasCome" placeholder="Гость пришел?">
+								<mat-option value="true">Да</mat-option>
+								<mat-option value="false">Нет</mat-option>
+							</mat-select>
+						</mat-form-field>
+						<button [disabled]="!formMoveToNextEpisode.valid" (click)="runMoveToNextEpisode()" class="method-btn" type="button" mat-raised-button color="primary">Выполнить</button>
+					</form>
+				</div>
+
+			</mat-card-content>
+		</mat-card>
+	</mat-grid-tile>
+</mat-grid-list>
