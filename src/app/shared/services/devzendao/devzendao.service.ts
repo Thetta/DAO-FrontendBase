@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Observable, from } from 'rxjs';
+import { Observable, from, forkJoin } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
-import { Contract } from 'web3/types';
 
 import { environment as env } from '../../../../environments/environment';
 import { Web3Service } from '../web3/web3.service';
@@ -11,12 +10,60 @@ import { Web3Service } from '../web3/web3.service';
 })
 export class DevzendaoService {
 
-	contract: Contract;
+	contract: any;
+
+	daoContract: any;
+	dztTokenContract: any;
+	dztRepTokenContract: any;
+	factoryContract: any;
 
 	constructor(
 		public web3Service: Web3Service
 	) {
-		this.contract = this.web3Service.getContract(env.contractAbi, env.contractAddress);
+		this.initContracts();
+	}
+
+	/**
+	 * Initializes contracts
+	 */
+	initContracts() {
+		// load DevZenDaoFactory contract
+		this.factoryContract = this.web3Service.getContract(env.devZenDaoFactoryAbi, env.devZenDaoFactoryAddress);
+		// load DevZenDao contract 
+		from(this.factoryContract.methods.dao().call()).pipe(
+			switchMap(daoAddress => { 
+				this.daoContract = this.web3Service.getContract(env.devZenDaoAbi, daoAddress);
+				// load DZT and DZRTEP tokens 
+				return forkJoin(
+					this.daoContract.methods.devZenToken().call(),
+					this.daoContract.methods.repToken().call()
+				);
+			})
+		).subscribe(
+			(tokenAddresses) => {
+				this.dztTokenContract = this.web3Service.getContract(env.stdDaoTokenAbi, tokenAddresses[0]);
+				this.dztRepTokenContract = this.web3Service.getContract(env.stdDaoTokenAbi, tokenAddresses[1]);
+			},
+			(err) => { console.error(err); }
+		);
+	}
+
+	//====================
+	// Contract properties
+	//====================
+
+	/**
+	 * Returns next episode details
+	 */
+	getNextEpisode(): Observable<any> {
+		return from(this.daoContract.methods.nextEpisode().call());
+	}
+
+	/**
+	 * Returns dao params
+	 */
+	getParams(): Observable<any> {
+		return from(this.daoContract.methods.params().call());
 	}
 
 	//==============================================
@@ -28,8 +75,9 @@ export class DevzendaoService {
 	 * @param params 
 	 */
 	updateDaoParams(params): Observable<any> {
+		const tupledParams = this.web3Service.toTuple(params);
 		return this.web3Service.getAccounts().pipe(
-			switchMap(accounts => this.contract.methods.updateDaoParams(params).send({
+			switchMap(accounts => this.daoContract.methods.updateDaoParams(tupledParams).send({
 				from: accounts[0]
 			}))
 		);
@@ -41,7 +89,7 @@ export class DevzendaoService {
 	 */
 	withdrawEther(outputAddress): Observable<any> {
 		return this.web3Service.getAccounts().pipe(
-			switchMap(accounts => this.contract.methods.withdrawEther(outputAddress).send({
+			switchMap(accounts => this.daoContract.methods.withdrawEther(outputAddress).send({
 				from: accounts[0]
 			}))
 		);
@@ -53,7 +101,7 @@ export class DevzendaoService {
 	 */
 	selectNextHost(nextHostAddress): Observable<any> {
 		return this.web3Service.getAccounts().pipe(
-			switchMap(accounts => this.contract.methods.selectNextHost(nextHostAddress).send({
+			switchMap(accounts => this.daoContract.methods.selectNextHost(nextHostAddress).send({
 				from: accounts[0]
 			}))
 		);
@@ -64,7 +112,7 @@ export class DevzendaoService {
 	 */
 	burnGuestStake(): Observable<any> {
 		return this.web3Service.getAccounts().pipe(
-			switchMap(accounts => this.contract.methods.burnGuestStake().send({
+			switchMap(accounts => this.daoContract.methods.burnGuestStake().send({
 				from: accounts[0]
 			}))
 		);
@@ -76,7 +124,7 @@ export class DevzendaoService {
 	 */
 	changeTheGuest(guestAddress): Observable<any> {
 		return this.web3Service.getAccounts().pipe(
-			switchMap(accounts => this.contract.methods.changeTheGuest(guestAddress).send({
+			switchMap(accounts => this.daoContract.methods.changeTheGuest(guestAddress).send({
 				from: accounts[0]
 			}))
 		);
@@ -88,7 +136,7 @@ export class DevzendaoService {
 	 */
 	emergencyChangeTheGuest(guestAddress): Observable<any> {
 		return this.web3Service.getAccounts().pipe(
-			switchMap(accounts => this.contract.methods.emergency_ChangeTheGuest(guestAddress).send({
+			switchMap(accounts => this.daoContract.methods.emergency_ChangeTheGuest(guestAddress).send({
 				from: accounts[0]
 			}))
 		);
@@ -100,7 +148,7 @@ export class DevzendaoService {
 	 */
 	moveToNextEpisode(guestHasCome): Observable<any> {
 		return this.web3Service.getAccounts().pipe(
-			switchMap(accounts => this.contract.methods.moveToNextEpisode(guestHasCome).send({
+			switchMap(accounts => this.daoContract.methods.moveToNextEpisode(guestHasCome).send({
 				from: accounts[0]
 			}))
 		);
@@ -116,7 +164,7 @@ export class DevzendaoService {
 	 */
 	runAdsInTheNextEpisode(adText): Observable<any> {
 		return this.web3Service.getAccounts().pipe(
-			switchMap(accounts => this.contract.methods.runAdsInTheNextEpisode(adText).send({
+			switchMap(accounts => this.daoContract.methods.runAdsInTheNextEpisode(adText).send({
 				from: accounts[0]
 			}))
 		);
@@ -127,7 +175,7 @@ export class DevzendaoService {
 	 */
 	becomeTheNextShowGuest(): Observable<any> {
 		return this.web3Service.getAccounts().pipe(
-			switchMap(accounts => this.contract.methods.becomeTheNextShowGuest().send({
+			switchMap(accounts => this.daoContract.methods.becomeTheNextShowGuest().send({
 				from: accounts[0]
 			}))
 		);
@@ -143,33 +191,54 @@ export class DevzendaoService {
 	 */
 	buyTokens(valueInWei): Observable<any> {
 		return this.web3Service.getAccounts().pipe(
-			switchMap(accounts => this.contract.methods.buyTokens().send({
+			switchMap(accounts => this.daoContract.methods.buyTokens().send({
 				from: accounts[0],
 				value: valueInWei
 			}))
 		);
-		// return from(this.contract.methods.buyTokens().send({value: valueInWei}));
 	}
 
 	/**
 	 * Checks whether 1 week has passed
 	 */
 	isOneWeekPassed(): Observable<boolean> {
-		// we run here plain call method because of https://github.com/ethereum/web3.js/issues/1063
-		// TODO: refactor when issue is solved
-		return Observable.create((observer) => {
-			const params = {
-				to: env.contractAddress,
-				data: this.contract.methods.isOneWeekPassed().encodeABI()
-			};
-			this.web3Service.call(params).subscribe(
-				(isOneWeekPassed) => {
-					observer.next(isOneWeekPassed === '0x' ? false : isOneWeekPassed);
-				},
-				(err) => { observer.error(err); },
-				() => { observer.complete(); }
-			);
-		});
+		return from(this.daoContract.methods.isOneWeekPassed().call());
+	}
+
+	//====================
+	// StdDaoToken methods
+	//====================
+
+	/**
+	 * Approve spending DZT or DZTREP for DAO
+	 * @param amount 
+	 * @param tokenName 
+	 */
+	approve(amount, tokenName) {
+		let baseContract = null;
+		if(tokenName == 'DZT') baseContract = this.dztTokenContract;
+		if(tokenName == 'DZTREP') baseContract = this.dztRepTokenContract;
+		if(!baseContract) throw new Error(`token name ${tokenName} not found, available: DZT, DZTREP`);
+
+		return this.web3Service.getAccounts().pipe(
+			switchMap(accounts => baseContract.methods.approve(this.daoContract.options.address, amount).send({
+				from: accounts[0]
+			}))
+		);
+	}
+
+	/**
+	 * Returns address balance by token name
+	 * @param address 
+	 * @param tokenName 
+	 */
+	balanceOf(address, tokenName): Observable<number> {
+		let baseContract = null;
+		if(tokenName == 'DZT') baseContract = this.dztTokenContract;
+		if(tokenName == 'DZTREP') baseContract = this.dztRepTokenContract;
+		if(!baseContract) throw new Error(`token name ${tokenName} not found, available: DZT, DZTREP`);
+
+		return from(baseContract.methods.balanceOf(address).call());
 	}
 
 }

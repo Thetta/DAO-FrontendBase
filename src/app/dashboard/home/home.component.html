@@ -1,96 +1,105 @@
 <h2>Главная</h2>
 
-<mat-grid-list cols="2">
-
-	<mat-grid-tile>
-		<mat-card class="card-next-episode">
+<div>
+	<!-- next episode -->
+	<div>
+		<mat-card class="dashboard-card card-next-episode">
 
 			<mat-card-content>
 				
 				<h3>Следующий эпизод</h3>
 
-				<div class="episode-row">
-					<div class="episode-param">Следующий организатор</div>
-					<div>0x0</div>
-				</div>
+				<mat-spinner *ngIf="loading" diameter="50"></mat-spinner>
 
-				<div class="episode-row">
-					<div class="episode-param">Следующий гость</div>
-					<div>0x0</div>
-				</div>
+				<div *ngIf="!loading">
+					<div class="param-row">
+						<div class="param-name">Следующий организатор</div>
+						<div>{{ nextEpisode.nextShowHost }}</div>
+					</div>
 
-				<div class="episode-row">
-					<div class="episode-param">Предыдущий организатор</div>
-					<div>0x0</div>
-				</div>
+					<div class="param-row">
+						<div class="param-name">Следующий гость</div>
+						<div>{{ nextEpisode.nextShowGuest }}</div>
+					</div>
 
-				<div class="episode-row">
-					<div class="episode-param">Предыдущий гость</div>
-					<div>0x0</div>
-				</div>
+					<div class="param-row">
+						<div class="param-name">Предыдущий организатор</div>
+						<div>{{ nextEpisode.prevShowHost }}</div>
+					</div>
 
-				<div class="episode-row">
-					<div class="episode-param">Рекламные слоты</div>
-					<div></div>
-				</div>
+					<div class="param-row">
+						<div class="param-name">Предыдущий гость</div>
+						<div>{{ nextEpisode.prevShowGuest }}</div>
+					</div>
 
-				<div class="episode-row">
-					<div class="episode-param">Экстренный гость</div>
-					<div>Нет</div>
+					<div class="param-row">
+						<div class="param-name">Занятые рекламные слоты</div>
+						<div>{{ nextEpisode.usedSlots }}</div>
+					</div>
+
+					<div class="param-row">
+						<div class="param-name">Экстренный гость</div>
+						<div>{{ nextEpisode.isEmergencyGuest }}</div>
+					</div>
 				</div>
 
 			</mat-card-content>
 		</mat-card>
-	</mat-grid-tile>
+	</div>
 
-	<mat-grid-tile>
-		<mat-card class="card-next-episode">
+	<!-- dao params -->
+	<div class="card-params-container">
+		<mat-card class="dashboard-card card-params">
 			<mat-card-content>
 				
 				<h3>Параметры DAO</h3>
 
-				<div class="episode-row">
-					<div class="episode-param">Кол-во DZT, создаваемых каждую неделю</div>
-					<div>0</div>
+				<mat-spinner *ngIf="loading" diameter="50"></mat-spinner>
+	
+				<div *ngIf="!loading">
+					<div class="param-row">
+						<div class="param-name">Кол-во DZT, создаваемых каждую неделю</div>
+						<div>{{ params.mintTokensPerWeekAmount }}</div>
+					</div>
+		
+					<div class="param-row">
+						<div class="param-name">Кол-во DZTREP, создаваемых каждую неделю</div>
+						<div>{{ params.mintReputationTokensPerWeekAmount }}</div>
+					</div>
+		
+					<div class="param-row">
+						<div class="param-name">Цена за 1 DZT в ETH</div>
+						<div>{{ params.oneTokenPriceInWei }}</div>
+					</div>
+		
+					<div class="param-row">
+						<div class="param-name">Цена за 1 рекламный слот в DZT</div>
+						<div>{{ params.oneAdSlotPrice }}</div>
+					</div>
+		
+					<div class="param-row">
+						<div class="param-name">Залог гостя в DZT</div>
+						<div>{{ params.becomeGuestStake }}</div>
+					</div>
+		
+					<div class="param-row">
+						<div class="param-name">Награда организатора за эпизод в DZTREP</div>
+						<div>{{ params.repTokensReward_Host }}</div>
+					</div>
+		
+					<div class="param-row">
+						<div class="param-name">Награда гостя за эпизод в DZTREP</div>
+						<div>{{ params.repTokensReward_Guest }}</div>
+					</div>
+		
+					<div class="param-row">
+						<div class="param-name">Награда всех членов команды за эпизод в DZTREP</div>
+						<div>{{ params.repTokensReward_TeamMembers }}</div>
+					</div>
 				</div>
-
-				<div class="episode-row">
-					<div class="episode-param">Кол-во DZTREP, создаваемых каждую неделю</div>
-					<div>0</div>
-				</div>
-
-				<div class="episode-row">
-					<div class="episode-param">Цена за 1 DZT в ETH</div>
-					<div>0</div>
-				</div>
-
-				<div class="episode-row">
-					<div class="episode-param">Цена за 1 рекламный слот в DZT</div>
-					<div>0</div>
-				</div>
-
-				<div class="episode-row">
-					<div class="episode-param">Залог гостя в DZT</div>
-					<div>0</div>
-				</div>
-
-				<div class="episode-row">
-					<div class="episode-param">Награда организатора за эпизод в DZTREP</div>
-					<div>0</div>
-				</div>
-
-				<div class="episode-row">
-					<div class="episode-param">Награда гостя за эпизод в DZTREP</div>
-					<div>0</div>
-				</div>
-
-				<div class="episode-row">
-					<div class="episode-param">Награда всех членов команды за эпизод в DZTREP</div>
-					<div>0</div>
-				</div>
-
+	
 			</mat-card-content>
 		</mat-card>
-	</mat-grid-tile>
+	</div>
 
-</mat-grid-list>
+</div>

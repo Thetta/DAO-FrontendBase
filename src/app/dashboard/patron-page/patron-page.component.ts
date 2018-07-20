@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
 
-import { DevzendaoService } from '../../shared';
+import { DevzendaoService, Web3Service } from '../../shared';
 
 @Component({
   selector: 'app-patron-page',
@@ -11,12 +11,14 @@ import { DevzendaoService } from '../../shared';
 })
 export class PatronPageComponent implements OnInit {
 
+	formApprove: FormGroup;
 	formRunAdsInTheNextEpisode: FormGroup;
 
 	constructor(
 		public devZenDaoService: DevzendaoService,
 		public formBuilder: FormBuilder,
-		public matSnackBar: MatSnackBar
+		public matSnackBar: MatSnackBar,
+		public web3Service: Web3Service
 	) { }
 
 	ngOnInit() {
@@ -30,6 +32,9 @@ export class PatronPageComponent implements OnInit {
 		this.formRunAdsInTheNextEpisode = this.formBuilder.group({
 			adText: ['', Validators.required]
 		});
+		this.formApprove = this.formBuilder.group({
+			amount: ['5', [Validators.required, Validators.min(5)]]
+		});
 	}
 
 	/**
@@ -40,6 +45,19 @@ export class PatronPageComponent implements OnInit {
 		this.devZenDaoService.runAdsInTheNextEpisode(adText).subscribe(
 			(resp) => {
 				this.matSnackBar.open(`Рекламное место успешно куплено`, 'Закрыть', {horizontalPosition: 'right', verticalPosition: 'top'});
+			},
+			(err) => { console.error(err); }
+		);
+	}
+
+	/**
+	 * Approve spending user's DZT for DAO
+	 */
+	runApprove() {
+		const weiSum = this.web3Service.toWei(this.formApprove.controls['amount'].value, 'ether');
+		this.devZenDaoService.approve(weiSum, "DZT").subscribe(
+			(resp) => {
+				this.matSnackBar.open(`Аппрув успешно выполнен`, 'Закрыть', {horizontalPosition: 'right', verticalPosition: 'top'});
 			},
 			(err) => { console.error(err); }
 		);

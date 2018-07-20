@@ -1,5 +1,7 @@
 export const environment = {
   production: true,
-  contractAddress: "",
-  contractAbi: ""
+  devZenDaoFactoryAddress: "",
+  devZenDaoFactoryAbi: "",
+  devZenDaoAbi: "",
+  stdDaoTokenAbi: ""
 };

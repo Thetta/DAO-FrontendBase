@@ -91,7 +91,7 @@ export class TeamPageComponent implements OnInit {
 	 */
 	runMoveToNextEpisode() {
 		// convert to boolean
-		const guestHasCome = !!this.formMoveToNextEpisode.controls['guestHasCome'].value;
+		const guestHasCome = this.formMoveToNextEpisode.controls['guestHasCome'].value == "true" ? true : false;
 		this.devZenDaoService.moveToNextEpisode(guestHasCome).subscribe(
 			(resp) => {
 				this.matSnackBar.open(`Следующий эпизод успешно создан`, 'Закрыть', {horizontalPosition: 'right', verticalPosition: 'top'});

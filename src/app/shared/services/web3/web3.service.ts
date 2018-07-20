@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Observable, from, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import Web3 from 'web3';
-import { Contract } from 'web3/types';
 
 const web3 = new Web3(Web3.givenProvider);
 
@@ -50,7 +49,7 @@ export class Web3Service {
 	 * @param abi 
 	 * @param address 
 	 */
-	getContract(abi, address): Contract {
+	getContract(abi, address): any {
 		return new web3.eth.Contract(abi, address);
 	}
 
@@ -70,6 +69,35 @@ export class Web3Service {
 				() => { observer.complete(); }
 			);
 		});
+	}
+
+	/**
+	 * Converts object to solidity tuple, {a: "1", b: "2"} => ["1", "2"]
+	 * @param obj 
+	 */
+	toTuple (obj) {
+		if (!(obj instanceof Object)) {
+			return [];
+		}
+		var output = [];
+		var i = 0;
+		Object.keys(obj).forEach((k) => {
+			if (obj[k] instanceof Object) {
+			output[i] = this.toTuple(obj[k]);
+			} else if (obj[k] instanceof Array) {
+			let j1 = 0;
+			let temp1 = [];
+			obj[k].forEach((ak) => {
+				temp1[j1] = this.toTuple(obj[k]);
+				j1++;
+			});
+			output[i] = temp1;
+			} else {
+			output[i] = obj[k];
+			}
+			i++;
+		});
+		return output;
 	}
 
 	/**

@@ -12,7 +12,10 @@ import { DevzendaoService, Web3Service } from '../shared';
 })
 export class DashboardComponent implements OnInit {
 
-	ethBalance: number = 0;
+	ethBalance = 0;
+	dztBalance = 0;
+	dztRepBalance = 0;
+	isToolbarLoading = true;
 
 	constructor(
 		public devZenDaoService: DevzendaoService,
@@ -25,7 +28,8 @@ export class DashboardComponent implements OnInit {
 		this.web3Service.isConnected().subscribe(
 			(isConnected) => {
 				if(isConnected) {
-					this.updateToolbarBalances();
+					// TODO: wait when devZenDaoService is initialized
+					setTimeout(this.updateToolbarBalances(), 1000);
 				} else {
 					this.dialog.open(NoConnectionDialog, { disableClose: true });
 				}
@@ -38,10 +42,22 @@ export class DashboardComponent implements OnInit {
 	 * Updates balances in toolbar
 	 */
 	updateToolbarBalances() {
+		this.isToolbarLoading = true;
 		this.web3Service.getAccounts().pipe(
-			switchMap(accounts => this.web3Service.getBalance(accounts[0]))
+			switchMap(accounts => {
+				return forkJoin(
+					this.web3Service.getBalance(accounts[0]),
+					this.devZenDaoService.balanceOf(accounts[0], "DZT"),
+					this.devZenDaoService.balanceOf(accounts[0], "DZTREP")
+				);
+			})
 		).subscribe(
-			(ethBalance) => { this.ethBalance = this.web3Service.fromWei(ethBalance, "ether"); },
+			(balances) => {
+				this.ethBalance = this.web3Service.fromWei(balances[0], "ether");
+				this.dztBalance = this.web3Service.fromWei(balances[1], "ether");
+				this.dztRepBalance = this.web3Service.fromWei(balances[2], "ether");
+				this.isToolbarLoading = false;
+			},
 			(err) => { console.error(err); }
 		);
 	}

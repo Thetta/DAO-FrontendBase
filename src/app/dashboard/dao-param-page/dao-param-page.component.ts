@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
 
-import { DevzendaoService } from '../../shared';
+import { DevzendaoService, Web3Service } from '../../shared';
 
 @Component({
   selector: 'app-dao-param-page',
@@ -16,7 +16,8 @@ export class DaoParamPageComponent implements OnInit {
 	constructor(
 		public devZenDaoService: DevzendaoService,
 		public formBuilder: FormBuilder,
-		public matSnackBar: MatSnackBar
+		public matSnackBar: MatSnackBar,
+		public web3Service: Web3Service
 	) { }
 
 	ngOnInit() {
@@ -44,7 +45,7 @@ export class DaoParamPageComponent implements OnInit {
 	 */
 	runUpdateDaoParams() {
 
-		const params = {
+		let params = {
 			mintTokensPerWeekAmount: this.formDaoParams.controls['mintTokensPerWeekAmount'].value,
 			mintReputationTokensPerWeekAmount: this.formDaoParams.controls['mintReputationTokensPerWeekAmount'].value,
 			oneTokenPriceInWei: this.formDaoParams.controls['oneTokenPriceInWei'].value,
@@ -54,14 +55,16 @@ export class DaoParamPageComponent implements OnInit {
 			repTokensReward_Guest: this.formDaoParams.controls['repTokensReward_Guest'].value,
 			repTokensReward_TeamMembers: this.formDaoParams.controls['repTokensReward_TeamMembers'].value
 		};
-		// TODO: convert to wei
-		// TODO: convert to tuple https://github.com/ethereum/web3.js/issues/1241
-		// this.devZenDaoService.updateDaoParams(params).subscribe(
-		// 	(resp) => {
-		// 		this.matSnackBar.open(`Параметры DAO изменены`, 'Закрыть', {horizontalPosition: 'right', verticalPosition: 'top'});
-		// 	},
-		// 	(err) => { console.error(err); }
-		// );
+
+		// convert param values to wei
+		Object.keys(params).map(key => params[key] = this.web3Service.toWei(String(params[key]), "ether"));
+
+		this.devZenDaoService.updateDaoParams(params).subscribe(
+			(resp) => {
+				this.matSnackBar.open(`Параметры DAO изменены`, 'Закрыть', {horizontalPosition: 'right', verticalPosition: 'top'});
+			},
+			(err) => { console.error(err); }
+		);
 	}
 
 }

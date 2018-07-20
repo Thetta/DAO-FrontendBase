@@ -3,9 +3,21 @@
 	<mat-toolbar color="primary">
 		<span>DevZen DAO</span>
 		<span class="toolbar-spacer"></span>
-		<span class="toolbar-balance"><i class="fab fa-ethereum"></i> {{ ethBalance }} ETH</span>
-		<span class="toolbar-balance"><i class="fas fa-money-bill"></i> 0 DZT</span>
-		<span class="toolbar-balance"><i class="fas fa-money-bill-alt"></i> 0 DZTREP</span>
+		<span class="toolbar-balance">
+			<i class="fab fa-ethereum"></i> 
+			<span class="spinner" *ngIf="!isToolbarLoading">{{ ethBalance }}</span>
+			<mat-spinner class="spinner" *ngIf="isToolbarLoading" diameter="25"></mat-spinner> ETH
+		</span>
+		<span class="toolbar-balance">
+			<i class="fas fa-money-bill"></i> 
+			<span class="spinner" *ngIf="!isToolbarLoading">{{ dztBalance }}</span> 
+			<mat-spinner class="spinner" *ngIf="isToolbarLoading" diameter="25"></mat-spinner> DZT
+		</span>
+		<span class="toolbar-balance">
+			<i class="fas fa-money-bill-alt"></i> 
+			<span class="spinner" *ngIf="!isToolbarLoading">{{ dztRepBalance }}</span> 
+			<mat-spinner class="spinner" *ngIf="isToolbarLoading" diameter="25"></mat-spinner> DZTREP
+		</span>
 	</mat-toolbar>
 	
 	<mat-sidenav-container class="sidenav-container">
