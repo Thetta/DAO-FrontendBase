@@ -1,18 +1,17 @@
-:host >>> .mat-grid-tile .mat-figure {
-	align-items: end;
-	justify-content: end;
-}
-
-.card-next-episode {
+.dashboard-card {
 	min-width: 70%;
 }
 
-.card-next-episode .episode-row {
+.dashboard-card .param-row {
 	display: flex;
     flex-direction: row;
     padding-bottom: 1%;
 }
 
-.card-next-episode .episode-param {
+.dashboard-card .param-name {
 	flex-grow: 1;
+}
+
+.card-params-container {
+	padding-top: 1%;
 }

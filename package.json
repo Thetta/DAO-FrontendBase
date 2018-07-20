@@ -26,8 +26,9 @@
     "@fortawesome/fontawesome-free": "^5.1.1",
     "core-js": "^2.5.4",
     "hammerjs": "^2.0.8",
+    "lerna": "^2.11.0",
     "rxjs": "^6.0.0",
-    "web3": "^1.0.0-beta.34",
+    "web3": "git+https://github.com/ethereum/web3.js.git#newAbiLib",
     "zone.js": "^0.8.26"
   },
   "devDependencies": {
