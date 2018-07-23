@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
+import { switchMap } from 'rxjs/operators';
 
 import { DevzendaoService, Web3Service } from '../../shared';
 
@@ -21,7 +22,30 @@ export class DaoParamPageComponent implements OnInit {
 	) { }
 
 	ngOnInit() {
+
 		this.initForms();
+
+		let sub;
+		if(this.devZenDaoService.isInitialized) {
+			sub = this.devZenDaoService.getParams()
+		} else {
+			sub = this.devZenDaoService.init.pipe(
+				switchMap(() => this.devZenDaoService.getParams())
+			);
+		}
+
+		sub.subscribe(
+			(params) => {
+				// assign values from params to form
+				Object.keys(params).map(key => {
+					if(this.formDaoParams.controls[key]) {
+						let value = this.web3Service.fromWei(params[key], "ether");
+						this.formDaoParams.controls[key].setValue(value);
+					}
+				});
+			},
+			(err) => { console.error(err); }
+		);
 	}
 
 	/**

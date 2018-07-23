@@ -1,14 +1,14 @@
 <h2>Команда</h2>
 
-<mat-grid-list cols="2">
+<mat-grid-list cols="1">
 	<mat-grid-tile>
 		<mat-card class="card-team">
 			<mat-card-content>
 
 				<div>
 					<form [formGroup]="formWithdrawEther" class="method-row">
-						<div class="method-desc">Вывод всех ETH</div>
-						<mat-form-field>
+						<div class="method-desc">Вывести собранные ETH на адрес:</div>
+						<mat-form-field class="method-param">
 							<input formControlName="output" matInput placeholder="Адрес">
 						</mat-form-field>
 						<button [disabled]="!formWithdrawEther.valid" (click)="runWithdrawEther()" class="method-btn" type="button" mat-raised-button color="primary">Выполнить</button>
@@ -17,8 +17,8 @@
 
 				<div>
 					<form [formGroup]="formSelectNextHost" class="method-row">
-						<div class="method-desc">Следующий организатор</div>
-						<mat-form-field>
+						<div class="method-desc">Установить следующего ведущего</div>
+						<mat-form-field class="method-param">
 							<input formControlName="host" matInput placeholder="Адрес">
 						</mat-form-field>
 						<button [disabled]="!formSelectNextHost.valid" (click)="runSelectNextHost()" class="method-btn" type="button" mat-raised-button color="primary">Выполнить</button>
@@ -26,16 +26,13 @@
 				</div>
 
 				<div>
-					<form class="method-row">
-						<div class="method-desc">Сжечь DZT гостя</div>
-						<button (click)="runBurnGuestStake()" class="method-btn" type="button" mat-raised-button color="primary">Выполнить</button>
-					</form>
-				</div>
-
-				<div>
 					<form [formGroup]="formChangeTheGuest" class="method-row">
-						<div class="method-desc">Сменить гостя</div>
-						<mat-form-field>
+						<div class="method-desc">Сменить гостя 
+							<button mat-icon-button matTooltip="Позволяет изменить следующего гостя легальным путем. Если следующий гость уже выбран и у него есть DZT на кону, то используя данный метод с адресом нового гостя: старый гость получит DZT обратно, а новый станет следующим гостем. Этот метод можно вызвать только если следующий гость уже выбран и у нового гостя есть достаточно DZT.">
+								<mat-icon>info</mat-icon>
+							</button>
+						</div>
+						<mat-form-field class="method-param">
 							<input formControlName="guest" matInput placeholder="Адрес">
 						</mat-form-field>
 						<button [disabled]="!formChangeTheGuest.valid" (click)="runChangeTheGuest()" class="method-btn" type="button" mat-raised-button color="primary">Выполнить</button>
@@ -44,8 +41,12 @@
 
 				<div>
 					<form [formGroup]="formEmergencyChangeTheGuest" class="method-row">
-						<div class="method-desc">Экстренно сменить гостя</div>
-						<mat-form-field>
+						<div class="method-desc">Экстренно сменить гостя 
+							<button mat-icon-button matTooltip="Экстренный гость отличается от обычного гостя тем, что у обычного стоят DZT на кону. Если обычный гость не приходит на шоу, то его DZT сгорают. У экстренного гостя нет никаких DZT на кону. Этот метод можно вызвать только если следующий гость уже выбран.">
+								<mat-icon>info</mat-icon>
+							</button>
+						</div>
+						<mat-form-field class="method-param">
 							<input formControlName="guest" matInput placeholder="Адрес">
 						</mat-form-field>
 						<button [disabled]="!formEmergencyChangeTheGuest.valid" (click)="runEmergencyChangeTheGuest()" class="method-btn" type="button" mat-raised-button color="primary">Выполнить</button>
@@ -54,9 +55,9 @@
 
 				<div>
 					<form [formGroup]="formMoveToNextEpisode" class="method-row">
-						<div class="method-desc">Запустить следующий эпизод</div>
-						<mat-form-field>
-							<mat-select formControlName="guestHasCome" placeholder="Гость пришел?">
+						<div class="method-desc">Текущий эпизод завершился</div>
+						<mat-form-field class="method-param">
+							<mat-select formControlName="guestHasCome" placeholder="Начислить репутацию гостю?">
 								<mat-option value="true">Да</mat-option>
 								<mat-option value="false">Нет</mat-option>
 							</mat-select>

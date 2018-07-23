@@ -49,18 +49,6 @@ export class TeamPageComponent implements OnInit {
 	}
 
 	/**
-	 * Burn guest stake
-	 */
-	runBurnGuestStake() {
-		this.devZenDaoService.burnGuestStake().subscribe(
-			(resp) => {
-				this.matSnackBar.open(`DZT гостя сожжены`, 'Закрыть', {horizontalPosition: 'right', verticalPosition: 'top'});
-			},
-			(err) => { console.error(err); }
-		);
-	}
-
-	/**
 	 * Change the guest in "legal" way
 	 */
 	runChangeTheGuest() {

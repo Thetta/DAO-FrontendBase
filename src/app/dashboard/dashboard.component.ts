@@ -28,8 +28,15 @@ export class DashboardComponent implements OnInit {
 		this.web3Service.getConnectionError().subscribe(
 			(errorCode) => {
 				if(!errorCode) {
-					// TODO: wait when devZenDaoService is initialized
-					setTimeout(this.updateToolbarBalances(), 1000);
+					// update toolbal balances
+					if(this.devZenDaoService.isInitialized) {
+						this.updateToolbarBalances();
+					} else {
+						this.devZenDaoService.init.subscribe(
+							(resp) => { this.updateToolbarBalances(); },
+							(err) => { console.error(err); }
+						);
+					}
 				} else {
 					if(errorCode == this.web3Service.CONNECTION_NO_PROVIDER) {
 						this.router.navigate(['metamask-not-installed']);

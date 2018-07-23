@@ -7,7 +7,7 @@ import { DaoParamPageComponent } from './dao-param-page';
 import { DashboardComponent } from './dashboard.component';
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { HomeComponent } from './home';
-import { OutsiderPageComponent } from './outsider-page';
+import { BecomeTheNextShowGuestDialog, OutsiderPageComponent } from './outsider-page';
 import { PatronPageComponent } from './patron-page';
 import { CustomMatModule } from '../shared';
 import { TeamPageComponent } from './team-page';
@@ -22,6 +22,7 @@ import { TeamPageComponent } from './team-page';
 		RouterModule
   ],
   declarations: [
+		BecomeTheNextShowGuestDialog,
 		DaoParamPageComponent,
 	  	DashboardComponent,
 		HomeComponent,
@@ -32,6 +33,8 @@ import { TeamPageComponent } from './team-page';
   exports: [
 	  	DashboardComponent
   ],
-  entryComponents: []
+  entryComponents: [
+	  BecomeTheNextShowGuestDialog
+  ]
 })
 export class DashboardModule { }

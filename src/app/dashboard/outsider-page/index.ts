@@ -1,1 +1,1 @@
-export { OutsiderPageComponent } from './outsider-page.component';
+export { BecomeTheNextShowGuestDialog, OutsiderPageComponent } from './outsider-page.component';

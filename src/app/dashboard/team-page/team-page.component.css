@@ -14,6 +14,12 @@
 
 .method-row .method-desc {
 	flex-grow: 1;
+	flex-basis: 0;
+}
+
+.method-row .method-param {
+	flex-grow: 1;
+	flex-basis: 0;
 }
 
 .method-row .method-btn {

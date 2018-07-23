@@ -32,9 +32,6 @@ export class PatronPageComponent implements OnInit {
 		this.formRunAdsInTheNextEpisode = this.formBuilder.group({
 			adText: ['', Validators.required]
 		});
-		this.formApprove = this.formBuilder.group({
-			amount: ['5', [Validators.required, Validators.min(5)]]
-		});
 	}
 
 	/**
@@ -45,31 +42,6 @@ export class PatronPageComponent implements OnInit {
 		this.devZenDaoService.runAdsInTheNextEpisode(adText).subscribe(
 			(resp) => {
 				this.matSnackBar.open(`Рекламное место успешно куплено`, 'Закрыть', {horizontalPosition: 'right', verticalPosition: 'top'});
-			},
-			(err) => { console.error(err); }
-		);
-	}
-
-	/**
-	 * Approve spending user's DZT for DAO
-	 */
-	runApprove() {
-		const weiSum = this.web3Service.toWei(this.formApprove.controls['amount'].value, 'ether');
-		this.devZenDaoService.approve(weiSum, "DZT").subscribe(
-			(resp) => {
-				this.matSnackBar.open(`Аппрув успешно выполнен`, 'Закрыть', {horizontalPosition: 'right', verticalPosition: 'top'});
-			},
-			(err) => { console.error(err); }
-		);
-	}
-
-	/**
-	 * Become the next show guest
-	 */
-	runBecomeTheNextShowGuest() {
-		this.devZenDaoService.becomeTheNextShowGuest().subscribe(
-			(resp) => {
-				this.matSnackBar.open(`Вы стали следующим гостем`, 'Закрыть', {horizontalPosition: 'right', verticalPosition: 'top'});
 			},
 			(err) => { console.error(err); }
 		);

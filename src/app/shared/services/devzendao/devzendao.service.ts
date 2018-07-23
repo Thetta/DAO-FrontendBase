@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable, Output } from '@angular/core';
 import { Observable, from, forkJoin } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
@@ -10,12 +10,13 @@ import { Web3Service } from '../web3/web3.service';
 })
 export class DevzendaoService {
 
-	contract: any;
+	@Output() init: EventEmitter<any> = new EventEmitter();
 
 	daoContract: any;
 	dztTokenContract: any;
 	dztRepTokenContract: any;
 	factoryContract: any;
+	isInitialized = false;
 
 	constructor(
 		public web3Service: Web3Service
@@ -43,6 +44,8 @@ export class DevzendaoService {
 			(tokenAddresses) => {
 				this.dztTokenContract = this.web3Service.getContract(env.stdDaoTokenAbi, tokenAddresses[0]);
 				this.dztRepTokenContract = this.web3Service.getContract(env.stdDaoTokenAbi, tokenAddresses[1]);
+				this.init.emit();
+				this.isInitialized = true;
 			},
 			(err) => { console.error(err); }
 		);
