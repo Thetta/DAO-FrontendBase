@@ -4,7 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
 import { DaoParamPageComponent } from './dao-param-page';
-import { DashboardComponent, NoConnectionDialog } from './dashboard.component';
+import { DashboardComponent } from './dashboard.component';
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { HomeComponent } from './home';
 import { OutsiderPageComponent } from './outsider-page';
@@ -25,7 +25,6 @@ import { TeamPageComponent } from './team-page';
 		DaoParamPageComponent,
 	  	DashboardComponent,
 		HomeComponent,
-		NoConnectionDialog,
 		OutsiderPageComponent,
 		PatronPageComponent,
 		TeamPageComponent
@@ -33,8 +32,6 @@ import { TeamPageComponent } from './team-page';
   exports: [
 	  	DashboardComponent
   ],
-  entryComponents: [
-	  	NoConnectionDialog
-  ]
+  entryComponents: []
 })
 export class DashboardModule { }

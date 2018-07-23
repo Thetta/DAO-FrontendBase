@@ -10,6 +10,13 @@ const web3 = new Web3(Web3.givenProvider);
 })
 export class Web3Service {
 
+	/**
+	 * Connection errors
+	 */
+	CONNECTION_NO_ERROR = 0;
+	CONNECTION_NO_PROVIDER = 1;
+	CONNECTION_NOT_LOGGED_IN = 2;
+
   	constructor() { }
 
 	/**
@@ -54,16 +61,16 @@ export class Web3Service {
 	}
 
 	/**
-	 * Checks that browser is connected to ethereum provider
+	 * Checks that browser is connected to ethereum provider and returns error code
 	 */
-	isConnected(): Observable<boolean> {
+	getConnectionError(): Observable<number> {
 		// check that user has metamask/mist or other provider
-		if(!web3.currentProvider) return of(false);
+		if(!web3.currentProvider) return of(this.CONNECTION_NO_PROVIDER);
 		// check that user has accounts available
 		return Observable.create((observer) => {
 			this.getAccounts().subscribe(
 				(accounts) => {
-					observer.next(accounts.length > 0 ? true : false);
+					observer.next(accounts.length > 0 ? this.CONNECTION_NO_ERROR : this.CONNECTION_NOT_LOGGED_IN);
 				},
 				(err) => { observer.error(err); },
 				() => { observer.complete(); }

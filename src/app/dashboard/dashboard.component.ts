@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog, MatDialogRef } from '@angular/material';
+import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
@@ -19,19 +19,24 @@ export class DashboardComponent implements OnInit {
 
 	constructor(
 		public devZenDaoService: DevzendaoService,
-		public dialog: MatDialog,
+		public router: Router,
 		public web3Service: Web3Service
 	) {}
 
 	ngOnInit() {
 		// check that user is connected to ethereum provider and has available accounts
-		this.web3Service.isConnected().subscribe(
-			(isConnected) => {
-				if(isConnected) {
+		this.web3Service.getConnectionError().subscribe(
+			(errorCode) => {
+				if(!errorCode) {
 					// TODO: wait when devZenDaoService is initialized
 					setTimeout(this.updateToolbarBalances(), 1000);
 				} else {
-					this.dialog.open(NoConnectionDialog, { disableClose: true });
+					if(errorCode == this.web3Service.CONNECTION_NO_PROVIDER) {
+						this.router.navigate(['metamask-not-installed']);
+					}
+					if(errorCode == this.web3Service.CONNECTION_NOT_LOGGED_IN) {
+						this.router.navigate(['metamask-not-logged-in']);
+					}
 				}
 			},
 			(err) => { console.error(err); }
@@ -62,29 +67,4 @@ export class DashboardComponent implements OnInit {
 		);
 	}
 
-}
-
-/**
- * No connection dialog
- */
-@Component({
-	selector: 'no-connection-dialog',
-	template: `
-		<mat-dialog-content>Ошибка. Не найден Ethereum провайдер или нет доступных счетов.</mat-dialog-content>
-		<mat-dialog-actions>
-			<button mat-button color="primary" (click)="reload()">Перезагрузить</button>
-		</mat-dialog-actions>`,
-})
-export class NoConnectionDialog {
-
-	constructor(
-		public dialogRef: MatDialogRef<NoConnectionDialog>
-	) {}
-
-	/**
-	 * Reloads browser page
-	 */
-	reload() {
-		location.reload();
-	}
 }
