@@ -28,16 +28,21 @@ export class DevzendaoService {
 	 * Initializes contracts
 	 */
 	initContracts() {
-		// load DevZenDaoFactory contract
-		this.factoryContract = this.web3Service.getContract(env.devZenDaoFactoryAbi, env.devZenDaoFactoryAddress);
-		// load DevZenDao contract 
-		from(this.factoryContract.methods.dao().call()).pipe(
-			switchMap(daoAddress => { 
-				this.daoContract = this.web3Service.getContract(env.devZenDaoAbi, daoAddress);
-				// load DZT and DZRTEP tokens 
-				return forkJoin(
-					this.daoContract.methods.devZenToken().call(),
-					this.daoContract.methods.repToken().call()
+
+		this.web3Service.getNetwork().pipe(
+			// load DevZenDaoFactory contract by current network name
+			switchMap((networkName) => {
+				this.factoryContract = this.web3Service.getContract(env.devZenDaoFactoryAbi, env.devZenDaoFactoryAddress[networkName]);
+				// load DevZenDao contract
+				return from(this.factoryContract.methods.dao().call()).pipe(
+					switchMap(daoAddress => { 
+						this.daoContract = this.web3Service.getContract(env.devZenDaoAbi, daoAddress);
+						// load DZT and DZRTEP tokens 
+						return forkJoin(
+							this.daoContract.methods.devZenToken().call(),
+							this.daoContract.methods.repToken().call()
+						);
+					})
 				);
 			})
 		).subscribe(

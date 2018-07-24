@@ -1,7 +1,13 @@
 export const environment = {
-  production: true,
-  devZenDaoFactoryAddress: "",
-  devZenDaoFactoryAbi: "",
-  devZenDaoAbi: "",
-  stdDaoTokenAbi: ""
+  	production: true,
+  	devZenDaoFactoryAddress: {
+		"main": "",
+		"ropsten": "",
+		"kovan": "",
+		"rinkeby": "",
+		"private": ""
+	},
+  	devZenDaoFactoryAbi: "",
+  	devZenDaoAbi: "",
+  	stdDaoTokenAbi: ""
 };

@@ -79,6 +79,13 @@ export class Web3Service {
 	}
 
 	/**
+	 * Returns current network name, ex: main, ropsten, kovan, rinkeby, private
+	 */
+	getNetwork(): Observable<string> {
+		return from(web3.eth.net.getNetworkType());
+	}
+
+	/**
 	 * Converts object to solidity tuple, {a: "1", b: "2"} => ["1", "2"]
 	 * @param obj 
 	 */
