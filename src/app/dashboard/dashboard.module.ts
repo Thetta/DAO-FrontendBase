@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 import { DaoParamPageComponent } from './dao-param-page';
 import { DashboardComponent } from './dashboard.component';
 import { DashboardRoutingModule } from './dashboard-routing.module';
+import { GroupMemberComponent, GroupMemberFormComponent } from './group-member';
 import { HomeComponent } from './home';
 import { BecomeTheNextShowGuestDialog, OutsiderPageComponent } from './outsider-page';
 import { PatronPageComponent } from './patron-page';
@@ -24,7 +25,9 @@ import { TeamPageComponent } from './team-page';
   declarations: [
 		BecomeTheNextShowGuestDialog,
 		DaoParamPageComponent,
-	  	DashboardComponent,
+		DashboardComponent,
+		GroupMemberComponent,
+		GroupMemberFormComponent,
 		HomeComponent,
 		OutsiderPageComponent,
 		PatronPageComponent,
@@ -34,7 +37,8 @@ import { TeamPageComponent } from './team-page';
 	  	DashboardComponent
   ],
   entryComponents: [
-	  BecomeTheNextShowGuestDialog
+	  BecomeTheNextShowGuestDialog,
+	  GroupMemberFormComponent
   ]
 })
 export class DashboardModule { }

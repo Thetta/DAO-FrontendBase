@@ -12,6 +12,8 @@ export class DevzendaoService {
 
 	@Output() init: EventEmitter<any> = new EventEmitter();
 
+	GROUP_DEV_ZEN_TEAM = "DevZenTeam";
+
 	daoContract: any;
 	dztTokenContract: any;
 	dztRepTokenContract: any;
@@ -247,6 +249,44 @@ export class DevzendaoService {
 		if(!baseContract) throw new Error(`token name ${tokenName} not found, available: DZT, DZTREP`);
 
 		return from(baseContract.methods.balanceOf(address).call());
+	}
+
+	//===================
+	// DaoStorage methods
+	//===================
+
+	/**
+	 * Adds new group member
+	 * @param groupName 
+	 * @param address 
+	 */
+	addGroupMember(groupName, address): Observable<void> {
+		return this.web3Service.getAccounts().pipe(
+			switchMap(accounts => this.daoContract.methods.addGroupMember(groupName, address).send({
+				from: accounts[0]
+			}))
+		);
+	}
+
+	/**
+	 * Returns addresses of group members by group name
+	 * @param groupName 
+	 */
+	getGroupMembers(groupName): Observable<string[]> {
+		return from(this.daoContract.methods.getGroupMembers(groupName).call());
+	}
+
+	/**
+	 * Removes address from group
+	 * @param groupName 
+	 * @param address 
+	 */
+	removeGroupMember(groupName, address): Observable<void> {
+		return this.web3Service.getAccounts().pipe(
+			switchMap(accounts => this.daoContract.methods.removeGroupMember(groupName, address).send({
+				from: accounts[0]
+			}))
+		);
 	}
 
 }

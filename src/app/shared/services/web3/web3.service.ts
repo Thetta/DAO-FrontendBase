@@ -20,6 +20,14 @@ export class Web3Service {
   	constructor() { }
 
 	/**
+	 * Returns hex of the string
+	 * @param text 
+	 */
+	asciiToHex(text): string {
+		return web3.utils.asciiToHex(text);
+	}
+
+	/**
 	 * Performs a plain call to blockchain
 	 * @param params 
 	 */

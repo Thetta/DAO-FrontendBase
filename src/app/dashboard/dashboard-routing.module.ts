@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { DaoParamPageComponent } from './dao-param-page';
 import { DashboardComponent } from './dashboard.component';
+import { GroupMemberComponent } from './group-member';
 import { HomeComponent } from './home';
 import { OutsiderPageComponent } from './outsider-page';
 import { PatronPageComponent } from './patron-page';
@@ -37,6 +38,10 @@ const routes: Routes = [
 				{
 					path: 'outsider-page',
 					component: OutsiderPageComponent
+				},
+				{
+					path: 'group-member',
+					component: GroupMemberComponent
 				}
 			]
 		}
