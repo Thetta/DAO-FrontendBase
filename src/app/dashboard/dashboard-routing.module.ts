@@ -7,6 +7,7 @@ import { GroupMemberComponent } from './group-member';
 import { HomeComponent } from './home';
 import { OutsiderPageComponent } from './outsider-page';
 import { PatronPageComponent } from './patron-page';
+import { ProposalComponent } from './proposal';
 import { TeamPageComponent } from './team-page';
 
 const routes: Routes = [
@@ -42,6 +43,10 @@ const routes: Routes = [
 				{
 					path: 'group-member',
 					component: GroupMemberComponent
+				},
+				{
+					path: 'proposal',
+					component: ProposalComponent
 				}
 			]
 		}

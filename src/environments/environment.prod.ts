@@ -9,5 +9,8 @@ export const environment = {
 	},
   	devZenDaoFactoryAbi: "",
   	devZenDaoAbi: "",
-  	stdDaoTokenAbi: ""
+	stdDaoTokenAbi: "",
+	daoBaseAutoAbi: "",
+	genericProposalAbi: "",
+	voting1p1vAbi: ""
 };

@@ -10,6 +10,7 @@ import { GroupMemberComponent, GroupMemberFormComponent } from './group-member';
 import { HomeComponent } from './home';
 import { BecomeTheNextShowGuestDialog, OutsiderPageComponent } from './outsider-page';
 import { PatronPageComponent } from './patron-page';
+import { ProposalComponent, VoteDialogComponent } from './proposal';
 import { CustomMatModule } from '../shared';
 import { TeamPageComponent } from './team-page';
 
@@ -31,14 +32,17 @@ import { TeamPageComponent } from './team-page';
 		HomeComponent,
 		OutsiderPageComponent,
 		PatronPageComponent,
-		TeamPageComponent
+		ProposalComponent,
+		TeamPageComponent,
+		VoteDialogComponent
   ],
   exports: [
 	  	DashboardComponent
   ],
   entryComponents: [
 	  BecomeTheNextShowGuestDialog,
-	  GroupMemberFormComponent
+	  GroupMemberFormComponent,
+	  VoteDialogComponent
   ]
 })
 export class DashboardModule { }

@@ -1,0 +1,36 @@
+<h2>Предложения</h2>
+
+<div *ngIf="proposals.length > 0" class="dao-card row m-t-1">
+	<div class="row">
+		<div class="col-xs-3"><strong>Название + параметры</strong></div>
+		<div class="col-xs-1"><strong>За</strong></div>
+		<div class="col-xs-1"><strong>Против</strong></div>
+		<div class="col-xs-1"><strong>Всего</strong></div>
+		<div class="col-xs-2"><strong>Статус</strong></div>
+		<div class="col-xs-2"><strong>Результат</strong></div>
+		<div class="col-xs-2"></div>
+	</div>
+	<div *ngFor="let proposal of proposals" class="p-t-1">
+		<div *ngIf="proposal.data" class="row">
+			<div class="col-xs-3"></div>
+			<div class="col-xs-1">{{ proposal.data[0].yesResults }}</div>
+			<div class="col-xs-1">{{ proposal.data[0].noResults }}</div>
+			<div class="col-xs-1">{{ +proposal.data[0].yesResults + +proposal.data[0].noResults }}/{{ proposal.data[0].votersTotal }}</div>
+			<div class="col-xs-2">
+				<mat-chip-list>
+					<mat-chip [color]="proposal.data[1] ? 'default' : 'primary'" selected>{{ proposal.data[1] ? 'Закончен' : 'Идет' }}</mat-chip>
+				</mat-chip-list>
+			</div>
+			<div class="col-xs-2">
+				<mat-chip-list *ngIf="proposal.data[1]">
+					<mat-chip [color]="proposal.data[2] ? 'primary' : 'warn'" selected>{{ proposal.data[2] ? 'Принято' : 'Отклонено' }}</mat-chip>
+				</mat-chip-list>
+			</div>
+			<div class="col-xs-2">
+				<button *ngIf="!proposal.data[1]" (click)="showVoteDialog(proposal)" mat-raised-button color="primary">Голосовать</button>
+			</div>
+		</div>
+		
+	</div>
+
+</div>

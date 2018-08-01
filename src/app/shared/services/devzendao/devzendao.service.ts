@@ -14,6 +14,7 @@ export class DevzendaoService {
 
 	GROUP_DEV_ZEN_TEAM = "DevZenTeam";
 
+	daoBaseAutoContract: any;
 	daoContract: any;
 	dztTokenContract: any;
 	dztRepTokenContract: any;
@@ -42,15 +43,17 @@ export class DevzendaoService {
 						// load DZT and DZRTEP tokens 
 						return forkJoin(
 							this.daoContract.methods.devZenToken().call(),
-							this.daoContract.methods.repToken().call()
+							this.daoContract.methods.repToken().call(),
+							this.factoryContract.methods.aac().call()
 						);
 					})
 				);
 			})
 		).subscribe(
-			(tokenAddresses) => {
-				this.dztTokenContract = this.web3Service.getContract(env.stdDaoTokenAbi, tokenAddresses[0]);
-				this.dztRepTokenContract = this.web3Service.getContract(env.stdDaoTokenAbi, tokenAddresses[1]);
+			(contractAddresses) => {
+				this.dztTokenContract = this.web3Service.getContract(env.stdDaoTokenAbi, contractAddresses[0]);
+				this.dztRepTokenContract = this.web3Service.getContract(env.stdDaoTokenAbi, contractAddresses[1]);
+				this.daoBaseAutoContract = this.web3Service.getContract(env.daoBaseAutoAbi, contractAddresses[2]);
 				this.init.emit();
 				this.isInitialized = true;
 			},
@@ -277,6 +280,21 @@ export class DevzendaoService {
 	}
 
 	/**
+	 * Returns proposal address by index
+	 * @param index 
+	 */
+	getProposalAtIndex(index): Observable<string> {
+		return from(this.daoContract.methods.getProposalAtIndex(index).call());
+	}
+
+	/**
+	 * Returns number of proposals
+	 */
+	getProposalsCount(): Observable<number> {
+		return from(this.daoContract.methods.getProposalsCount().call());
+	}
+
+	/**
 	 * Removes address from group
 	 * @param groupName 
 	 * @param address 
@@ -286,6 +304,90 @@ export class DevzendaoService {
 			switchMap(accounts => this.daoContract.methods.removeGroupMember(groupName, address).send({
 				from: accounts[0]
 			}))
+		);
+	}
+
+	//====================
+	// DaoBaseAuto methods
+	//====================
+
+	/**
+	 * Creates a proposal for adding user addres to a group
+	 * @param groupName 
+	 * @param address 
+	 */
+	addGroupMemberAuto(groupName, address): Observable<string> {
+		return this.web3Service.getAccounts().pipe(
+			switchMap(accounts => this.daoBaseAutoContract.methods.addGroupMemberAuto(groupName, address).send({
+				from: accounts[0]
+			}))
+		);
+	}
+
+	//===============
+	// Voting methods
+	//===============
+
+	/**
+	 * Returns voting status with counts of yes, no, total
+	 * @param proposalAddress 
+	 */
+	getVotingStats(proposalAddress): Observable<any> {
+		const proposal = this.web3Service.getContract(env.genericProposalAbi, proposalAddress);
+		return from(proposal.methods.getVoting().call()).pipe(
+			switchMap(votingAddress => {
+				const voting = this.web3Service.getContract(env.voting1p1vAbi, votingAddress);
+				return from(voting.methods.getVotingStats().call());
+			})
+		)
+	}
+
+	/**
+	 * Checks whether voting is finished
+	 * @param proposalAddress 
+	 */
+	isFinished(proposalAddress): Observable<boolean> {
+		const proposal = this.web3Service.getContract(env.genericProposalAbi, proposalAddress);
+		return from(proposal.methods.getVoting().call()).pipe(
+			switchMap(votingAddress => {
+				const voting = this.web3Service.getContract(env.voting1p1vAbi, votingAddress);
+				return from(voting.methods.isFinished().call());
+			})
+		)
+	}
+
+	/**
+	 * Returns voting result
+	 * @param proposalAddress 
+	 */
+	isYes(proposalAddress): Observable<boolean> {
+		const proposal = this.web3Service.getContract(env.genericProposalAbi, proposalAddress);
+		return from(proposal.methods.getVoting().call()).pipe(
+			switchMap(votingAddress => {
+				const voting = this.web3Service.getContract(env.voting1p1vAbi, votingAddress);
+				return from(voting.methods.isYes().call());
+			})
+		)
+	}
+
+	/**
+	 * Votes for a proposal
+	 * @param proposalAddress 
+	 * @param vote 
+	 */
+	vote(proposalAddress, vote): Observable<void> {
+		return this.web3Service.getAccounts().pipe(
+			switchMap(accounts => {
+				const proposal = this.web3Service.getContract(env.genericProposalAbi, proposalAddress);
+				return from(proposal.methods.getVoting().call()).pipe(
+					switchMap(votingAddress => {
+						const voting = this.web3Service.getContract(env.voting1p1vAbi, votingAddress);
+						return from(voting.methods.vote(vote, 0).send({
+							from: accounts[0]
+						}));
+					})
+				);
+			})
 		);
 	}
 
