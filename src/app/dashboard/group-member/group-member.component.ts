@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog, MatSnackBar } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { switchMap } from 'rxjs/operators';
 import { forkJoin } from 'rxjs';
 
@@ -18,8 +18,7 @@ export class GroupMemberComponent implements OnInit {
 
 	constructor(
 		public devZenDaoService: DevzendaoService,
-		public dialog: MatDialog,
-		public matSnackBar: MatSnackBar
+		public dialog: MatDialog
 	) {}
 
 	ngOnInit() {
@@ -67,12 +66,7 @@ export class GroupMemberComponent implements OnInit {
 	 * @param member 
 	 */
 	deleteGroupMember(member) {
-		this.devZenDaoService.removeGroupMember(this.devZenDaoService.GROUP_DEV_ZEN_TEAM, member.address).subscribe(
-			resp => {
-				this.matSnackBar.open(`Участник успешно удален`, 'Закрыть', {horizontalPosition: 'right', verticalPosition: 'top'});
-			},
-			err => { console.error(err); }
-		);
+		this.devZenDaoService.removeGroupMember(this.devZenDaoService.GROUP_DEV_ZEN_TEAM, member.address).subscribe();
 	}
 
 	/**

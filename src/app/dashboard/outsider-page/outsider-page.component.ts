@@ -1,7 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatSnackBar } from '@angular/material';
 
 import { DevzendaoService, Web3Service } from '../../shared';
 import { switchMap } from 'rxjs/operators';
@@ -19,7 +18,6 @@ export class OutsiderPageComponent implements OnInit {
 		public devZenDaoService: DevzendaoService,
 		public formBuilder: FormBuilder,
 		public matDialog: MatDialog,
-		public matSnackBar: MatSnackBar,
 		public web3Service: Web3Service
 	) { }
 
@@ -55,12 +53,7 @@ export class OutsiderPageComponent implements OnInit {
 	 */
 	runBuyTokens() {
 		const weiSum = this.web3Service.toWei(this.formBuyTokens.controls['ethSum'].value, 'ether');
-		this.devZenDaoService.buyTokens(weiSum).subscribe(
-			(resp) => {
-				this.matSnackBar.open(`Перевод успешно выполнен`, 'Закрыть', {horizontalPosition: 'right', verticalPosition: 'top'});
-			},
-			(err) => { console.error(err); }
-		);
+		this.devZenDaoService.buyTokens(weiSum).subscribe();
 	}
 
 }
@@ -86,7 +79,6 @@ export class BecomeTheNextShowGuestDialog {
 		public devZenDaoService: DevzendaoService,
 		public dialogRef: MatDialogRef<BecomeTheNextShowGuestDialog>,
 		@Inject(MAT_DIALOG_DATA) public data,
-		public matSnackBar: MatSnackBar,
 		public web3Service: Web3Service
 	) {}
 
@@ -108,12 +100,7 @@ export class BecomeTheNextShowGuestDialog {
 		// approve for dao to spend user's DZT to put at stake and become the next show guest
 		this.devZenDaoService.approve(weiSum, "DZT").pipe(
 			switchMap(() => { return this.devZenDaoService.becomeTheNextShowGuest(); })
-		).subscribe(
-			(resp) => {
-				this.matSnackBar.open(`Вы стали следующим гостем`, 'Закрыть', {horizontalPosition: 'right', verticalPosition: 'top'});
-			},
-			(err) => { console.error(err); }
-		);
+		).subscribe();
 	}
   
 }

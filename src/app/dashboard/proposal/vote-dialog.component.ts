@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialogRef, MatSnackBar } from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 
 import { DevzendaoService } from '../../shared';
 
@@ -17,8 +17,7 @@ export class VoteDialogComponent implements OnInit {
 		public devZenDaoService: DevzendaoService,
 		public dialogRef: MatDialogRef<VoteDialogComponent>,
 		public formBuilder: FormBuilder,
-		@Inject(MAT_DIALOG_DATA) public data,
-		public matSnackBar: MatSnackBar
+		@Inject(MAT_DIALOG_DATA) public data
 	) {}
 
 	ngOnInit() {
@@ -47,12 +46,7 @@ export class VoteDialogComponent implements OnInit {
 	onVote() {
 		this.dialogRef.close();
 		const vote = this.formVote.controls['vote'].value == "true" ? true : false;
-		this.devZenDaoService.vote(this.data.proposal.address, vote).subscribe(
-			resp => {
-				this.matSnackBar.open(`Транзакция успешно создана`, 'Закрыть', {horizontalPosition: 'right', verticalPosition: 'top'});
-			},
-			err => { console.error(err); }
-		);
+		this.devZenDaoService.vote(this.data.proposal.address, vote).subscribe();
 	}
 
 }

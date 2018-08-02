@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatSnackBar } from '@angular/material';
 
 import { DevzendaoService, Web3Service } from '../../shared';
 
@@ -17,7 +16,6 @@ export class PatronPageComponent implements OnInit {
 	constructor(
 		public devZenDaoService: DevzendaoService,
 		public formBuilder: FormBuilder,
-		public matSnackBar: MatSnackBar,
 		public web3Service: Web3Service
 	) { }
 
@@ -39,12 +37,7 @@ export class PatronPageComponent implements OnInit {
 	 */
 	runAdsInTheNextEpisode() {
 		const adText = this.formRunAdsInTheNextEpisode.controls['adText'].value;
-		this.devZenDaoService.runAdsInTheNextEpisode(adText).subscribe(
-			(resp) => {
-				this.matSnackBar.open(`Рекламное место успешно куплено`, 'Закрыть', {horizontalPosition: 'right', verticalPosition: 'top'});
-			},
-			(err) => { console.error(err); }
-		);
+		this.devZenDaoService.runAdsInTheNextEpisode(adText).subscribe();
 	}
 
 }

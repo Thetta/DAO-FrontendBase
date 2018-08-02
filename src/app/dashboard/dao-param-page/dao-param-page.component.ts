@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatSnackBar } from '@angular/material';
 import { switchMap } from 'rxjs/operators';
 
 import { DevzendaoService, Web3Service } from '../../shared';
@@ -17,7 +16,6 @@ export class DaoParamPageComponent implements OnInit {
 	constructor(
 		public devZenDaoService: DevzendaoService,
 		public formBuilder: FormBuilder,
-		public matSnackBar: MatSnackBar,
 		public web3Service: Web3Service
 	) { }
 
@@ -83,12 +81,7 @@ export class DaoParamPageComponent implements OnInit {
 		// convert param values to wei
 		Object.keys(params).map(key => params[key] = this.web3Service.toWei(String(params[key]), "ether"));
 
-		this.devZenDaoService.updateDaoParams(params).subscribe(
-			(resp) => {
-				this.matSnackBar.open(`Параметры DAO изменены`, 'Закрыть', {horizontalPosition: 'right', verticalPosition: 'top'});
-			},
-			(err) => { console.error(err); }
-		);
+		this.devZenDaoService.updateDaoParams(params).subscribe();
 	}
 
 }

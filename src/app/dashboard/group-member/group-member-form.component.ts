@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef, MatSnackBar } from '@angular/material';
+import { MatDialogRef } from '@angular/material';
 
 import { DevzendaoService } from '../../shared';
 
@@ -15,8 +15,7 @@ import { DevzendaoService } from '../../shared';
 	constructor(
 		public devZenDaoService: DevzendaoService,
 		public dialogRef: MatDialogRef<GroupMemberFormComponent>,
-		public formBuilder: FormBuilder,
-		public matSnackBar: MatSnackBar
+		public formBuilder: FormBuilder
 	) {}
 
 	ngOnInit() {
@@ -47,12 +46,7 @@ import { DevzendaoService } from '../../shared';
 		this.devZenDaoService.addGroupMemberAuto(
 			this.devZenDaoService.GROUP_DEV_ZEN_TEAM,
 			this.formGroupMember.controls['address'].value
-		).subscribe(
-			resp => {
-				this.matSnackBar.open(`Голосование успешно создано`, 'Закрыть', {horizontalPosition: 'right', verticalPosition: 'top'});
-			},
-			err => { console.error(err); }
-		);
+		).subscribe();
 	}
 
   }

@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatSnackBar } from '@angular/material';
 
 import { DevzendaoService } from '../../shared';
 
@@ -19,8 +18,7 @@ export class TeamPageComponent implements OnInit {
 
 	constructor(
 		public devZenDaoService: DevzendaoService,
-		public formBuilder: FormBuilder,
-		public matSnackBar: MatSnackBar
+		public formBuilder: FormBuilder
 	) { }
 
 	ngOnInit() {
@@ -53,12 +51,7 @@ export class TeamPageComponent implements OnInit {
 	 */
 	runChangeTheGuest() {
 		const guestAddress = this.formChangeTheGuest.controls['guest'].value;
-		this.devZenDaoService.changeTheGuest(guestAddress).subscribe(
-			(resp) => {
-				this.matSnackBar.open(`Гость успешно выбран`, 'Закрыть', {horizontalPosition: 'right', verticalPosition: 'top'});
-			},
-			(err) => { console.error(err); }
-		);
+		this.devZenDaoService.changeTheGuest(guestAddress).subscribe();
 	}
 
 	/**
@@ -66,12 +59,7 @@ export class TeamPageComponent implements OnInit {
 	 */
 	runEmergencyChangeTheGuest() {
 		const guestAddress = this.formEmergencyChangeTheGuest.controls['guest'].value;
-		this.devZenDaoService.emergencyChangeTheGuest(guestAddress).subscribe(
-			(resp) => {
-				this.matSnackBar.open(`Экстренный гость успешно выбран`, 'Закрыть', {horizontalPosition: 'right', verticalPosition: 'top'});
-			},
-			(err) => { console.error(err); }
-		);
+		this.devZenDaoService.emergencyChangeTheGuest(guestAddress).subscribe();
 	}
 
 	/**
@@ -80,12 +68,7 @@ export class TeamPageComponent implements OnInit {
 	runMoveToNextEpisode() {
 		// convert to boolean
 		const guestHasCome = this.formMoveToNextEpisode.controls['guestHasCome'].value == "true" ? true : false;
-		this.devZenDaoService.moveToNextEpisode(guestHasCome).subscribe(
-			(resp) => {
-				this.matSnackBar.open(`Следующий эпизод успешно создан`, 'Закрыть', {horizontalPosition: 'right', verticalPosition: 'top'});
-			},
-			(err) => { console.error(err); }
-		);
+		this.devZenDaoService.moveToNextEpisode(guestHasCome).subscribe();
 	}
 
 	/**
@@ -93,12 +76,7 @@ export class TeamPageComponent implements OnInit {
 	 */
 	runSelectNextHost() {
 		const hostAddress = this.formSelectNextHost.controls['host'].value;
-		this.devZenDaoService.selectNextHost(hostAddress).subscribe(
-			(resp) => {
-				this.matSnackBar.open(`Следующий организатор успешно выбран`, 'Закрыть', {horizontalPosition: 'right', verticalPosition: 'top'});
-			},
-			(err) => { console.error(err); }
-		);
+		this.devZenDaoService.selectNextHost(hostAddress).subscribe();
 	}
 
 	/**
@@ -106,12 +84,7 @@ export class TeamPageComponent implements OnInit {
 	 */
 	runWithdrawEther() {
 		const outputAddress = this.formWithdrawEther.controls['output'].value;
-		this.devZenDaoService.withdrawEther(outputAddress).subscribe(
-			(resp) => {
-				this.matSnackBar.open(`Перевод успешно выполнен`, 'Закрыть', {horizontalPosition: 'right', verticalPosition: 'top'});
-			},
-			(err) => { console.error(err); }
-		);
+		this.devZenDaoService.withdrawEther(outputAddress).subscribe();
 	}
 
 }
