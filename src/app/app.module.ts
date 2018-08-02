@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-import { HttpModule } from '@angular/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -20,7 +20,7 @@ import { PageNotFoundComponent } from './page-not-found';
   imports: [
 	BrowserModule,
 	BrowserAnimationsModule,
-	HttpModule,
+	HttpClientModule,
 	DashboardModule,
 	AppRoutingModule
   ],

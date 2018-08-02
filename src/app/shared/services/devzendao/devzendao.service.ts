@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { EventEmitter, Injectable, Output } from '@angular/core';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material';
 import { Observable, from, forkJoin } from 'rxjs';
@@ -15,6 +16,7 @@ export class DevzendaoService {
 
 	GROUP_DEV_ZEN_TEAM = "DevZenTeam";
 
+	contractsData = [];
 	daoBaseAutoContract: any;
 	daoContract: any;
 	dztTokenContract: any;
@@ -22,7 +24,16 @@ export class DevzendaoService {
 	factoryContract: any;
 	isInitialized = false;
 
+	// abi indexes
+	ABI_INDEX_STD_DAO_TOKEN = 0;
+	ABI_INDEX_DAO_BASE_AUTO = 1;
+	ABI_INDEX_GENERIC_PROPOSAL = 2;
+	ABI_INDEX_VOTING_1P_1V = 3;
+	ABI_INDEX_DEV_ZEN_DAO_FACTORY = 4;
+	ABI_INDEX_DEV_ZEN_DAO = 5;
+
 	constructor(
+		public http: HttpClient,
 		public matSnackBar: MatSnackBar,
 		public web3Service: Web3Service
 	) {
@@ -34,14 +45,19 @@ export class DevzendaoService {
 	 */
 	initContracts() {
 
-		this.web3Service.getNetwork().pipe(
+		this.loadContractsData().pipe(
+			// load contracts data
+			switchMap(contractsData => {
+				this.contractsData = contractsData;
+				return this.web3Service.getNetwork();
+			}),
 			// load DevZenDaoFactory contract by current network name
-			switchMap((networkName) => {
-				this.factoryContract = this.web3Service.getContract(env.devZenDaoFactoryAbi, env.devZenDaoFactoryAddress[networkName]);
+			switchMap(networkName => {
+				this.factoryContract = this.web3Service.getContract(this.contractsData[this.ABI_INDEX_DEV_ZEN_DAO_FACTORY].abi, env.devZenDaoFactoryAddress[networkName]);
 				// load DevZenDao contract
 				return from(this.factoryContract.methods.dao().call()).pipe(
 					switchMap(daoAddress => { 
-						this.daoContract = this.web3Service.getContract(env.devZenDaoAbi, daoAddress);
+						this.daoContract = this.web3Service.getContract(this.contractsData[this.ABI_INDEX_DEV_ZEN_DAO].abi, daoAddress);
 						// load DZT and DZRTEP tokens 
 						return forkJoin(
 							this.daoContract.methods.devZenToken().call(),
@@ -53,14 +69,41 @@ export class DevzendaoService {
 			})
 		).subscribe(
 			(contractAddresses) => {
-				this.dztTokenContract = this.web3Service.getContract(env.stdDaoTokenAbi, contractAddresses[0]);
-				this.dztRepTokenContract = this.web3Service.getContract(env.stdDaoTokenAbi, contractAddresses[1]);
-				this.daoBaseAutoContract = this.web3Service.getContract(env.daoBaseAutoAbi, contractAddresses[2]);
+				this.dztTokenContract = this.web3Service.getContract(this.contractsData[this.ABI_INDEX_STD_DAO_TOKEN].abi, contractAddresses[0]);
+				this.dztRepTokenContract = this.web3Service.getContract(this.contractsData[this.ABI_INDEX_STD_DAO_TOKEN].abi, contractAddresses[1]);
+				this.daoBaseAutoContract = this.web3Service.getContract(this.contractsData[this.ABI_INDEX_DAO_BASE_AUTO].abi, contractAddresses[2]);
 				this.init.emit();
 				this.isInitialized = true;
 			},
 			(err) => { console.error(err); }
 		);
+	}
+
+	/**
+	 * Loads contracts data
+	 */
+	loadContractsData(): Observable<any> {
+
+		let commonRequests = [
+			this.http.get('assets/contracts/StdDaoToken.json'),
+			this.http.get('assets/contracts/DaoBaseAuto.json'),
+			this.http.get('assets/contracts/GenericProposal.json'),
+			this.http.get('assets/contracts/Voting_1p1v.json')
+		];
+
+		if(env.production) {
+			commonRequests.push(
+				this.http.get('assets/contracts/DevZenDaoFactory.json'),
+				this.http.get('assets/contracts/DevZenDao.json')
+			);
+		} else {
+			commonRequests.push(
+				this.http.get('assets/contracts/DevZenDaoFactoryTestable.json'),
+				this.http.get('assets/contracts/DevZenDaoTestable.json')
+			);
+		}
+		
+		return forkJoin(commonRequests);
 	}
 
 	//====================
@@ -390,10 +433,10 @@ export class DevzendaoService {
 	 * @param proposalAddress 
 	 */
 	getVotingStats(proposalAddress): Observable<any> {
-		const proposal = this.web3Service.getContract(env.genericProposalAbi, proposalAddress);
+		const proposal = this.web3Service.getContract(this.contractsData[this.ABI_INDEX_GENERIC_PROPOSAL].abi, proposalAddress);
 		return from(proposal.methods.getVoting().call()).pipe(
 			switchMap(votingAddress => {
-				const voting = this.web3Service.getContract(env.voting1p1vAbi, votingAddress);
+				const voting = this.web3Service.getContract(this.contractsData[this.ABI_INDEX_VOTING_1P_1V].abi, votingAddress);
 				return from(voting.methods.getVotingStats().call());
 			})
 		)
@@ -404,10 +447,10 @@ export class DevzendaoService {
 	 * @param proposalAddress 
 	 */
 	isFinished(proposalAddress): Observable<boolean> {
-		const proposal = this.web3Service.getContract(env.genericProposalAbi, proposalAddress);
+		const proposal = this.web3Service.getContract(this.contractsData[this.ABI_INDEX_GENERIC_PROPOSAL].abi, proposalAddress);
 		return from(proposal.methods.getVoting().call()).pipe(
 			switchMap(votingAddress => {
-				const voting = this.web3Service.getContract(env.voting1p1vAbi, votingAddress);
+				const voting = this.web3Service.getContract(this.contractsData[this.ABI_INDEX_VOTING_1P_1V].abi, votingAddress);
 				return from(voting.methods.isFinished().call());
 			})
 		)
@@ -418,10 +461,10 @@ export class DevzendaoService {
 	 * @param proposalAddress 
 	 */
 	isYes(proposalAddress): Observable<boolean> {
-		const proposal = this.web3Service.getContract(env.genericProposalAbi, proposalAddress);
+		const proposal = this.web3Service.getContract(this.contractsData[this.ABI_INDEX_GENERIC_PROPOSAL].abi, proposalAddress);
 		return from(proposal.methods.getVoting().call()).pipe(
 			switchMap(votingAddress => {
-				const voting = this.web3Service.getContract(env.voting1p1vAbi, votingAddress);
+				const voting = this.web3Service.getContract(this.contractsData[this.ABI_INDEX_VOTING_1P_1V].abi, votingAddress);
 				return from(voting.methods.isYes().call());
 			})
 		)
@@ -436,10 +479,10 @@ export class DevzendaoService {
 
 		return this.web3Service.getAccounts().pipe(
 			switchMap(accounts => {
-				const proposal = this.web3Service.getContract(env.genericProposalAbi, proposalAddress);
+				const proposal = this.web3Service.getContract(this.contractsData[this.ABI_INDEX_GENERIC_PROPOSAL].abi, proposalAddress);
 				return from(proposal.methods.getVoting().call()).pipe(
 					switchMap(votingAddress => {
-						const voting = this.web3Service.getContract(env.voting1p1vAbi, votingAddress);
+						const voting = this.web3Service.getContract(this.contractsData[this.ABI_INDEX_VOTING_1P_1V].abi, votingAddress);
 						return this.send(
 							voting.methods.vote, 
 							[vote, 0], 

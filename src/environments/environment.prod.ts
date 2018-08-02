@@ -6,11 +6,5 @@ export const environment = {
 		"kovan": "",
 		"rinkeby": "",
 		"private": ""
-	},
-  	devZenDaoFactoryAbi: "",
-  	devZenDaoAbi: "",
-	stdDaoTokenAbi: "",
-	daoBaseAutoAbi: "",
-	genericProposalAbi: "",
-	voting1p1vAbi: ""
+	}
 };
