@@ -5,6 +5,7 @@ import { Observable, from, forkJoin } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
 import { environment as env } from '../../../../environments/environment';
+import { TxSenderService } from '../tx-sender/tx-sender.service';
 import { Web3Service } from '../web3/web3.service';
 
 @Injectable({
@@ -35,6 +36,7 @@ export class DevzendaoService {
 	constructor(
 		public http: HttpClient,
 		public matSnackBar: MatSnackBar,
+		public txSenderService: TxSenderService,
 		public web3Service: Web3Service
 	) {
 		this.initContracts();
@@ -135,7 +137,7 @@ export class DevzendaoService {
 	updateDaoParams(params): Observable<any> {
 		const tupledParams = [this.web3Service.toTuple(params)];
 		return this.web3Service.getAccounts().pipe(
-			switchMap(accounts => this.send(
+			switchMap(accounts => this.txSenderService.send(
 				this.daoContract.methods.updateDaoParams, 
 				tupledParams, 
 				{ from: accounts[0] },
@@ -151,7 +153,7 @@ export class DevzendaoService {
 	 */
 	withdrawEther(outputAddress): Observable<any> {
 		return this.web3Service.getAccounts().pipe(
-			switchMap(accounts => this.send(
+			switchMap(accounts => this.txSenderService.send(
 				this.daoContract.methods.withdrawEther, 
 				[outputAddress],
 				{ from: accounts[0] },
@@ -167,7 +169,7 @@ export class DevzendaoService {
 	 */
 	selectNextHost(nextHostAddress): Observable<any> {
 		return this.web3Service.getAccounts().pipe(
-			switchMap(accounts => this.send(
+			switchMap(accounts => this.txSenderService.send(
 				this.daoContract.methods.selectNextHost,
 				[nextHostAddress],
 				{ from: accounts[0] },
@@ -182,7 +184,7 @@ export class DevzendaoService {
 	 */
 	burnGuestStake(): Observable<any> {
 		return this.web3Service.getAccounts().pipe(
-			switchMap(accounts => this.send(
+			switchMap(accounts => this.txSenderService.send(
 				this.daoContract.methods.burnGuestStake,
 				[],
 				{ from: accounts[0] },
@@ -198,7 +200,7 @@ export class DevzendaoService {
 	 */
 	changeTheGuest(guestAddress): Observable<any> {
 		return this.web3Service.getAccounts().pipe(
-			switchMap(accounts => this.send(
+			switchMap(accounts => this.txSenderService.send(
 				this.daoContract.methods.changeTheGuest,
 				[guestAddress],
 				{ from: accounts[0] },
@@ -214,7 +216,7 @@ export class DevzendaoService {
 	 */
 	emergencyChangeTheGuest(guestAddress): Observable<any> {
 		return this.web3Service.getAccounts().pipe(
-			switchMap(accounts => this.send(
+			switchMap(accounts => this.txSenderService.send(
 				this.daoContract.methods.emergency_ChangeTheGuest,
 				[guestAddress],
 				{ from: accounts[0] },
@@ -230,7 +232,7 @@ export class DevzendaoService {
 	 */
 	moveToNextEpisode(guestHasCome): Observable<any> {
 		return this.web3Service.getAccounts().pipe(
-			switchMap(accounts => this.send(
+			switchMap(accounts => this.txSenderService.send(
 				this.daoContract.methods.moveToNextEpisode,
 				[guestHasCome],
 				{ from: accounts[0] },
@@ -250,7 +252,7 @@ export class DevzendaoService {
 	 */
 	runAdsInTheNextEpisode(adText): Observable<any> {
 		return this.web3Service.getAccounts().pipe(
-			switchMap(accounts => this.send(
+			switchMap(accounts => this.txSenderService.send(
 				this.daoContract.methods.runAdsInTheNextEpisode,
 				[adText],
 				{ from: accounts[0] },
@@ -265,7 +267,7 @@ export class DevzendaoService {
 	 */
 	becomeTheNextShowGuest(): Observable<any> {
 		return this.web3Service.getAccounts().pipe(
-			switchMap(accounts => this.send(
+			switchMap(accounts => this.txSenderService.send(
 				this.daoContract.methods.becomeTheNextShowGuest,
 				[],
 				{ from: accounts[0] },
@@ -285,7 +287,7 @@ export class DevzendaoService {
 	 */
 	buyTokens(valueInWei): Observable<any> {
 		return this.web3Service.getAccounts().pipe(
-			switchMap(accounts => this.send(
+			switchMap(accounts => this.txSenderService.send(
 				this.daoContract.methods.buyTokens,
 				[],
 				{ from: accounts[0], value: valueInWei },
@@ -318,7 +320,7 @@ export class DevzendaoService {
 		if(!baseContract) throw new Error(`token name ${tokenName} not found, available: DZT, DZTREP`);
 
 		return this.web3Service.getAccounts().pipe(
-			switchMap(accounts => this.send(
+			switchMap(accounts => this.txSenderService.send(
 				baseContract.methods.approve,
 				[this.daoContract.options.address, amount],
 				{ from: accounts[0] },
@@ -353,7 +355,7 @@ export class DevzendaoService {
 	 */
 	addGroupMember(groupName, address): Observable<void> {
 		return this.web3Service.getAccounts().pipe(
-			switchMap(accounts => this.send(
+			switchMap(accounts => this.txSenderService.send(
 				this.daoContract.methods.addGroupMember,
 				[groupName, address],
 				{ from: accounts[0] },
@@ -393,7 +395,7 @@ export class DevzendaoService {
 	 */
 	removeGroupMember(groupName, address): Observable<void> {
 		return this.web3Service.getAccounts().pipe(
-			switchMap(accounts => this.send(
+			switchMap(accounts => this.txSenderService.send(
 				this.daoContract.methods.removeGroupMember,
 				[groupName, address],
 				{ from: accounts[0] },
@@ -414,7 +416,7 @@ export class DevzendaoService {
 	 */
 	addGroupMemberAuto(groupName, address): Observable<string> {
 		return this.web3Service.getAccounts().pipe(
-			switchMap(accounts => this.send(
+			switchMap(accounts => this.txSenderService.send(
 				this.daoBaseAutoContract.methods.addGroupMemberAuto, 
 				[groupName, address], 
 				{ from: accounts[0] },
@@ -483,7 +485,7 @@ export class DevzendaoService {
 				return from(proposal.methods.getVoting().call()).pipe(
 					switchMap(votingAddress => {
 						const voting = this.web3Service.getContract(this.contractsData[this.ABI_INDEX_VOTING_1P_1V].abi, votingAddress);
-						return this.send(
+						return this.txSenderService.send(
 							voting.methods.vote, 
 							[vote, 0], 
 							{ from: accounts[0] },
@@ -493,42 +495,6 @@ export class DevzendaoService {
 					})
 				);
 			})
-		);
-	}
-
-	//===============
-	// Helper methods
-	//===============
-
-	/**
-	 * Creates a transaction
-	 * @param method 
-	 * @param params 
-	 * @param data 
-	 * @param successMsg 
-	 * @param errorMsg 
-	 */
-	send(method, params = [], data = {}, successMsg = "Успех", errorMsg = "Ошибка"): Observable<any> {
-		const defaultSnackBarParams: MatSnackBarConfig = {
-			horizontalPosition: 'right',
-			verticalPosition: 'top'
-		};
-		return from(
-			method(...params).send(data)
-				.on('transactionHash', (hash) => {
-					this.matSnackBar.open(`Транзакция успешно создана`, 'Закрыть', defaultSnackBarParams);
-				})
-				.on('confirmation', (confirmationNumber, receipt) => {
-					// on 1st confirmation
-					// TODO: delete if when bug is fixed https://github.com/ethereum/web3.js/issues/1239
-					if(confirmationNumber == 1) {
-						this.matSnackBar.open(successMsg, 'Закрыть', defaultSnackBarParams);
-					}
-				})
-				.on('error', (err) => {
-					this.matSnackBar.open(errorMsg, 'Закрыть', defaultSnackBarParams);
-					console.error(err);
-				})
 		);
 	}
 

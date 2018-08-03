@@ -10,7 +10,7 @@ export const environment = {
 		"ropsten": "",
 		"kovan": "",
 		"rinkeby": "",
-		"private": "0x24dae1b9cd88138b4dc3080373db367ca931e7cc"
+		"private": "0xf1ed2addd25f10deb1c8d94b129579376557c62d"
 	}
 };
 
