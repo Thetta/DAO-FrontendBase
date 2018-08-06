@@ -11,7 +11,7 @@ import { HomeComponent } from './home';
 import { BecomeTheNextShowGuestDialog, OutsiderPageComponent } from './outsider-page';
 import { PatronPageComponent } from './patron-page';
 import { ProposalComponent, VoteDialogComponent } from './proposal';
-import { CustomMatModule } from '../shared';
+import { CustomMatModule, SharedModule } from '../shared';
 import { TeamPageComponent } from './team-page';
 
 @NgModule({
@@ -21,7 +21,8 @@ import { TeamPageComponent } from './team-page';
 		DashboardRoutingModule,
 		FormsModule,
 		ReactiveFormsModule,
-		RouterModule
+		RouterModule,
+		SharedModule
   ],
   declarations: [
 		BecomeTheNextShowGuestDialog,

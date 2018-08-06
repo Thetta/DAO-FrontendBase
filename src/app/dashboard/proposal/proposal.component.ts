@@ -57,6 +57,9 @@ export class ProposalComponent implements OnInit {
 			proposalsData => {
 				for(let i = 0; i < proposalsData.length; i++) {
 					this.proposals[i].data = proposalsData[i];
+					// TODO: request for real method sign with params when new core is updated
+					this.proposals[i].data.push("methodSign");
+					this.proposals[i].data.push([]);
 				}
 			},
 			err => { console.error(err); }

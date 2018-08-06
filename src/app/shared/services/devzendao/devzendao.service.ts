@@ -431,6 +431,24 @@ export class DevzendaoService {
 	//===============
 
 	/**
+	 * Returns method signature that should be called if proposal is accepted
+	 * @param proposalAddress 
+	 */
+	getMethodSig(proposalAddress): Observable<string> {
+		const proposal = this.web3Service.getContract(this.contractsData[this.ABI_INDEX_GENERIC_PROPOSAL].abi, proposalAddress);
+		return from(proposal.methods.getMethodSig().call());
+	}
+
+	/**
+	 * Returns params of the method that should be called if proposal is accepted
+	 * @param proposalAddress 
+	 */
+	getProposalParams(proposalAddress): Observable<string> {
+		const proposal = this.web3Service.getContract(this.contractsData[this.ABI_INDEX_GENERIC_PROPOSAL].abi, proposalAddress);
+		return from(proposal.methods.getParams().call());
+	}
+
+	/**
 	 * Returns voting status with counts of yes, no, total
 	 * @param proposalAddress 
 	 */

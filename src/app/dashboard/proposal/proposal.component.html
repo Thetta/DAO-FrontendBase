@@ -12,7 +12,10 @@
 	</div>
 	<div *ngFor="let proposal of proposals" class="p-t-1">
 		<div *ngIf="proposal.data" class="row">
-			<div class="col-xs-3"></div>
+			<div class="col-xs-3">
+				<div>{{ proposal.data[3] | readableMethodSign }}</div>
+				<div *ngFor="let paramValue of proposal.data[4]">{{ paramValue }}</div>
+			</div>
 			<div class="col-xs-1">{{ proposal.data[0].yesResults }}</div>
 			<div class="col-xs-1">{{ proposal.data[0].noResults }}</div>
 			<div class="col-xs-1">{{ +proposal.data[0].yesResults + +proposal.data[0].noResults }}/{{ proposal.data[0].votersTotal }}</div>
