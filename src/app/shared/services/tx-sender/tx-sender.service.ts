@@ -31,7 +31,7 @@ export class TxSenderService {
 				})
 				.on('confirmation', (confirmationNumber, receipt) => {
 					// on 1st confirmation
-					// TODO: delete if when bug is fixed https://github.com/ethereum/web3.js/issues/1239
+					// TODO: delete when bug is fixed https://github.com/ethereum/web3.js/issues/1239
 					if(confirmationNumber == 1) {
 						this.matSnackBar.open(successMsg, 'Закрыть', defaultSnackBarParams);
 					}

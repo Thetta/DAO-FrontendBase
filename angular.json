@@ -23,8 +23,7 @@
               "src/assets"
             ],
             "styles": [
-			  "node_modules/@fortawesome/fontawesome-free/css/all.css",
-			  "node_modules/flexboxgrid/css/flexboxgrid.min.css",
+			        "node_modules/@fortawesome/fontawesome-free/css/all.css",
               "src/styles.css"
             ],
             "scripts": []

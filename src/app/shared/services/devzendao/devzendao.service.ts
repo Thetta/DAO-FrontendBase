@@ -39,7 +39,7 @@ export class DevzendaoService {
 		public txSenderService: TxSenderService,
 		public web3Service: Web3Service
 	) {
-		this.initContracts();
+		// this.initContracts();
 	}
 
 	/**
