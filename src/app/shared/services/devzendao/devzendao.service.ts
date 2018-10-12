@@ -17,105 +17,53 @@ export class DevzendaoService {
 	GROUP_DEV_ZEN_TEAM = "DevZenTeam";
 
 	contractsData = [];
-	daoBaseAutoContract: any;
-	daoContract: any;
-	dztTokenContract: any;
-	dztRepTokenContract: any;
-	factoryContract: any;
+	devZenDaoContract: any;
 	isInitialized = false;
 
 	// abi indexes
-	ABI_INDEX_STD_DAO_TOKEN = 0;
-	ABI_INDEX_DAO_BASE_AUTO = 1;
-	ABI_INDEX_GENERIC_PROPOSAL = 2;
-	ABI_INDEX_VOTING_1P_1V = 3;
-	ABI_INDEX_DEV_ZEN_DAO_FACTORY = 4;
-	ABI_INDEX_DEV_ZEN_DAO = 5;
+	ABI_INDEX_DEV_ZEN_DAO = 0;
 
 	constructor(
 		public http: HttpClient,
 		public txSenderService: TxSenderService,
 		public web3Service: Web3Service
 	) {
-		// this.initContracts();
+		this.initContracts();
 	}
 
-	// /**
-	//  * Initializes contracts
-	//  */
-	// initContracts() {
+	/**
+	 * Initializes contracts
+	 */
+	initContracts() {
+		forkJoin(
+			this.http.get('assets/contracts/DevZenDao.json')
+		).pipe(
+			// load contracts data
+			switchMap(contractsData => {
+				this.contractsData = contractsData;
+				return this.web3Service.getNetwork()
+			})
+		).subscribe(
+			networkName => {
+				// load contracts by network name
+				this.devZenDaoContract = this.web3Service.getContract(this.contractsData[this.ABI_INDEX_DEV_ZEN_DAO].abi, env.networks[networkName].devZenDaoAddress);
+				this.init.emit();
+				this.isInitialized = true;
+			},
+			err => { console.error(err); }
+		);
+	}
 
-	// 	this.loadContractsData().pipe(
-	// 		// load contracts data
-	// 		switchMap(contractsData => {
-	// 			this.contractsData = contractsData;
-	// 			return this.web3Service.getNetwork();
-	// 		}),
-	// 		// load DevZenDaoFactory contract by current network name
-	// 		switchMap(networkName => {
-	// 			this.factoryContract = this.web3Service.getContract(this.contractsData[this.ABI_INDEX_DEV_ZEN_DAO_FACTORY].abi, env.devZenDaoFactoryAddress[networkName]);
-	// 			// load DevZenDao contract
-	// 			return from(this.factoryContract.methods.dao().call()).pipe(
-	// 				switchMap(daoAddress => { 
-	// 					this.daoContract = this.web3Service.getContract(this.contractsData[this.ABI_INDEX_DEV_ZEN_DAO].abi, daoAddress);
-	// 					// load DZT and DZRTEP tokens 
-	// 					return forkJoin(
-	// 						this.daoContract.methods.devZenToken().call(),
-	// 						this.daoContract.methods.repToken().call(),
-	// 						this.factoryContract.methods.aac().call()
-	// 					);
-	// 				})
-	// 			);
-	// 		})
-	// 	).subscribe(
-	// 		(contractAddresses) => {
-	// 			this.dztTokenContract = this.web3Service.getContract(this.contractsData[this.ABI_INDEX_STD_DAO_TOKEN].abi, contractAddresses[0]);
-	// 			this.dztRepTokenContract = this.web3Service.getContract(this.contractsData[this.ABI_INDEX_STD_DAO_TOKEN].abi, contractAddresses[1]);
-	// 			this.daoBaseAutoContract = this.web3Service.getContract(this.contractsData[this.ABI_INDEX_DAO_BASE_AUTO].abi, contractAddresses[2]);
-	// 			this.init.emit();
-	// 			this.isInitialized = true;
-	// 		},
-	// 		(err) => { console.error(err); }
-	// 	);
-	// }
+	//====================
+	// Contract properties
+	//====================
 
-	// /**
-	//  * Loads contracts data
-	//  */
-	// loadContractsData(): Observable<any> {
-
-	// 	let commonRequests = [
-	// 		this.http.get('assets/contracts/StdDaoToken.json'),
-	// 		this.http.get('assets/contracts/DaoBaseAuto.json'),
-	// 		this.http.get('assets/contracts/GenericProposal.json'),
-	// 		this.http.get('assets/contracts/Voting_1p1v.json')
-	// 	];
-
-	// 	if(env.production) {
-	// 		commonRequests.push(
-	// 			this.http.get('assets/contracts/DevZenDaoFactory.json'),
-	// 			this.http.get('assets/contracts/DevZenDao.json')
-	// 		);
-	// 	} else {
-	// 		commonRequests.push(
-	// 			this.http.get('assets/contracts/DevZenDaoFactoryTestable.json'),
-	// 			this.http.get('assets/contracts/DevZenDaoTestable.json')
-	// 		);
-	// 	}
-		
-	// 	return forkJoin(commonRequests);
-	// }
-
-	// //====================
-	// // Contract properties
-	// //====================
-
-	// /**
-	//  * Returns next episode details
-	//  */
-	// getNextEpisode(): Observable<any> {
-	// 	return from(this.daoContract.methods.nextEpisode().call());
-	// }
+	/**
+	 * Returns next episode details
+	 */
+	nextEpisode(): Observable<any> {
+		return from(this.devZenDaoContract.methods.nextEpisode().call());
+	}
 
 	// /**
 	//  * Returns dao params

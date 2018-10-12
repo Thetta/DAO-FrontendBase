@@ -4,13 +4,22 @@
 
 export const environment = {
 	production: false,
-	// NOTICE: change this address to your local DevZenDaoFactoryTestable address
-  	devZenDaoFactoryAddress: {
-		"main": "",
-		"ropsten": "",
-		"kovan": "",
-		"rinkeby": "",
-		"private": "0xf1ed2addd25f10deb1c8d94b129579376557c62d"
+	networks: {
+		main: {
+			devZenDaoAddress: ""
+		},
+		ropsten: {
+			devZenDaoAddress: ""
+		},
+		kovan: {
+			devZenDaoAddress: ""
+		},
+		rinkeby: {
+			devZenDaoAddress: ""
+		},
+		private: {
+			devZenDaoAddress: "0xec6c00a8e0eb82e1566bb3352eb69fa442db5f63"
+		}
 	}
 };
 

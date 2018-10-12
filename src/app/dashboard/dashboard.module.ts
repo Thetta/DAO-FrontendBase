@@ -11,7 +11,7 @@ import { HomeComponent } from './home';
 import { BecomeTheNextShowGuestDialog, OutsiderPageComponent } from './outsider-page';
 import { PatronPageComponent } from './patron-page';
 import { ProposalComponent, VoteDialogComponent } from './proposal';
-import { SharedModule } from '../shared';
+import { PrimengCustomModule, SharedModule } from '../shared';
 import { TeamPageComponent } from './team-page';
 
 @NgModule({
@@ -19,6 +19,7 @@ import { TeamPageComponent } from './team-page';
 		CommonModule,
 		DashboardRoutingModule,
 		FormsModule,
+		PrimengCustomModule,
 		ReactiveFormsModule,
 		RouterModule,
 		SharedModule

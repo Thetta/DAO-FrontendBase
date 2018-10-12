@@ -1,10 +1,20 @@
 export const environment = {
   	production: true,
-  	devZenDaoFactoryAddress: {
-		"main": "",
-		"ropsten": "",
-		"kovan": "",
-		"rinkeby": "",
-		"private": ""
+  	networks: {
+		main: {
+			devZenDaoAddress: ""
+		},
+		ropsten: {
+			devZenDaoAddress: ""
+		},
+		kovan: {
+			devZenDaoAddress: ""
+		},
+		rinkeby: {
+			devZenDaoAddress: ""
+		},
+		private: {
+			devZenDaoAddress: ""
+		}
 	}
 };
