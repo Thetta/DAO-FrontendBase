@@ -29,14 +29,16 @@ export class HomeComponent implements OnInit {
 		// if DevZenDaoService initialized then we don't need to wait for it to load the contracts
 		if(this.devZenDaoService.isInitialized) {
 			sub = forkJoin(
-				this.devZenDaoService.nextEpisode()
+				this.devZenDaoService.nextEpisode(),
+				this.devZenDaoService.getAllParams()
 			);
 		} else {
 			// wait for the DevZenDaoService to be initialized
 			sub = this.devZenDaoService.init.pipe(
 				switchMap(() => {
 					return forkJoin(
-						this.devZenDaoService.nextEpisode()
+						this.devZenDaoService.nextEpisode(),
+						this.devZenDaoService.getAllParams()
 					);
 				})
 			);
@@ -45,14 +47,12 @@ export class HomeComponent implements OnInit {
 		sub.subscribe(
 			(data) => { 
 				this.nextEpisode = data[0]; 
-				console.log(this.nextEpisode);
-				// this.params = data[1];
-				// convert all values to readable format
-				// Object.keys(this.params).map(key => this.params[key] = this.web3Service.fromWei(this.params[key], "ether"));
+				this.params = data[1];
+				// convert all params to readable format
+				Object.keys(this.params).map(key => this.params[key] = this.web3Service.fromWei(this.params[key], "ether"));
 				this.loading = false;
 			},
 			(err) => {
-				// TODO: show error
 				this.loading = false;
 				this.messageService.add({severity:'error', summary:'Ошибка', detail:'Ошибка при получении параметров DAO'});
 				console.error(err); 

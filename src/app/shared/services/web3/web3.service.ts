@@ -28,6 +28,14 @@ export class Web3Service {
 	}
 
 	/**
+	 * Returns hex from the bytes array
+	 * @param arrayOfBytes 
+	 */
+	bytesToHex(arrayOfBytes): any {
+		return web3.utils.bytesToHex(arrayOfBytes);
+	}
+
+	/**
 	 * Performs a plain call to blockchain
 	 * @param params 
 	 */
@@ -94,6 +102,58 @@ export class Web3Service {
 	}
 
 	/**
+	 * Returns ascii representation of a given hex
+	 * @param hex 
+	 */
+	hexToAscii(hex): any {
+		return web3.utils.hexToAscii(hex);
+	}
+
+	/**
+	 * Converts hex string to bytes array
+	 * @param hex 
+	 */
+	hexToBytes(hex): any {
+		return web3.utils.hexToBytes(hex);
+	}
+
+	/**
+	 * Converts hex to utf8 string
+	 * @param hex 
+	 */
+	hexToUtf8(hex): any {
+		return web3.utils.hexToUtf8(hex);
+	}
+
+	/**
+	 * Inserts sign to the left of the string and sets length to characterAmount
+	 * @param str 
+	 * @param characterAmount 
+	 * @param sign 
+	 */
+	padLeft(str, characterAmount, sign = "0"): any {
+		return web3.utils.padLeft(str, characterAmount, sign);
+	}
+
+	/**
+	 * Inserts sign to the right of the string and sets length to characterAmount
+	 * @param str 
+	 * @param characterAmount 
+	 * @param sign 
+	 */
+	padRight(str, characterAmount, sign = "0"): any {
+		return web3.utils.padRight(str, characterAmount, sign);
+	}
+
+	/**
+	 * Returns sha3(keccak256) hash of the string
+	 * @param value 
+	 */
+	sha3(str): any {
+		return web3.utils.sha3(str);
+	}
+
+	/**
 	 * Converts object to solidity tuple, {a: "1", b: "2"} => ["1", "2"]
 	 * @param obj 
 	 */
@@ -129,6 +189,14 @@ export class Web3Service {
 	 */
 	toWei(value, unit) {
 		return web3.utils.toWei(value, unit);
+	}
+
+	/**
+	 * Converts utf8 str to hex
+	 * @param str 
+	 */
+	utf8ToHex(str): any {
+		return web3.utils.utf8ToHex(str);
 	}
 
 }

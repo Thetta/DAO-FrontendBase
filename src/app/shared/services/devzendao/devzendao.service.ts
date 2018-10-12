@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { EventEmitter, Injectable, Output } from '@angular/core';
-import { Observable, from, forkJoin } from 'rxjs';
+import { Observable, from, forkJoin, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
 import { environment as env } from '../../../../environments/environment';
@@ -14,14 +14,25 @@ export class DevzendaoService {
 
 	@Output() init: EventEmitter<any> = new EventEmitter();
 
+	// params
+	PARAM_MINT_TOKENS_PER_WEEK_AMOUNT = "0xc9b51a76ddd807905ae4f432305a7941a6eeed3018a217456051bf48a64b23cc";
+	PARAM_MINT_REPUTATION_TOKENS_PER_WEEK_AMOUNT = "0xf62293a5f827624aae2cb3ccf2a626acfb00192eb976ac25c0b6fcfe9099f109";
+	PARAM_ONE_AD_SLOT_PRICE = "0x2fc30c0260b9c2120dbb43e5716b23b323cb0059511c89856fe497bcaf93cbe0";
+	PARAM_ONE_TOKEN_PRICE_IN_WEI = "0x1d18f55c54a96a26d4aaa596d526372f95c7cef9f217e9bbe766cea168596907";
+	PARAM_BECOME_GUEST_STAKE = "0x3016d4c48f6a1e0a92b321085915d5914a9ab2c36783443e2b6066054b37f7c4";
+	PARAM_REP_TOKENS_REWARD_HOST = "0x91a208a4a1aa03cdcf19de90fdf6add60ea8d103a63e151f2b189cc77dfc8cf7";
+	PARAM_REP_TOKENS_REWARD_GUEST = "0x9cf4c579edc10b766d99450c69f14a06144239d4923ded8d12e0a7d6ec69a048";
+	PARAM_REP_TOKENS_REWARD_TEAM_MEMBERS = "0x8097db39df04019c8a72c19c6369ebda43741c8e2a45d27badc3e4ff8ecc3d0b";
+
+	// available groups
 	GROUP_DEV_ZEN_TEAM = "DevZenTeam";
+
+	// abi indexes
+	ABI_INDEX_DEV_ZEN_DAO = 0;
 
 	contractsData = [];
 	devZenDaoContract: any;
 	isInitialized = false;
-
-	// abi indexes
-	ABI_INDEX_DEV_ZEN_DAO = 0;
 
 	constructor(
 		public http: HttpClient,
@@ -65,12 +76,12 @@ export class DevzendaoService {
 		return from(this.devZenDaoContract.methods.nextEpisode().call());
 	}
 
-	// /**
-	//  * Returns dao params
-	//  */
-	// getParams(): Observable<any> {
-	// 	return from(this.daoContract.methods.params().call());
-	// }
+	/**
+	 * Returns dao params
+	 */
+	params(hexName): Observable<any> {
+		return from(this.devZenDaoContract.methods.params(hexName).call());
+	}
 
 	// //==============================================
 	// // These methods should be called by DevZen team
@@ -461,5 +472,39 @@ export class DevzendaoService {
 	// 		})
 	// 	);
 	// }
+
+	//===============
+	// Helper methods
+	//===============
+
+	/**
+	 * Returns all DAO parameters
+	 */
+	getAllParams(): Observable<any> {
+		return forkJoin(
+			this.params(this.PARAM_MINT_TOKENS_PER_WEEK_AMOUNT),
+			this.params(this.PARAM_MINT_REPUTATION_TOKENS_PER_WEEK_AMOUNT),
+			this.params(this.PARAM_ONE_AD_SLOT_PRICE),
+			this.params(this.PARAM_ONE_TOKEN_PRICE_IN_WEI),
+			this.params(this.PARAM_BECOME_GUEST_STAKE),
+			this.params(this.PARAM_REP_TOKENS_REWARD_HOST),
+			this.params(this.PARAM_REP_TOKENS_REWARD_GUEST),
+			this.params(this.PARAM_REP_TOKENS_REWARD_TEAM_MEMBERS)
+		).pipe(switchMap(
+			params => {
+				const result = {
+					mintTokensPerWeekAmount: params[0],
+					mintReputationTokensPerWeekAmount: params[1],
+					oneAdSlotPrice: params[2],
+					oneTokenPriceInWei: params[3],
+					becomeGuestStake: params[4],
+					repTokensRewardHost: params[5],
+					repTokensRewardGuest: params[6],
+					repTokensRewardTeamMembers: params[7]
+				};
+				return of(result);
+			}
+		));
+	}
 
 }
