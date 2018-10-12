@@ -1,4 +1,32 @@
-<h2>Для слушателя</h2>
+<header>
+	<h1 class="h3 display">Для слушателя</h1>
+</header>
+
+<div class="row">
+	<div class="col-lg-12">
+		<div class="card">
+			<div class="card-body">
+				<div>
+					<form [formGroup]="formBuyTokens">
+						<div class="form-group row">
+							<label class="col-sm-12 col-md-3 form-control-label">Купить DZT</label>
+							<div class="col-sm-12 col-md-9">
+								<div class="row">
+									<div class="col-md-4">
+										<input type="number" formControlName="ethSum" class="form-control" placeholder="Сумма в ETH">
+									</div>
+									<div class="col-md-4">
+										<button [disabled]="!formBuyTokens.valid" (click)="runBuyTokens()" type="button" class="btn btn-primary">Купить</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
 
 <!-- <mat-grid-list cols="2">
 	<mat-grid-tile>
@@ -9,16 +37,6 @@
 					<form class="method-row">
 						<div class="method-desc">Стать следующим гостем</div>
 						<button (click)="runBecomeTheNextShowGuest()" class="method-btn" type="button" mat-raised-button color="primary">Выполнить</button>
-					</form>
-				</div>
-
-				<div>
-					<form [formGroup]="formBuyTokens" class="method-row">
-						<div class="method-desc">Купить DZT</div>
-						<mat-form-field>
-							<input formControlName="ethSum" matInput placeholder="Сумма в ETH">
-						</mat-form-field>
-						<button [disabled]="!formBuyTokens.valid" (click)="runBuyTokens()" class="method-btn" type="button" mat-raised-button color="primary">Выполнить</button>
 					</form>
 				</div>
 

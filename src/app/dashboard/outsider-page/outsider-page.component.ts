@@ -1,5 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MessageService } from 'primeng/api';
 
 import { DevzendaoService, Web3Service } from '../../shared';
 import { switchMap } from 'rxjs/operators';
@@ -16,21 +17,22 @@ export class OutsiderPageComponent implements OnInit {
 	constructor(
 		public devZenDaoService: DevzendaoService,
 		public formBuilder: FormBuilder,
+		public messageService: MessageService,
 		public web3Service: Web3Service
 	) { }
 
 	ngOnInit() {
-		// this.initForms();
+		this.initForms();
 	}
 
-	// /**
-	//  * Initializes forms with validators
-	//  */
-	// initForms() {
-	// 	this.formBuyTokens = this.formBuilder.group({
-	// 		ethSum: ['0.001', [Validators.required, Validators.min(1 / (10 ** 18))]]
-	// 	});
-	// }
+	/**
+	 * Initializes forms with validators
+	 */
+	initForms() {
+		this.formBuyTokens = this.formBuilder.group({
+			ethSum: ['0.001', [Validators.required, Validators.min(1 / (10 ** 18))]]
+		});
+	}
 
 	// /**
 	//  * Become the next show guest
@@ -46,13 +48,13 @@ export class OutsiderPageComponent implements OnInit {
 	// 	);
 	// }
 
-	// /**
-	//  * Buy DZT
-	//  */
-	// runBuyTokens() {
-	// 	const weiSum = this.web3Service.toWei(this.formBuyTokens.controls['ethSum'].value, 'ether');
-	// 	this.devZenDaoService.buyTokens(weiSum).subscribe();
-	// }
+	/**
+	 * Buy DZT
+	 */
+	runBuyTokens() {
+		const weiSum = this.web3Service.toWei(String(this.formBuyTokens.controls['ethSum'].value), 'ether');
+		this.devZenDaoService.buyTokens(weiSum).subscribe();
+	}
 
 }
 

@@ -189,21 +189,21 @@ export class DevzendaoService {
 	// 	);
 	// }
 
-	// /**
-	//  * Move to next episode
-	//  * @param guestHasCome whether guest visited the show
-	//  */
-	// moveToNextEpisode(guestHasCome): Observable<any> {
-	// 	return this.web3Service.getAccounts().pipe(
-	// 		switchMap(accounts => this.txSenderService.send(
-	// 			this.daoContract.methods.moveToNextEpisode,
-	// 			[guestHasCome],
-	// 			{ from: accounts[0] },
-	// 			"Новый эпизод успешно создан",
-	// 			"Ошибка создания нового эпизода"
-	// 		))
-	// 	);
-	// }
+	/**
+	 * Move to next episode
+	 * @param guestHasCome whether guest visited the show
+	 */
+	moveToNextEpisode(guestHasCome): Observable<any> {
+		return this.web3Service.getAccounts().pipe(
+			switchMap(accounts => this.txSenderService.send(
+				this.devZenDaoContract.methods.moveToNextEpisode,
+				[guestHasCome],
+				{ from: accounts[0] },
+				"Новый эпизод успешно создан",
+				"Ошибка создания нового эпизода"
+			))
+		);
+	}
 
 	// //=======================================================
 	// // These methods should be called by DevZen token holders
@@ -240,25 +240,25 @@ export class DevzendaoService {
 	// 	);
 	// }
 
-	// //==============================================
-	// // These methods should be called by any address
-	// //==============================================
+	//==============================================
+	// These methods should be called by any address
+	//==============================================
 
-	// /**
-	//  * Buy DZT
-	//  * @param valueInWei 
-	//  */
-	// buyTokens(valueInWei): Observable<any> {
-	// 	return this.web3Service.getAccounts().pipe(
-	// 		switchMap(accounts => this.txSenderService.send(
-	// 			this.daoContract.methods.buyTokens,
-	// 			[],
-	// 			{ from: accounts[0], value: valueInWei },
-	// 			"Успешная покупка DZT",
-	// 			"Ошибка покупки DZT"
-	// 		))
-	// 	);
-	// }
+	/**
+	 * Buy DZT
+	 * @param valueInWei 
+	 */
+	buyTokens(valueInWei): Observable<any> {
+		return this.web3Service.getAccounts().pipe(
+			switchMap(accounts => this.txSenderService.send(
+				this.devZenDaoContract.methods.buyTokens,
+				[],
+				{ from: accounts[0], value: valueInWei },
+				"Успешная покупка DZT",
+				"Ошибка покупки DZT"
+			))
+		);
+	}
 
 	// /**
 	//  * Checks whether 1 week has passed

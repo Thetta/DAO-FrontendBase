@@ -26,9 +26,9 @@ export const environment = {
 			devZenRepTokenAddress: ""
 		},
 		private: {
-			devZenDaoAddress: "0x0895bce9cb4f65882e9a13599700892b18808e7c",
-			devZenTokenAddress: "0x5d41c8fdc3d82a9040a05226a1286fc1abdc378c",
-			devZenRepTokenAddress: "0x821bcde359fc379ca59689c87c7533b5a9c41987"
+			devZenDaoAddress: "0x43f2def404c9d480fe775e858c38f7888bddda88",
+			devZenTokenAddress: "0x64890da7ce0f1aa764c3fb12ffd014f80f3048ea",
+			devZenRepTokenAddress: "0x6d45e6c38a40aedbb0168cc32facbede0d9d88a8"
 		}
 	}
 };

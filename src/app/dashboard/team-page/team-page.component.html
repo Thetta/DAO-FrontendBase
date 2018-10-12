@@ -1,4 +1,36 @@
-<h2>Команда</h2>
+<header>
+	<h1 class="h3 display">Команда</h1>
+</header>
+
+<div class="row">
+	<div class="col-lg-12">
+		<div class="card">
+			<div class="card-body">
+				<div>
+					<form [formGroup]="formMoveToNextEpisode">
+						<div class="form-group row">
+							<label class="col-sm-12 col-md-3 form-control-label">Текущий эпизод завершился</label>
+							<div class="col-sm-12 col-md-9">
+								<div class="row">
+									<div class="col-md-4">
+										<select formControlName="guestHasCome" class="form-control" placeholder="Начислить репутацию гостю?">
+											<option value="true">Да</option>
+											<option value="false">Нет</option>
+										</select>
+										<span class="text-small text-gray help-block-none">Начислить репутацию гостю?</span>
+									</div>
+									<div class="col-md-4">
+										<button [disabled]="!formMoveToNextEpisode.valid" (click)="runMoveToNextEpisode()" type="button" class="btn btn-primary">Выполнить</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
 
 <!-- <mat-grid-list cols="1">
 	<mat-grid-tile>
@@ -50,19 +82,6 @@
 							<input formControlName="guest" matInput placeholder="Адрес">
 						</mat-form-field>
 						<button [disabled]="!formEmergencyChangeTheGuest.valid" (click)="runEmergencyChangeTheGuest()" class="method-btn" type="button" mat-raised-button color="primary">Выполнить</button>
-					</form>
-				</div>
-
-				<div>
-					<form [formGroup]="formMoveToNextEpisode" class="method-row">
-						<div class="method-desc">Текущий эпизод завершился</div>
-						<mat-form-field class="method-param">
-							<mat-select formControlName="guestHasCome" placeholder="Начислить репутацию гостю?">
-								<mat-option value="true">Да</mat-option>
-								<mat-option value="false">Нет</mat-option>
-							</mat-select>
-						</mat-form-field>
-						<button [disabled]="!formMoveToNextEpisode.valid" (click)="runMoveToNextEpisode()" class="method-btn" type="button" mat-raised-button color="primary">Выполнить</button>
 					</form>
 				</div>
 

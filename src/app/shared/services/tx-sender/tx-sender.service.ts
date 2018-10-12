@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { MessageService } from 'primeng/api';
 import { Observable, from } from 'rxjs';
 
 @Injectable({
@@ -7,6 +8,7 @@ import { Observable, from } from 'rxjs';
 export class TxSenderService {
 
 	constructor(
+		public messageService: MessageService
 	) {}
 
 	/**
@@ -21,16 +23,17 @@ export class TxSenderService {
 		return from(
 			method(...params).send(data)
 				.on('transactionHash', (hash) => {
-					console.log("Транзакция успешно создана");
+					this.messageService.add({severity:'info', summary:'Информация', detail:'Транзакция создана'});
 				})
 				.on('confirmation', (confirmationNumber, receipt) => {
 					// on 6th confirmation
 					// TODO: delete when bug is fixed https://github.com/ethereum/web3.js/issues/1239
 					if(confirmationNumber == 6) {
-						console.log("confirmed");
+						this.messageService.add({severity:'success', summary:'Успех', detail:successMsg});
 					}
 				})
 				.on('error', (err) => {
+					this.messageService.add({severity:'error', summary:'Ошибка', detail:errorMsg});
 					console.error(err);
 				})
 		);
