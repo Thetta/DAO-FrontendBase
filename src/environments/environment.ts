@@ -6,19 +6,29 @@ export const environment = {
 	production: false,
 	networks: {
 		main: {
-			devZenDaoAddress: ""
+			devZenDaoAddress: "",
+			devZenTokenAddress: "",
+			devZenRepTokenAddress: ""
 		},
 		ropsten: {
-			devZenDaoAddress: ""
+			devZenDaoAddress: "",
+			devZenTokenAddress: "",
+			devZenRepTokenAddress: ""
 		},
 		kovan: {
-			devZenDaoAddress: ""
+			devZenDaoAddress: "",
+			devZenTokenAddress: "",
+			devZenRepTokenAddress: ""
 		},
 		rinkeby: {
-			devZenDaoAddress: ""
+			devZenDaoAddress: "",
+			devZenTokenAddress: "",
+			devZenRepTokenAddress: ""
 		},
 		private: {
-			devZenDaoAddress: "0xec6c00a8e0eb82e1566bb3352eb69fa442db5f63"
+			devZenDaoAddress: "0x0895bce9cb4f65882e9a13599700892b18808e7c",
+			devZenTokenAddress: "0x5d41c8fdc3d82a9040a05226a1286fc1abdc378c",
+			devZenRepTokenAddress: "0x821bcde359fc379ca59689c87c7533b5a9c41987"
 		}
 	}
 };

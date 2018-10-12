@@ -29,9 +29,12 @@ export class DevzendaoService {
 
 	// abi indexes
 	ABI_INDEX_DEV_ZEN_DAO = 0;
+	ABI_INDEX_STD_DAO_TOKEN = 1;
 
 	contractsData = [];
 	devZenDaoContract: any;
+	devZenRepTokenContract: any;
+	devZenTokenContract: any;
 	isInitialized = false;
 
 	constructor(
@@ -47,7 +50,8 @@ export class DevzendaoService {
 	 */
 	initContracts() {
 		forkJoin(
-			this.http.get('assets/contracts/DevZenDao.json')
+			this.http.get('assets/contracts/DevZenDao.json'),
+			this.http.get('assets/contracts/StdDaoToken.json')
 		).pipe(
 			// load contracts data
 			switchMap(contractsData => {
@@ -58,6 +62,8 @@ export class DevzendaoService {
 			networkName => {
 				// load contracts by network name
 				this.devZenDaoContract = this.web3Service.getContract(this.contractsData[this.ABI_INDEX_DEV_ZEN_DAO].abi, env.networks[networkName].devZenDaoAddress);
+				this.devZenTokenContract = this.web3Service.getContract(this.contractsData[this.ABI_INDEX_STD_DAO_TOKEN].abi, env.networks[networkName].devZenTokenAddress);
+				this.devZenRepTokenContract = this.web3Service.getContract(this.contractsData[this.ABI_INDEX_STD_DAO_TOKEN].abi, env.networks[networkName].devZenRepTokenAddress);
 				this.init.emit();
 				this.isInitialized = true;
 			},
@@ -261,9 +267,9 @@ export class DevzendaoService {
 	// 	return from(this.daoContract.methods.isOneWeekPassed().call());
 	// }
 
-	// //====================
-	// // StdDaoToken methods
-	// //====================
+	//====================
+	// StdDaoToken methods
+	//====================
 
 	// /**
 	//  * Approve spending DZT or DZTREP for DAO
@@ -287,19 +293,19 @@ export class DevzendaoService {
 	// 	);
 	// }
 
-	// /**
-	//  * Returns address balance by token name
-	//  * @param address 
-	//  * @param tokenName 
-	//  */
-	// balanceOf(address, tokenName): Observable<number> {
-	// 	let baseContract = null;
-	// 	if(tokenName == 'DZT') baseContract = this.dztTokenContract;
-	// 	if(tokenName == 'DZTREP') baseContract = this.dztRepTokenContract;
-	// 	if(!baseContract) throw new Error(`token name ${tokenName} not found, available: DZT, DZTREP`);
+	/**
+	 * Returns address balance by token name
+	 * @param address 
+	 * @param tokenName 
+	 */
+	balanceOf(address, tokenName): Observable<number> {
+		let baseContract = null;
+		if(tokenName == 'DZT') baseContract = this.devZenTokenContract;
+		if(tokenName == 'DZTREP') baseContract = this.devZenRepTokenContract;
+		if(!baseContract) throw new Error(`token name ${tokenName} not found, available: DZT, DZTREP`);
 
-	// 	return from(baseContract.methods.balanceOf(address).call());
-	// }
+		return from(baseContract.methods.balanceOf(address).call());
+	}
 
 	// //===================
 	// // DaoStorage methods

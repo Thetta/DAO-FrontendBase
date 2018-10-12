@@ -28,40 +28,20 @@
 		<div class="container-fluid">
 			<div class="navbar-holder d-flex align-items-center justify-content-between">
 			<div class="navbar-header">
-				<a id="toggle-btn" href="#" class="menu-btn"><i class="icon-bars"> </i></a>
+				<a id="toggle-btn" href="#" class="menu-btn"><i class="icon-bars"></i></a>
 			</div>
-			<ul class="nav-menu list-unstyled d-flex flex-md-row align-items-md-center">
-				<!-- Notifications dropdown-->
-				<li class="nav-item dropdown"> <a id="notifications" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link"><i class="fa fa-bell"></i><span class="badge badge-warning">12</span></a>
-				<ul aria-labelledby="notifications" class="dropdown-menu">
-					<li>
-						<a rel="nofollow" href="#" class="dropdown-item"> 
-						<div class="notification d-flex justify-content-between">
-							<div class="notification-content"><i class="fa fa-envelope"></i>You have 6 new messages </div>
-							<div class="notification-time"><small>4 minutes ago</small></div>
-						</div>
-						</a>
-					</li>
-					<li>
-						<a rel="nofollow" href="#" class="dropdown-item"> 
-							<div class="notification d-flex justify-content-between">
-								<div class="notification-content"><i class="fa fa-twitter"></i>You have 2 followers</div>
-								<div class="notification-time"><small>4 minutes ago</small></div>
-							</div>
-						</a>
-					</li>
-					<li><a rel="nofollow" href="#" class="dropdown-item"> 
-						<div class="notification d-flex justify-content-between">
-						<div class="notification-content"><i class="fa fa-upload"></i>Server Rebooted</div>
-						<div class="notification-time"><small>4 minutes ago</small></div>
-						</div></a></li>
-					<li><a rel="nofollow" href="#" class="dropdown-item"> 
-						<div class="notification d-flex justify-content-between">
-						<div class="notification-content"><i class="fa fa-twitter"></i>You have 2 followers</div>
-						<div class="notification-time"><small>10 minutes ago</small></div>
-						</div></a></li>
-					<li><a rel="nofollow" href="#" class="dropdown-item all-notifications text-center"> <strong> <i class="fa fa-bell"></i>view all notifications                                            </strong></a></li>
-				</ul>
+			<ul *ngIf="isToolbarLoading" class="nav-menu list-unstyled d-flex flex-md-row align-items-md-center text-white">
+				<li><p-progressSpinner [style]="{width: '50px', height: '50px'}"></p-progressSpinner></li>
+			</ul>
+			<ul *ngIf="!isToolbarLoading" class="nav-menu list-unstyled d-flex flex-md-row align-items-md-center text-white">
+				<li class="nav-item pr-3">
+					<i class="fab fa-ethereum"></i> {{ ethBalance }} ETH
+				</li>
+				<li class="nav-item pr-3">
+					<i class="fas fa-money-bill"></i> {{ dztBalance }} DZT
+				</li>
+				<li class="nav-item pr-3">
+					<i class="fas fa-money-bill-alt"></i> {{ dztRepBalance }} DZTREP
 				</li>
 			</ul>
 			</div>
@@ -90,26 +70,6 @@
 <p-toast></p-toast>
 
 <!-- <div>
-
-	<mat-toolbar color="primary">
-		<span>DevZen DAO</span>
-		<span class="toolbar-spacer"></span>
-		<span class="toolbar-balance">
-			<i class="fab fa-ethereum"></i> 
-			<span class="spinner" *ngIf="!isToolbarLoading">{{ ethBalance }}</span>
-			<mat-spinner class="spinner" *ngIf="isToolbarLoading" diameter="25"></mat-spinner> ETH
-		</span>
-		<span class="toolbar-balance">
-			<i class="fas fa-money-bill"></i> 
-			<span class="spinner" *ngIf="!isToolbarLoading">{{ dztBalance }}</span> 
-			<mat-spinner class="spinner" *ngIf="isToolbarLoading" diameter="25"></mat-spinner> DZT
-		</span>
-		<span class="toolbar-balance">
-			<i class="fas fa-money-bill-alt"></i> 
-			<span class="spinner" *ngIf="!isToolbarLoading">{{ dztRepBalance }}</span> 
-			<mat-spinner class="spinner" *ngIf="isToolbarLoading" diameter="25"></mat-spinner> DZTREP
-		</span>
-	</mat-toolbar>
 	
 	<mat-sidenav-container class="sidenav-container">
 
