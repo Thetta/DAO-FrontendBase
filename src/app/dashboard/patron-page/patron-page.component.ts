@@ -20,24 +20,24 @@ export class PatronPageComponent implements OnInit {
 	) { }
 
 	ngOnInit() {
-		this.initForms();
+		// this.initForms();
 	}
 
-	/**
-	 * Initializes forms with validators
-	 */
-	initForms() {
-		this.formRunAdsInTheNextEpisode = this.formBuilder.group({
-			adText: ['', Validators.required]
-		});
-	}
+	// /**
+	//  * Initializes forms with validators
+	//  */
+	// initForms() {
+	// 	this.formRunAdsInTheNextEpisode = this.formBuilder.group({
+	// 		adText: ['', Validators.required]
+	// 	});
+	// }
 
-	/**
-	 * Run ads in the next episode
-	 */
-	runAdsInTheNextEpisode() {
-		const adText = this.formRunAdsInTheNextEpisode.controls['adText'].value;
-		this.devZenDaoService.runAdsInTheNextEpisode(adText).subscribe();
-	}
+	// /**
+	//  * Run ads in the next episode
+	//  */
+	// runAdsInTheNextEpisode() {
+	// 	const adText = this.formRunAdsInTheNextEpisode.controls['adText'].value;
+	// 	this.devZenDaoService.runAdsInTheNextEpisode(adText).subscribe();
+	// }
 
 }

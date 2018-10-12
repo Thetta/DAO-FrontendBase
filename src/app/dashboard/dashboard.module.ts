@@ -11,13 +11,12 @@ import { HomeComponent } from './home';
 import { BecomeTheNextShowGuestDialog, OutsiderPageComponent } from './outsider-page';
 import { PatronPageComponent } from './patron-page';
 import { ProposalComponent, VoteDialogComponent } from './proposal';
-import { CustomMatModule, SharedModule } from '../shared';
+import { SharedModule } from '../shared';
 import { TeamPageComponent } from './team-page';
 
 @NgModule({
   imports: [
 		CommonModule,
-		CustomMatModule,
 		DashboardRoutingModule,
 		FormsModule,
 		ReactiveFormsModule,
