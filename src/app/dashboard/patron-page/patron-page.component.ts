@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { DevzendaoService, Web3Service } from '../../shared';
+import { DevzendaoService } from '../../shared';
 
 @Component({
   selector: 'app-patron-page',
@@ -10,34 +10,32 @@ import { DevzendaoService, Web3Service } from '../../shared';
 })
 export class PatronPageComponent implements OnInit {
 
-	formApprove: FormGroup;
 	formRunAdsInTheNextEpisode: FormGroup;
 
 	constructor(
 		public devZenDaoService: DevzendaoService,
-		public formBuilder: FormBuilder,
-		public web3Service: Web3Service
+		public formBuilder: FormBuilder
 	) { }
 
 	ngOnInit() {
-		// this.initForms();
+		this.initForms();
 	}
 
-	// /**
-	//  * Initializes forms with validators
-	//  */
-	// initForms() {
-	// 	this.formRunAdsInTheNextEpisode = this.formBuilder.group({
-	// 		adText: ['', Validators.required]
-	// 	});
-	// }
+	/**
+	 * Initializes forms with validators
+	 */
+	initForms() {
+		this.formRunAdsInTheNextEpisode = this.formBuilder.group({
+			adText: ['', Validators.required]
+		});
+	}
 
-	// /**
-	//  * Run ads in the next episode
-	//  */
-	// runAdsInTheNextEpisode() {
-	// 	const adText = this.formRunAdsInTheNextEpisode.controls['adText'].value;
-	// 	this.devZenDaoService.runAdsInTheNextEpisode(adText).subscribe();
-	// }
+	/**
+	 * Run ads in the next episode
+	 */
+	runAdsInTheNextEpisode() {
+		const adText = this.formRunAdsInTheNextEpisode.controls['adText'].value;
+		this.devZenDaoService.runAdsInTheNextEpisode(adText).subscribe();
+	}
 
 }

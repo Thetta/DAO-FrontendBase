@@ -1,21 +1,29 @@
-<h2>Для рекламодателя</h2>
+<header>
+	<h1 class="h3 display">Для рекламодателя</h1>
+</header>
 
-<!-- <mat-grid-list cols="2">
-	<mat-grid-tile>
-		<mat-card class="card-patron">
-			<mat-card-content>
-
+<div class="row">
+	<div class="col-lg-12">
+		<div class="card">
+			<div class="card-body">
 				<div>
-					<form [formGroup]="formRunAdsInTheNextEpisode" class="method-row">
-						<div class="method-desc">Купить рекламное место</div>
-						<mat-form-field>
-							<input formControlName="adText" matInput placeholder="Текст рекламы">
-						</mat-form-field>
-						<button [disabled]="!formRunAdsInTheNextEpisode.valid" (click)="runAdsInTheNextEpisode()" class="method-btn" type="button" mat-raised-button color="primary">Выполнить</button>
+					<form [formGroup]="formRunAdsInTheNextEpisode">
+						<div class="form-group row">
+							<label class="col-sm-12 col-md-3 form-control-label">Купить рекламное место</label>
+							<div class="col-sm-12 col-md-9">
+								<div class="row">
+									<div class="col-md-4">
+										<input type="text" formControlName="adText" class="form-control" placeholder="Текст рекламы">
+									</div>
+									<div class="col-md-4">
+										<button [disabled]="!formRunAdsInTheNextEpisode.valid" (click)="runAdsInTheNextEpisode()" type="button" class="btn btn-primary">Купить</button>
+									</div>
+								</div>
+							</div>
+						</div>
 					</form>
 				</div>
-
-			</mat-card-content>
-		</mat-card>
-	</mat-grid-tile>
-</mat-grid-list> -->
+			</div>
+		</div>
+	</div>
+</div>

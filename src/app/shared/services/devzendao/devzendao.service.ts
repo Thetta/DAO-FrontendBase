@@ -209,21 +209,21 @@ export class DevzendaoService {
 	// These methods should be called by DevZen token holders
 	//=======================================================
 
-	// /**
-	//  * Adds adv slot to the next episode
-	//  * @param adText 
-	//  */
-	// runAdsInTheNextEpisode(adText): Observable<any> {
-	// 	return this.web3Service.getAccounts().pipe(
-	// 		switchMap(accounts => this.txSenderService.send(
-	// 			this.daoContract.methods.runAdsInTheNextEpisode,
-	// 			[adText],
-	// 			{ from: accounts[0] },
-	// 			"Рекламное объявление успешно добавлено",
-	// 			"Ошибка добавления рекламного объявления"
-	// 		))
-	// 	);
-	// }
+	/**
+	 * Adds adv slot to the next episode
+	 * @param adText 
+	 */
+	runAdsInTheNextEpisode(adText): Observable<any> {
+		return this.web3Service.getAccounts().pipe(
+			switchMap(accounts => this.txSenderService.send(
+				this.devZenDaoContract.methods.runAdsInTheNextEpisode,
+				[adText],
+				{ from: accounts[0] },
+				"Рекламное объявление успешно добавлено",
+				"Ошибка добавления рекламного объявления"
+			))
+		);
+	}
 
 	/**
 	 * Becomes the next show guest
