@@ -12,7 +12,10 @@ import { switchMap } from 'rxjs/operators';
 })
 export class OutsiderPageComponent implements OnInit {
 
+	becomeGuestStakeInEth = null;
+	displayBecomeTheNextShowGuestDialog = false;
 	formBuyTokens: FormGroup;
+	params = {};
 
 	constructor(
 		public devZenDaoService: DevzendaoService,
@@ -22,6 +25,28 @@ export class OutsiderPageComponent implements OnInit {
 	) { }
 
 	ngOnInit() {
+		let sub;
+		// if DevZenDaoService initialized then we don't need to wait for it to load the contracts
+		if(this.devZenDaoService.isInitialized) {
+			sub = this.devZenDaoService.getAllParams()
+		} else {
+			// wait for the DevZenDaoService to be initialized
+			sub = this.devZenDaoService.init.pipe(
+				switchMap(() => this.devZenDaoService.getAllParams())
+			);
+		}
+
+		sub.subscribe(
+			params => { 
+				this.params = params;
+				this.becomeGuestStakeInEth = this.web3Service.fromWei(String(this.params['becomeGuestStake']), "ether");
+			},
+			err => {
+				this.messageService.add({severity:'error', summary:'Ошибка', detail:'Ошибка при получении параметров DAO'});
+				console.error(err);
+			}
+		)
+
 		this.initForms();
 	}
 
@@ -34,19 +59,16 @@ export class OutsiderPageComponent implements OnInit {
 		});
 	}
 
-	// /**
-	//  * Become the next show guest
-	//  */
-	// runBecomeTheNextShowGuest() {
-	// 	// get become guest stake and show modal
-	// 	this.devZenDaoService.getParams().subscribe(
-	// 		(params) => {
-	// 			const becomeGuestStake = this.web3Service.fromWei(params['becomeGuestStake'], "ether");
-	// 			this.matDialog.open(BecomeTheNextShowGuestDialog, { data: { becomeGuestStake: becomeGuestStake }});
-	// 		},
-	// 		(err) => { console.error(err); }
-	// 	);
-	// }
+	/**
+	 * Become the next show guest
+	 */
+	runBecomeTheNextShowGuest() {
+		// approve for dao to spend user's DZT to put at stake and become the next show guest
+		this.devZenDaoService.approve(this.params['becomeGuestStake'], "DZT").pipe(
+			switchMap(() => { return this.devZenDaoService.becomeTheNextShowGuest(); })
+		).subscribe();
+		this.displayBecomeTheNextShowGuestDialog = false;
+	}
 
 	/**
 	 * Buy DZT
@@ -56,49 +78,4 @@ export class OutsiderPageComponent implements OnInit {
 		this.devZenDaoService.buyTokens(weiSum).subscribe();
 	}
 
-}
-
-/**
- * Become the next show guest dialog
- */
-@Component({
-	selector: 'become-the-next-show-guest-dialog',
-	template: `
-		<div mat-dialog-content>
-			<p>Чтобы стать гостем, вам нужно положить в стейк {{ data.becomeGuestStake }} DZT токенов. Вы уверены?</p>
-		</div>
-		<div mat-dialog-actions>
-			<button mat-button (click)="onCancel()">Отмена</button>
-			<button mat-button (click)="onOk()">Ok</button>
-		</div>
-	`,
-})
-export class BecomeTheNextShowGuestDialog {
-
-	// constructor(
-	// 	public devZenDaoService: DevzendaoService,
-	// 	public web3Service: Web3Service
-	// ) {}
-
-	// /**
-	//  * On calcel click close dialog
-	//  */
-	// onCancel() {
-	// 	this.dialogRef.close();
-	// }
-
-	// /**
-	//  * On OK click to approve and become the next show guest
-	//  */
-	// onOk() {
-	// 	this.dialogRef.close();
-		
-	// 	const weiSum = this.web3Service.toWei(this.data.becomeGuestStake, 'ether');
-
-	// 	// approve for dao to spend user's DZT to put at stake and become the next show guest
-	// 	this.devZenDaoService.approve(weiSum, "DZT").pipe(
-	// 		switchMap(() => { return this.devZenDaoService.becomeTheNextShowGuest(); })
-	// 	).subscribe();
-	// }
-  
 }

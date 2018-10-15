@@ -205,9 +205,9 @@ export class DevzendaoService {
 		);
 	}
 
-	// //=======================================================
-	// // These methods should be called by DevZen token holders
-	// //=======================================================
+	//=======================================================
+	// These methods should be called by DevZen token holders
+	//=======================================================
 
 	// /**
 	//  * Adds adv slot to the next episode
@@ -225,20 +225,20 @@ export class DevzendaoService {
 	// 	);
 	// }
 
-	// /**
-	//  * Becomes the next show guest
-	//  */
-	// becomeTheNextShowGuest(): Observable<any> {
-	// 	return this.web3Service.getAccounts().pipe(
-	// 		switchMap(accounts => this.txSenderService.send(
-	// 			this.daoContract.methods.becomeTheNextShowGuest,
-	// 			[],
-	// 			{ from: accounts[0] },
-	// 			"Вы стали следующим гостем",
-	// 			"Ошибка выбора следующего гостя"
-	// 		))
-	// 	);
-	// }
+	/**
+	 * Becomes the next show guest
+	 */
+	becomeTheNextShowGuest(): Observable<any> {
+		return this.web3Service.getAccounts().pipe(
+			switchMap(accounts => this.txSenderService.send(
+				this.devZenDaoContract.methods.becomeTheNextShowGuest,
+				[],
+				{ from: accounts[0] },
+				"Вы стали следующим гостем",
+				"Ошибка выбора следующего гостя"
+			))
+		);
+	}
 
 	//==============================================
 	// These methods should be called by any address
@@ -271,27 +271,27 @@ export class DevzendaoService {
 	// StdDaoToken methods
 	//====================
 
-	// /**
-	//  * Approve spending DZT or DZTREP for DAO
-	//  * @param amount 
-	//  * @param tokenName 
-	//  */
-	// approve(amount, tokenName) {
-	// 	let baseContract = null;
-	// 	if(tokenName == 'DZT') baseContract = this.dztTokenContract;
-	// 	if(tokenName == 'DZTREP') baseContract = this.dztRepTokenContract;
-	// 	if(!baseContract) throw new Error(`token name ${tokenName} not found, available: DZT, DZTREP`);
+	/**
+	 * Approve spending DZT or DZTREP for DAO
+	 * @param amount 
+	 * @param tokenName 
+	 */
+	approve(amount, tokenName) {
+		let baseContract = null;
+		if(tokenName == 'DZT') baseContract = this.devZenTokenContract;
+		if(tokenName == 'DZTREP') baseContract = this.devZenRepTokenContract;
+		if(!baseContract) throw new Error(`token name ${tokenName} not found, available: DZT, DZTREP`);
 
-	// 	return this.web3Service.getAccounts().pipe(
-	// 		switchMap(accounts => this.txSenderService.send(
-	// 			baseContract.methods.approve,
-	// 			[this.daoContract.options.address, amount],
-	// 			{ from: accounts[0] },
-	// 			"Успешный аппрув DZT",
-	// 			"Ошибка аппрува DZT"
-	// 		))
-	// 	);
-	// }
+		return this.web3Service.getAccounts().pipe(
+			switchMap(accounts => this.txSenderService.send(
+				baseContract.methods.approve,
+				[this.devZenDaoContract.options.address, amount],
+				{ from: accounts[0] },
+				`Успешный аппрув ${tokenName}`,
+				`Ошибка аппрува ${tokenName}`
+			))
+		);
+	}
 
 	/**
 	 * Returns address balance by token name

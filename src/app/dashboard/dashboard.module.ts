@@ -8,7 +8,7 @@ import { DashboardComponent } from './dashboard.component';
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { GroupMemberComponent, GroupMemberFormComponent } from './group-member';
 import { HomeComponent } from './home';
-import { BecomeTheNextShowGuestDialog, OutsiderPageComponent } from './outsider-page';
+import { OutsiderPageComponent } from './outsider-page';
 import { PatronPageComponent } from './patron-page';
 import { ProposalComponent, VoteDialogComponent } from './proposal';
 import { PrimengCustomModule, SharedModule } from '../shared';
@@ -25,7 +25,6 @@ import { TeamPageComponent } from './team-page';
 		SharedModule
   ],
   declarations: [
-		BecomeTheNextShowGuestDialog,
 		DaoParamPageComponent,
 		DashboardComponent,
 		GroupMemberComponent,
@@ -41,7 +40,6 @@ import { TeamPageComponent } from './team-page';
 	  	DashboardComponent
   ],
   entryComponents: [
-	  BecomeTheNextShowGuestDialog,
 	  GroupMemberFormComponent,
 	  VoteDialogComponent
   ]
