@@ -7,26 +7,31 @@ export const environment = {
 	networks: {
 		main: {
 			devZenDaoAddress: "",
+			devZenDaoAutoAddress: "",
 			devZenTokenAddress: "",
 			devZenRepTokenAddress: ""
 		},
 		ropsten: {
 			devZenDaoAddress: "",
+			devZenDaoAutoAddress: "",
 			devZenTokenAddress: "",
 			devZenRepTokenAddress: ""
 		},
 		kovan: {
 			devZenDaoAddress: "",
+			devZenDaoAutoAddress: "",
 			devZenTokenAddress: "",
 			devZenRepTokenAddress: ""
 		},
 		rinkeby: {
 			devZenDaoAddress: "",
+			devZenDaoAutoAddress: "",
 			devZenTokenAddress: "",
 			devZenRepTokenAddress: ""
 		},
 		private: {
 			devZenDaoAddress: "0x43f2def404c9d480fe775e858c38f7888bddda88",
+			devZenDaoAutoAddress: "0x0e5817fc22c0e5e5e2ec91d7e6f65877911a9947",
 			devZenTokenAddress: "0x64890da7ce0f1aa764c3fb12ffd014f80f3048ea",
 			devZenRepTokenAddress: "0x6d45e6c38a40aedbb0168cc32facbede0d9d88a8"
 		}

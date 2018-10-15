@@ -29,38 +29,38 @@ export class TeamPageComponent implements OnInit {
 	 * Initializes forms with validators
 	 */
 	initForms() {
-		// this.formWithdrawEther = this.formBuilder.group({
-		// 	output: ['', [Validators.required, Validators.minLength(42), Validators.maxLength(42)]]
-		// });
-		// this.formSelectNextHost = this.formBuilder.group({
-		// 	host: ['', [Validators.required, Validators.minLength(42), Validators.maxLength(42)]]
-		// });
-		// this.formChangeTheGuest = this.formBuilder.group({
-		// 	guest: ['', [Validators.required, Validators.minLength(42), Validators.maxLength(42)]]
-		// });
-		// this.formEmergencyChangeTheGuest = this.formBuilder.group({
-		// 	guest: ['', [Validators.required, Validators.minLength(42), Validators.maxLength(42)]]
-		// });
+		this.formWithdrawEther = this.formBuilder.group({
+			output: ['', [Validators.required, Validators.pattern('^0x[a-fA-F0-9]{40}$')]]
+		});
+		this.formSelectNextHost = this.formBuilder.group({
+			host: ['', [Validators.required, Validators.pattern('^0x[a-fA-F0-9]{40}$')]]
+		});
+		this.formChangeTheGuest = this.formBuilder.group({
+			guest: ['', [Validators.required, Validators.pattern('^0x[a-fA-F0-9]{40}$')]]
+		});
+		this.formEmergencyChangeTheGuest = this.formBuilder.group({
+			guest: ['', [Validators.required, Validators.pattern('^0x[a-fA-F0-9]{40}$')]]
+		});
 		this.formMoveToNextEpisode = this.formBuilder.group({
 			guestHasCome: ['true', Validators.required]
 		});
 	}
 
-	// /**
-	//  * Change the guest in "legal" way
-	//  */
-	// runChangeTheGuest() {
-	// 	const guestAddress = this.formChangeTheGuest.controls['guest'].value;
-	// 	this.devZenDaoService.changeTheGuest(guestAddress).subscribe();
-	// }
+	/**
+	 * Change the guest in "legal" way
+	 */
+	runChangeTheGuest() {
+		const guestAddress = this.formChangeTheGuest.controls['guest'].value;
+		this.devZenDaoService.changeTheGuestAuto(guestAddress).subscribe();
+	}
 
-	// /**
-	//  * Change the guest in "emergency" way
-	//  */
-	// runEmergencyChangeTheGuest() {
-	// 	const guestAddress = this.formEmergencyChangeTheGuest.controls['guest'].value;
-	// 	this.devZenDaoService.emergencyChangeTheGuest(guestAddress).subscribe();
-	// }
+	/**
+	 * Change the guest in "emergency" way
+	 */
+	runEmergencyChangeTheGuest() {
+		const guestAddress = this.formEmergencyChangeTheGuest.controls['guest'].value;
+		this.devZenDaoService.emergencyChangeTheGuestAuto(guestAddress).subscribe();
+	}
 
 	/**
 	 * Move to next episode
@@ -71,20 +71,20 @@ export class TeamPageComponent implements OnInit {
 		this.devZenDaoService.moveToNextEpisode(guestHasCome).subscribe();
 	}
 
-	// /**
-	//  * Select next host
-	//  */
-	// runSelectNextHost() {
-	// 	const hostAddress = this.formSelectNextHost.controls['host'].value;
-	// 	this.devZenDaoService.selectNextHost(hostAddress).subscribe();
-	// }
+	/**
+	 * Select next host
+	 */
+	runSelectNextHost() {
+		const hostAddress = this.formSelectNextHost.controls['host'].value;
+		this.devZenDaoService.selectNextHostAuto(hostAddress).subscribe();
+	}
 
-	// /**
-	//  * Withdraw ether
-	//  */
-	// runWithdrawEther() {
-	// 	const outputAddress = this.formWithdrawEther.controls['output'].value;
-	// 	this.devZenDaoService.withdrawEther(outputAddress).subscribe();
-	// }
+	/**
+	 * Withdraw ether
+	 */
+	runWithdrawEther() {
+		const outputAddress = this.formWithdrawEther.controls['output'].value;
+		this.devZenDaoService.withdrawEtherAuto(outputAddress).subscribe();
+	}
 
 }

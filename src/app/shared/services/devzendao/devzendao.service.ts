@@ -30,9 +30,11 @@ export class DevzendaoService {
 	// abi indexes
 	ABI_INDEX_DEV_ZEN_DAO = 0;
 	ABI_INDEX_STD_DAO_TOKEN = 1;
+	ABI_INDEX_DEV_ZEN_DAO_AUTO = 2;
 
 	contractsData = [];
 	devZenDaoContract: any;
+	devZenDaoAutoContract: any;
 	devZenRepTokenContract: any;
 	devZenTokenContract: any;
 	isInitialized = false;
@@ -51,7 +53,8 @@ export class DevzendaoService {
 	initContracts() {
 		forkJoin(
 			this.http.get('assets/contracts/DevZenDao.json'),
-			this.http.get('assets/contracts/StdDaoToken.json')
+			this.http.get('assets/contracts/StdDaoToken.json'),
+			this.http.get('assets/contracts/DevZenDaoAuto.json')
 		).pipe(
 			// load contracts data
 			switchMap(contractsData => {
@@ -64,6 +67,7 @@ export class DevzendaoService {
 				this.devZenDaoContract = this.web3Service.getContract(this.contractsData[this.ABI_INDEX_DEV_ZEN_DAO].abi, env.networks[networkName].devZenDaoAddress);
 				this.devZenTokenContract = this.web3Service.getContract(this.contractsData[this.ABI_INDEX_STD_DAO_TOKEN].abi, env.networks[networkName].devZenTokenAddress);
 				this.devZenRepTokenContract = this.web3Service.getContract(this.contractsData[this.ABI_INDEX_STD_DAO_TOKEN].abi, env.networks[networkName].devZenRepTokenAddress);
+				this.devZenDaoAutoContract = this.web3Service.getContract(this.contractsData[this.ABI_INDEX_DEV_ZEN_DAO_AUTO].abi, env.networks[networkName].devZenDaoAutoAddress);
 				this.init.emit();
 				this.isInitialized = true;
 			},
@@ -368,9 +372,9 @@ export class DevzendaoService {
 	// 	);
 	// }
 
-	// //====================
-	// // DaoBaseAuto methods
-	// //====================
+	//====================
+	// DevZenDaoAuto methods
+	//====================
 
 	// /**
 	//  * Creates a proposal for adding user addres to a group
@@ -388,6 +392,70 @@ export class DevzendaoService {
 	// 		))
 	// 	);
 	// }
+
+	/**
+	 * Changes the guest in "legal" way and creates a voting
+	 * @param guestAddress 
+	 */
+	changeTheGuestAuto(guestAddress): Observable<any> {
+		return this.web3Service.getAccounts().pipe(
+			switchMap(accounts => this.txSenderService.send(
+				this.devZenDaoAutoContract.methods.changeTheGuestAuto,
+				[guestAddress],
+				{ from: accounts[0] },
+				"Голосование 'Смена гостя' создано",
+				"Ошибка создания голосования 'Смена гостя'"
+			))
+		);
+	}
+
+	/**
+	 * Changes the guest in "emergency" way and creates a voting
+	 * @param guestAddress 
+	 */
+	emergencyChangeTheGuestAuto(guestAddress): Observable<any> {
+		return this.web3Service.getAccounts().pipe(
+			switchMap(accounts => this.txSenderService.send(
+				this.devZenDaoAutoContract.methods.emergency_ChangeTheGuestAuto,
+				[guestAddress],
+				{ from: accounts[0] },
+				"Голосование 'Экстренная смена гостя' создано",
+				"Ошибка создания голосования 'Экстренная смена гостя'"
+			))
+		);
+	}
+
+	/**
+	 * Selects next host and creates a voting
+	 * @param nextHostAddress 
+	 */
+	selectNextHostAuto(nextHostAddress): Observable<any> {
+		return this.web3Service.getAccounts().pipe(
+			switchMap(accounts => this.txSenderService.send(
+				this.devZenDaoAutoContract.methods.selectNextHostAuto,
+				[nextHostAddress],
+				{ from: accounts[0] },
+				"Голосование 'Изменение организатора' создано",
+				"Ошибка создания голосования 'Изменение организатора'"
+			))
+		);
+	}
+
+	/**
+	 * Withdraws ether to output address and creates a voting
+	 * @param outputAddress 
+	 */
+	withdrawEtherAuto(outputAddress): Observable<any> {
+		return this.web3Service.getAccounts().pipe(
+			switchMap(accounts => this.txSenderService.send(
+				this.devZenDaoAutoContract.methods.withdrawEtherAuto, 
+				[outputAddress],
+				{ from: accounts[0] },
+				"Голосование 'Вывод средств' создано",
+				"Ошибка создания голосования 'Вывод средств'"
+			))
+		);
+	}
 
 	// //===============
 	// // Voting methods
