@@ -31,23 +31,6 @@ export class DevzendaoAutoService {
 	//  */
 
 	// /**
-	//  * Updates DAO params and creates a voting
-	//  * @param params 
-	//  */
-	// updateDaoParamsAuto(params): Observable<string> {
-	// 	const tupledParams = [this.web3Service.toTuple(params)];
-	// 	return this.web3Service.getAccounts().pipe(
-	// 		switchMap(accounts => this.txSenderService.send(
-	// 			this.contract.methods.updateDaoParamsAuto, 
-	// 			tupledParams, 
-	// 			{ from: accounts[0] },
-	// 			"Голосование 'Обновление параметров DAO' создано",
-	// 			"Ошибка создания голосования 'Обновление параметров DAO'"
-	// 		))
-	// 	);
-	// }
-
-	// /**
 	//  * Moves to next episode and creates a voting
 	//  * @param guestHasCome whether guest visited the show
 	//  */

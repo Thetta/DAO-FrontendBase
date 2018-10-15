@@ -442,6 +442,23 @@ export class DevzendaoService {
 	}
 
 	/**
+	 * Updates DAO param and creates a voting
+	 * @param paramHash
+	 * @param value
+	 */
+	setParamAuto(paramHash, value): Observable<string> {
+		return this.web3Service.getAccounts().pipe(
+			switchMap(accounts => this.txSenderService.send(
+				this.devZenDaoAutoContract.methods.setParamAuto, 
+				[paramHash, value],
+				{ from: accounts[0] },
+				"Голосование 'Обновление параметра DAO' создано",
+				"Ошибка создания голосования 'Обновление параметра DAO'"
+			))
+		);
+	}
+
+	/**
 	 * Withdraws ether to output address and creates a voting
 	 * @param outputAddress 
 	 */
@@ -579,6 +596,22 @@ export class DevzendaoService {
 				return of(result);
 			}
 		));
+	}
+
+	/**
+	 * Returns parameter name by hash
+	 */
+	getParamNameByHash(hash) {
+		let name = null;
+		if(hash == this.PARAM_MINT_TOKENS_PER_WEEK_AMOUNT) return "mintTokensPerWeekAmount";
+		if(hash == this.PARAM_MINT_REPUTATION_TOKENS_PER_WEEK_AMOUNT) return "mintReputationTokensPerWeekAmount";
+		if(hash == this.PARAM_ONE_AD_SLOT_PRICE) return "oneAdSlotPrice";
+		if(hash == this.PARAM_ONE_TOKEN_PRICE_IN_WEI) return "oneTokenPriceInWei";
+		if(hash == this.PARAM_BECOME_GUEST_STAKE) return "becomeGuestStake";
+		if(hash == this.PARAM_REP_TOKENS_REWARD_HOST) return "repTokensRewardHost";
+		if(hash == this.PARAM_REP_TOKENS_REWARD_GUEST) return "repTokensRewardGuest";
+		if(hash == this.PARAM_REP_TOKENS_REWARD_TEAM_MEMBERS) return "repTokensRewardTeamMembers";
+		if(!name) throw Error(`param name not found for hash ${hash}`);
 	}
 
 }
