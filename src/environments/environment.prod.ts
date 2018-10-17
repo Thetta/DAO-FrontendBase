@@ -5,31 +5,36 @@ export const environment = {
 			devZenDaoAddress: "",
 			devZenDaoAutoAddress: "",
 			devZenTokenAddress: "",
-			devZenRepTokenAddress: ""
+			devZenRepTokenAddress: "",
+			daoBaseAddress: ""
 		},
 		ropsten: {
 			devZenDaoAddress: "",
 			devZenDaoAutoAddress: "",
 			devZenTokenAddress: "",
-			devZenRepTokenAddress: ""
+			devZenRepTokenAddress: "",
+			daoBaseAddress: ""
 		},
 		kovan: {
 			devZenDaoAddress: "",
 			devZenDaoAutoAddress: "",
 			devZenTokenAddress: "",
-			devZenRepTokenAddress: ""
+			devZenRepTokenAddress: "",
+			daoBaseAddress: ""
 		},
 		rinkeby: {
 			devZenDaoAddress: "",
 			devZenDaoAutoAddress: "",
 			devZenTokenAddress: "",
-			devZenRepTokenAddress: ""
+			devZenRepTokenAddress: "",
+			daoBaseAddress: ""
 		},
 		private: {
 			devZenDaoAddress: "",
 			devZenDaoAutoAddress: "",
 			devZenTokenAddress: "",
-			devZenRepTokenAddress: ""
+			devZenRepTokenAddress: "",
+			daoBaseAddress: ""
 		}
 	}
 };

@@ -31,8 +31,12 @@ export class DevzendaoService {
 	ABI_INDEX_DEV_ZEN_DAO = 0;
 	ABI_INDEX_STD_DAO_TOKEN = 1;
 	ABI_INDEX_DEV_ZEN_DAO_AUTO = 2;
+	ABI_INDEX_DAO_BASE = 3;
+	ABI_INDEX_GENERIC_PROPOSAL = 4;
+	ABI_INDEX_VOTING = 5;
 
 	contractsData = [];
+	daoBaseContract: any;
 	devZenDaoContract: any;
 	devZenDaoAutoContract: any;
 	devZenRepTokenContract: any;
@@ -54,7 +58,10 @@ export class DevzendaoService {
 		forkJoin(
 			this.http.get('assets/contracts/DevZenDao.json'),
 			this.http.get('assets/contracts/StdDaoToken.json'),
-			this.http.get('assets/contracts/DevZenDaoAuto.json')
+			this.http.get('assets/contracts/DevZenDaoAuto.json'),
+			this.http.get('assets/contracts/DaoBase.json'),
+			this.http.get('assets/contracts/GenericProposal.json'),
+			this.http.get('assets/contracts/Voting.json')
 		).pipe(
 			// load contracts data
 			switchMap(contractsData => {
@@ -68,6 +75,7 @@ export class DevzendaoService {
 				this.devZenTokenContract = this.web3Service.getContract(this.contractsData[this.ABI_INDEX_STD_DAO_TOKEN].abi, env.networks[networkName].devZenTokenAddress);
 				this.devZenRepTokenContract = this.web3Service.getContract(this.contractsData[this.ABI_INDEX_STD_DAO_TOKEN].abi, env.networks[networkName].devZenRepTokenAddress);
 				this.devZenDaoAutoContract = this.web3Service.getContract(this.contractsData[this.ABI_INDEX_DEV_ZEN_DAO_AUTO].abi, env.networks[networkName].devZenDaoAutoAddress);
+				this.daoBaseContract = this.web3Service.getContract(this.contractsData[this.ABI_INDEX_DAO_BASE].abi, env.networks[networkName].daoBaseAddress);
 				this.init.emit();
 				this.isInitialized = true;
 			},
@@ -93,105 +101,9 @@ export class DevzendaoService {
 		return from(this.devZenDaoContract.methods.params(hexName).call());
 	}
 
-	// //==============================================
-	// // These methods should be called by DevZen team
-	// //==============================================
-
-	// /**
-	//  * Update DAO params
-	//  * @param params 
-	//  */
-	// updateDaoParams(params): Observable<any> {
-	// 	const tupledParams = [this.web3Service.toTuple(params)];
-	// 	return this.web3Service.getAccounts().pipe(
-	// 		switchMap(accounts => this.txSenderService.send(
-	// 			this.daoContract.methods.updateDaoParams, 
-	// 			tupledParams, 
-	// 			{ from: accounts[0] },
-	// 			"Параметры DAO изменены",
-	// 			"Ошибка обновления параметров DAO"
-	// 		))
-	// 	);
-	// }
-
-	// /**
-	//  * Withdraw ether to output address
-	//  * @param outputAddress 
-	//  */
-	// withdrawEther(outputAddress): Observable<any> {
-	// 	return this.web3Service.getAccounts().pipe(
-	// 		switchMap(accounts => this.txSenderService.send(
-	// 			this.daoContract.methods.withdrawEther, 
-	// 			[outputAddress],
-	// 			{ from: accounts[0] },
-	// 			"Перевод успешно выполнен",
-	// 			"Ошибка вывода средств"
-	// 		))
-	// 	);
-	// }
-
-	// /**
-	//  * Select next host
-	//  * @param nextHostAddress 
-	//  */
-	// selectNextHost(nextHostAddress): Observable<any> {
-	// 	return this.web3Service.getAccounts().pipe(
-	// 		switchMap(accounts => this.txSenderService.send(
-	// 			this.daoContract.methods.selectNextHost,
-	// 			[nextHostAddress],
-	// 			{ from: accounts[0] },
-	// 			"Следующий организатор изменен",
-	// 			"Ошибка изменения организатора"
-	// 		))
-	// 	);
-	// }
-
-	// /**
-	//  * Burn guest stake
-	//  */
-	// burnGuestStake(): Observable<any> {
-	// 	return this.web3Service.getAccounts().pipe(
-	// 		switchMap(accounts => this.txSenderService.send(
-	// 			this.daoContract.methods.burnGuestStake,
-	// 			[],
-	// 			{ from: accounts[0] },
-	// 			"Токены гостя удалены",
-	// 			"Ошибка удаления токенов гостя"
-	// 		))
-	// 	);
-	// }
-
-	// /**
-	//  * Change the guest in "legal" way
-	//  * @param guestAddress 
-	//  */
-	// changeTheGuest(guestAddress): Observable<any> {
-	// 	return this.web3Service.getAccounts().pipe(
-	// 		switchMap(accounts => this.txSenderService.send(
-	// 			this.daoContract.methods.changeTheGuest,
-	// 			[guestAddress],
-	// 			{ from: accounts[0] },
-	// 			"Гость успешно изменен",
-	// 			"Ошибка изменения гостя"
-	// 		))
-	// 	);
-	// }
-
-	// /**
-	//  * Change the guest in "emergency" way
-	//  * @param guestAddress 
-	//  */
-	// emergencyChangeTheGuest(guestAddress): Observable<any> {
-	// 	return this.web3Service.getAccounts().pipe(
-	// 		switchMap(accounts => this.txSenderService.send(
-	// 			this.daoContract.methods.emergency_ChangeTheGuest,
-	// 			[guestAddress],
-	// 			{ from: accounts[0] },
-	// 			"Гость успешно изменен",
-	// 			"Ошибка изменения гостя"
-	// 		))
-	// 	);
-	// }
+	//==============================================
+	// These methods should be called by DevZen team
+	//==============================================
 
 	/**
 	 * Move to next episode
@@ -264,12 +176,12 @@ export class DevzendaoService {
 		);
 	}
 
-	// /**
-	//  * Checks whether 1 week has passed
-	//  */
-	// isOneWeekPassed(): Observable<boolean> {
-	// 	return from(this.daoContract.methods.isOneWeekPassed().call());
-	// }
+	/**
+	 * Checks whether 1 week has passed
+	 */
+	isOneWeekPassed(): Observable<boolean> {
+		return from(this.devZenDaoContract.methods.isOneWeekPassed().call());
+	}
 
 	//====================
 	// StdDaoToken methods
@@ -311,9 +223,9 @@ export class DevzendaoService {
 		return from(baseContract.methods.balanceOf(address).call());
 	}
 
-	// //===================
-	// // DaoStorage methods
-	// //===================
+	//===================
+	// DaoBase methods
+	//===================
 
 	// /**
 	//  * Adds new group member
@@ -340,20 +252,20 @@ export class DevzendaoService {
 	// 	return from(this.daoContract.methods.getGroupMembers(groupName).call());
 	// }
 
-	// /**
-	//  * Returns proposal address by index
-	//  * @param index 
-	//  */
-	// getProposalAtIndex(index): Observable<string> {
-	// 	return from(this.daoContract.methods.getProposalAtIndex(index).call());
-	// }
+	/**
+	 * Returns proposal address by index
+	 * @param index 
+	 */
+	getProposalAtIndex(index): Observable<string> {
+		return from(this.daoBaseContract.methods.getProposalAtIndex(index).call());
+	}
 
-	// /**
-	//  * Returns number of proposals
-	//  */
-	// getProposalsCount(): Observable<number> {
-	// 	return from(this.daoContract.methods.getProposalsCount().call());
-	// }
+	/**
+	 * Returns number of proposals
+	 */
+	getProposalsCount(): Observable<number> {
+		return from(this.daoBaseContract.methods.getProposalsCount().call());
+	}
 
 	// /**
 	//  * Removes address from group
@@ -474,95 +386,94 @@ export class DevzendaoService {
 		);
 	}
 
-	// //===============
-	// // Voting methods
-	// //===============
+	//===============
+	// Voting methods
+	//===============
 
-	// /**
-	//  * Returns method signature that should be called if proposal is accepted
-	//  * @param proposalAddress 
-	//  */
-	// getMethodSig(proposalAddress): Observable<string> {
-	// 	const proposal = this.web3Service.getContract(this.contractsData[this.ABI_INDEX_GENERIC_PROPOSAL].abi, proposalAddress);
-	// 	return from(proposal.methods.getMethodSig().call());
-	// }
+	/**
+	 * Returns method signature that should be called if proposal is accepted
+	 * @param proposalAddress 
+	 */
+	getMethodSig(proposalAddress): Observable<string> {
+		const proposal = this.web3Service.getContract(this.contractsData[this.ABI_INDEX_GENERIC_PROPOSAL].abi, proposalAddress);
+		return from(proposal.methods.getMethodSig().call());
+	}
 
-	// /**
-	//  * Returns params of the method that should be called if proposal is accepted
-	//  * @param proposalAddress 
-	//  */
-	// getProposalParams(proposalAddress): Observable<string> {
-	// 	const proposal = this.web3Service.getContract(this.contractsData[this.ABI_INDEX_GENERIC_PROPOSAL].abi, proposalAddress);
-	// 	return from(proposal.methods.getParams().call());
-	// }
+	/**
+	 * Returns params of the method that should be called if proposal is accepted
+	 * @param proposalAddress 
+	 */
+	getProposalParams(proposalAddress): Observable<string> {
+		const proposal = this.web3Service.getContract(this.contractsData[this.ABI_INDEX_GENERIC_PROPOSAL].abi, proposalAddress);
+		return from(proposal.methods.getParams().call());
+	}
 
-	// /**
-	//  * Returns voting status with counts of yes, no, total
-	//  * @param proposalAddress 
-	//  */
-	// getVotingStats(proposalAddress): Observable<any> {
-	// 	const proposal = this.web3Service.getContract(this.contractsData[this.ABI_INDEX_GENERIC_PROPOSAL].abi, proposalAddress);
-	// 	return from(proposal.methods.getVoting().call()).pipe(
-	// 		switchMap(votingAddress => {
-	// 			const voting = this.web3Service.getContract(this.contractsData[this.ABI_INDEX_VOTING_1P_1V].abi, votingAddress);
-	// 			return from(voting.methods.getVotingStats().call());
-	// 		})
-	// 	)
-	// }
+	/**
+	 * Returns voting status with counts of yes, no, total
+	 * @param proposalAddress 
+	 */
+	getVotingStats(proposalAddress): Observable<any> {
+		const proposal = this.web3Service.getContract(this.contractsData[this.ABI_INDEX_GENERIC_PROPOSAL].abi, proposalAddress);
+		return from(proposal.methods.getVoting().call()).pipe(
+			switchMap(votingAddress => {
+				const voting = this.web3Service.getContract(this.contractsData[this.ABI_INDEX_VOTING].abi, votingAddress);
+				return from(voting.methods.getVotingStats().call());
+			})
+		)
+	}
 
-	// /**
-	//  * Checks whether voting is finished
-	//  * @param proposalAddress 
-	//  */
-	// isFinished(proposalAddress): Observable<boolean> {
-	// 	const proposal = this.web3Service.getContract(this.contractsData[this.ABI_INDEX_GENERIC_PROPOSAL].abi, proposalAddress);
-	// 	return from(proposal.methods.getVoting().call()).pipe(
-	// 		switchMap(votingAddress => {
-	// 			const voting = this.web3Service.getContract(this.contractsData[this.ABI_INDEX_VOTING_1P_1V].abi, votingAddress);
-	// 			return from(voting.methods.isFinished().call());
-	// 		})
-	// 	)
-	// }
+	/**
+	 * Checks whether voting is finished
+	 * @param proposalAddress 
+	 */
+	isFinished(proposalAddress): Observable<boolean> {
+		const proposal = this.web3Service.getContract(this.contractsData[this.ABI_INDEX_GENERIC_PROPOSAL].abi, proposalAddress);
+		return from(proposal.methods.getVoting().call()).pipe(
+			switchMap(votingAddress => {
+				const voting = this.web3Service.getContract(this.contractsData[this.ABI_INDEX_VOTING].abi, votingAddress);
+				return from(voting.methods.isFinished().call());
+			})
+		)
+	}
 
-	// /**
-	//  * Returns voting result
-	//  * @param proposalAddress 
-	//  */
-	// isYes(proposalAddress): Observable<boolean> {
-	// 	const proposal = this.web3Service.getContract(this.contractsData[this.ABI_INDEX_GENERIC_PROPOSAL].abi, proposalAddress);
-	// 	return from(proposal.methods.getVoting().call()).pipe(
-	// 		switchMap(votingAddress => {
-	// 			const voting = this.web3Service.getContract(this.contractsData[this.ABI_INDEX_VOTING_1P_1V].abi, votingAddress);
-	// 			return from(voting.methods.isYes().call());
-	// 		})
-	// 	)
-	// }
+	/**
+	 * Returns voting result
+	 * @param proposalAddress 
+	 */
+	isYes(proposalAddress): Observable<boolean> {
+		const proposal = this.web3Service.getContract(this.contractsData[this.ABI_INDEX_GENERIC_PROPOSAL].abi, proposalAddress);
+		return from(proposal.methods.getVoting().call()).pipe(
+			switchMap(votingAddress => {
+				const voting = this.web3Service.getContract(this.contractsData[this.ABI_INDEX_VOTING].abi, votingAddress);
+				return from(voting.methods.isYes().call());
+			})
+		)
+	}
 
-	// /**
-	//  * Votes for a proposal
-	//  * @param proposalAddress 
-	//  * @param vote 
-	//  */
-	// vote(proposalAddress, vote): Observable<void> {
-
-	// 	return this.web3Service.getAccounts().pipe(
-	// 		switchMap(accounts => {
-	// 			const proposal = this.web3Service.getContract(this.contractsData[this.ABI_INDEX_GENERIC_PROPOSAL].abi, proposalAddress);
-	// 			return from(proposal.methods.getVoting().call()).pipe(
-	// 				switchMap(votingAddress => {
-	// 					const voting = this.web3Service.getContract(this.contractsData[this.ABI_INDEX_VOTING_1P_1V].abi, votingAddress);
-	// 					return this.txSenderService.send(
-	// 						voting.methods.vote, 
-	// 						[vote, 0], 
-	// 						{ from: accounts[0] },
-	// 						"Ваш голос добавлен",
-	// 						"Ошибка голосования"
-	// 					);
-	// 				})
-	// 			);
-	// 		})
-	// 	);
-	// }
+	/**
+	 * Votes for a proposal
+	 * @param proposalAddress 
+	 * @param vote 
+	 */
+	vote(proposalAddress, vote): Observable<void> {
+		return this.web3Service.getAccounts().pipe(
+			switchMap(accounts => {
+				const proposal = this.web3Service.getContract(this.contractsData[this.ABI_INDEX_GENERIC_PROPOSAL].abi, proposalAddress);
+				return from(proposal.methods.getVoting().call()).pipe(
+					switchMap(votingAddress => {
+						const voting = this.web3Service.getContract(this.contractsData[this.ABI_INDEX_VOTING].abi, votingAddress);
+						return this.txSenderService.send(
+							voting.methods.vote, 
+							[vote], 
+							{ from: accounts[0] },
+							"Ваш голос добавлен",
+							"Ошибка голосования"
+						);
+					})
+				);
+			})
+		);
+	}
 
 	//===============
 	// Helper methods

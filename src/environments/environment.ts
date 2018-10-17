@@ -9,31 +9,36 @@ export const environment = {
 			devZenDaoAddress: "",
 			devZenDaoAutoAddress: "",
 			devZenTokenAddress: "",
-			devZenRepTokenAddress: ""
+			devZenRepTokenAddress: "",
+			daoBaseAddress: ""
 		},
 		ropsten: {
 			devZenDaoAddress: "",
 			devZenDaoAutoAddress: "",
 			devZenTokenAddress: "",
-			devZenRepTokenAddress: ""
+			devZenRepTokenAddress: "",
+			daoBaseAddress: ""
 		},
 		kovan: {
 			devZenDaoAddress: "",
 			devZenDaoAutoAddress: "",
 			devZenTokenAddress: "",
-			devZenRepTokenAddress: ""
+			devZenRepTokenAddress: "",
+			daoBaseAddress: ""
 		},
 		rinkeby: {
 			devZenDaoAddress: "",
 			devZenDaoAutoAddress: "",
 			devZenTokenAddress: "",
-			devZenRepTokenAddress: ""
+			devZenRepTokenAddress: "",
+			daoBaseAddress: ""
 		},
 		private: {
 			devZenDaoAddress: "0x43f2def404c9d480fe775e858c38f7888bddda88",
 			devZenDaoAutoAddress: "0x0e5817fc22c0e5e5e2ec91d7e6f65877911a9947",
 			devZenTokenAddress: "0x64890da7ce0f1aa764c3fb12ffd014f80f3048ea",
-			devZenRepTokenAddress: "0x6d45e6c38a40aedbb0168cc32facbede0d9d88a8"
+			devZenRepTokenAddress: "0x6d45e6c38a40aedbb0168cc32facbede0d9d88a8",
+			daoBaseAddress: "0xe7524ce9429c2d08440080ea2dbfcb4db138a0e9"
 		}
 	}
 };

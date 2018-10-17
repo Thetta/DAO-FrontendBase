@@ -10,7 +10,7 @@ import { GroupMemberComponent, GroupMemberFormComponent } from './group-member';
 import { HomeComponent } from './home';
 import { OutsiderPageComponent } from './outsider-page';
 import { PatronPageComponent } from './patron-page';
-import { ProposalComponent, VoteDialogComponent } from './proposal';
+import { ProposalComponent } from './proposal';
 import { PrimengCustomModule, SharedModule } from '../shared';
 import { TeamPageComponent } from './team-page';
 
@@ -33,15 +33,13 @@ import { TeamPageComponent } from './team-page';
 		OutsiderPageComponent,
 		PatronPageComponent,
 		ProposalComponent,
-		TeamPageComponent,
-		VoteDialogComponent
+		TeamPageComponent
   ],
   exports: [
 	  	DashboardComponent
   ],
   entryComponents: [
-	  GroupMemberFormComponent,
-	  VoteDialogComponent
+	  GroupMemberFormComponent
   ]
 })
 export class DashboardModule { }

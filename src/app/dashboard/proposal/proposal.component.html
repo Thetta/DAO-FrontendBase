@@ -1,39 +1,75 @@
-<h2>Предложения</h2>
+<header>
+	<h1 class="h3 display">Предложения</h1>
+</header>
 
-<!-- <div *ngIf="proposals.length > 0" class="dao-card row m-t-1">
-	<div class="row">
-		<div class="col-xs-3"><strong>Название + параметры</strong></div>
-		<div class="col-xs-1"><strong>За</strong></div>
-		<div class="col-xs-1"><strong>Против</strong></div>
-		<div class="col-xs-1"><strong>Всего</strong></div>
-		<div class="col-xs-2"><strong>Статус</strong></div>
-		<div class="col-xs-2"><strong>Результат</strong></div>
-		<div class="col-xs-2"></div>
+<div *ngIf="loading" class="row">
+	<div class="col-lg-12 text-center">
+		<p-progressSpinner></p-progressSpinner>
 	</div>
-	<div *ngFor="let proposal of proposals" class="p-t-1">
-		<div *ngIf="proposal.data" class="row">
-			<div class="col-xs-3">
-				<div>{{ proposal.data[3] | readableMethodSign }}</div>
-				<div *ngFor="let paramValue of proposal.data[4]">{{ paramValue }}</div>
-			</div>
-			<div class="col-xs-1">{{ proposal.data[0].yesResults }}</div>
-			<div class="col-xs-1">{{ proposal.data[0].noResults }}</div>
-			<div class="col-xs-1">{{ +proposal.data[0].yesResults + +proposal.data[0].noResults }}/{{ proposal.data[0].votersTotal }}</div>
-			<div class="col-xs-2">
-				<mat-chip-list>
-					<mat-chip [color]="proposal.data[1] ? 'default' : 'primary'" selected>{{ proposal.data[1] ? 'Закончен' : 'Идет' }}</mat-chip>
-				</mat-chip-list>
-			</div>
-			<div class="col-xs-2">
-				<mat-chip-list *ngIf="proposal.data[1]">
-					<mat-chip [color]="proposal.data[2] ? 'primary' : 'warn'" selected>{{ proposal.data[2] ? 'Принято' : 'Отклонено' }}</mat-chip>
-				</mat-chip-list>
-			</div>
-			<div class="col-xs-2">
-				<button *ngIf="!proposal.data[1]" (click)="showVoteDialog(proposal)" mat-raised-button color="primary">Голосовать</button>
+</div>
+
+<div *ngIf="!loading" class="row">
+	<div class="col-lg-12">
+		<div class="card">
+			<div class="card-body">
+				<div class="table-responsive">
+					<table class="table table-striped table-hover">
+						<thead>
+							<tr>
+								<th>Название</th>
+								<!-- <th>Параметры</th> -->
+								<th>За</th>
+								<th>Против</th>
+								<th>Всего</th>
+								<th>Статус</th>
+								<th>Результат</th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr *ngFor="let proposal of proposals">
+								<td>{{ proposal.data[3] | readableMethodSign }}</td>
+								<!-- <td>
+									<div *ngFor="let paramValue of proposal.data[4]">{{ paramValue }}</div>
+								</td> -->
+								<td>{{ proposal.data[0].yesResults }}</td>
+								<td>{{ proposal.data[0].noResults }}</td>
+								<td>{{ +proposal.data[0].yesResults + +proposal.data[0].noResults }}/{{ proposal.data[0].votersTotal }}</td>
+								<td>{{ proposal.data[1] ? 'Закончен' : 'Идет' }}</td>
+								<td>
+									<span *ngIf="proposal.data[1]">{{ proposal.data[2] ? 'Принято' : 'Отклонено' }}</span>
+								</td>
+								<td>
+									<button *ngIf="!proposal.data[1]" (click)="showVoteDialog(proposal.address)" class="btn btn-primary">Голосовать</button>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
 			</div>
 		</div>
-		
 	</div>
+</div>
 
-</div> -->
+<!-- vote dialog -->
+<p-dialog header="Голосовать" [visible]="displayVoteDialog" [modal]="true" [closable]="false">
+		<form [formGroup]="formVote">
+			<div class="form-group row">
+				<label class="col-sm-12 form-control-label">Ваш выбор</label>
+				<div class="col-sm-12">
+					<div class="row">
+						<div class="col-sm-12">
+							<select formControlName="vote" class="form-control" placeholder="Выш выбор">
+								<option value="true">За</option>
+								<option value="false">Против</option>
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+        <p-footer>
+            <button [disabled]="!formVote.valid" type="button" (click)="vote()" class="btn btn-primary">Голосовать</button>
+            <button type="button" (click)="displayVoteDialog = false" class="btn">Отмена</button>
+        </p-footer>
+</p-dialog>
