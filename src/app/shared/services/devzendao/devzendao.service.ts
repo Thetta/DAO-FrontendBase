@@ -207,30 +207,13 @@ export class DevzendaoService {
 	// DaoBase methods
 	//===================
 
-	// /**
-	//  * Adds new group member
-	//  * @param groupName 
-	//  * @param address 
-	//  */
-	// addGroupMember(groupName, address): Observable<void> {
-	// 	return this.web3Service.getAccounts().pipe(
-	// 		switchMap(accounts => this.txSenderService.send(
-	// 			this.daoContract.methods.addGroupMember,
-	// 			[groupName, address],
-	// 			{ from: accounts[0] },
-	// 			"Успешное добавление участника",
-	// 			"Ошибка добавления участника"
-	// 		))
-	// 	);
-	// }
-
-	// /**
-	//  * Returns addresses of group members by group name
-	//  * @param groupName 
-	//  */
-	// getGroupMembers(groupName): Observable<string[]> {
-	// 	return from(this.daoContract.methods.getGroupMembers(groupName).call());
-	// }
+	/**
+	 * Returns addresses of group members by group name
+	 * @param groupName 
+	 */
+	getGroupMembers(groupName): Observable<string[]> {
+		return from(this.daoBaseContract.methods.getGroupMembers(groupName).call());
+	}
 
 	/**
 	 * Returns proposal address by index
@@ -247,43 +230,26 @@ export class DevzendaoService {
 		return from(this.daoBaseContract.methods.getProposalsCount().call());
 	}
 
-	// /**
-	//  * Removes address from group
-	//  * @param groupName 
-	//  * @param address 
-	//  */
-	// removeGroupMember(groupName, address): Observable<void> {
-	// 	return this.web3Service.getAccounts().pipe(
-	// 		switchMap(accounts => this.txSenderService.send(
-	// 			this.daoContract.methods.removeGroupMember,
-	// 			[groupName, address],
-	// 			{ from: accounts[0] },
-	// 			"Участник удален",
-	// 			"Ошибка удаления участника"
-	// 		))
-	// 	);
-	// }
-
 	//====================
 	// DevZenDaoAuto methods
 	//====================
 
-	// /**
-	//  * Creates a proposal for adding user addres to a group
-	//  * @param groupName 
-	//  * @param address 
-	//  */
-	// addGroupMemberAuto(groupName, address): Observable<string> {
-	// 	return this.web3Service.getAccounts().pipe(
-	// 		switchMap(accounts => this.txSenderService.send(
-	// 			this.daoBaseAutoContract.methods.addGroupMemberAuto, 
-	// 			[groupName, address], 
-	// 			{ from: accounts[0] },
-	// 			"Голосование о добавлении нового участника создано",
-	// 			"Ошибка создания голосования о добавлении нового участника"
-	// 		))
-	// 	);
-	// }
+	/**
+	 * Creates a proposal for adding user addres to a group
+	 * @param groupName 
+	 * @param address 
+	 */
+	addGroupMemberAuto(groupName, address): Observable<string> {
+		return this.web3Service.getAccounts().pipe(
+			switchMap(accounts => this.txSenderService.send(
+				this.devZenDaoAutoContract.methods.addGroupMemberAuto, 
+				[groupName, address], 
+				{ from: accounts[0] },
+				"Голосование о добавлении нового участника создано",
+				"Ошибка создания голосования о добавлении нового участника"
+			))
+		);
+	}
 
 	/**
 	 * Changes the guest in "legal" way and creates a voting
@@ -329,6 +295,23 @@ export class DevzendaoService {
 				{ from: accounts[0] },
 				"Голосование 'Запуск нового эпизода' создано",
 				"Ошибка создания голосования 'Запуск нового эпизода'"
+			))
+		);
+	}
+
+	/**
+	 * Removes address from group
+	 * @param groupName 
+	 * @param address 
+	 */
+	removeGroupMemberAuto(groupName, address): Observable<void> {
+		return this.web3Service.getAccounts().pipe(
+			switchMap(accounts => this.txSenderService.send(
+				this.devZenDaoAutoContract.methods.removeGroupMemberAuto,
+				[groupName, address],
+				{ from: accounts[0] },
+				"Голосование об удалении нового участника создано",
+				"Ошибка создания голосования об удалении нового участника"
 			))
 		);
 	}

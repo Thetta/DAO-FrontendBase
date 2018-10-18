@@ -6,7 +6,7 @@ import { RouterModule } from '@angular/router';
 import { DaoParamPageComponent } from './dao-param-page';
 import { DashboardComponent } from './dashboard.component';
 import { DashboardRoutingModule } from './dashboard-routing.module';
-import { GroupMemberComponent, GroupMemberFormComponent } from './group-member';
+import { GroupMemberComponent } from './group-member';
 import { HomeComponent } from './home';
 import { OutsiderPageComponent } from './outsider-page';
 import { PatronPageComponent } from './patron-page';
@@ -28,7 +28,6 @@ import { TeamPageComponent } from './team-page';
 		DaoParamPageComponent,
 		DashboardComponent,
 		GroupMemberComponent,
-		GroupMemberFormComponent,
 		HomeComponent,
 		OutsiderPageComponent,
 		PatronPageComponent,
@@ -37,9 +36,6 @@ import { TeamPageComponent } from './team-page';
   ],
   exports: [
 	  	DashboardComponent
-  ],
-  entryComponents: [
-	  GroupMemberFormComponent
   ]
 })
 export class DashboardModule { }
