@@ -101,26 +101,6 @@ export class DevzendaoService {
 		return from(this.devZenDaoContract.methods.params(hexName).call());
 	}
 
-	//==============================================
-	// These methods should be called by DevZen team
-	//==============================================
-
-	/**
-	 * Move to next episode
-	 * @param guestHasCome whether guest visited the show
-	 */
-	moveToNextEpisode(guestHasCome): Observable<any> {
-		return this.web3Service.getAccounts().pipe(
-			switchMap(accounts => this.txSenderService.send(
-				this.devZenDaoContract.methods.moveToNextEpisode,
-				[guestHasCome],
-				{ from: accounts[0] },
-				"Новый эпизод успешно создан",
-				"Ошибка создания нового эпизода"
-			))
-		);
-	}
-
 	//=======================================================
 	// These methods should be called by DevZen token holders
 	//=======================================================
@@ -338,6 +318,22 @@ export class DevzendaoService {
 	}
 
 	/**
+	 * Moves to next episode and creates a voting
+	 * @param guestHasCome whether guest visited the show
+	 */
+	moveToNextEpisodeAuto(guestHasCome): Observable<any> {
+		return this.web3Service.getAccounts().pipe(
+			switchMap(accounts => this.txSenderService.send(
+				this.devZenDaoAutoContract.methods.moveToNextEpisodeAuto,
+				[guestHasCome],
+				{ from: accounts[0] },
+				"Голосование 'Запуск нового эпизода' создано",
+				"Ошибка создания голосования 'Запуск нового эпизода'"
+			))
+		);
+	}
+
+	/**
 	 * Selects next host and creates a voting
 	 * @param nextHostAddress 
 	 */
@@ -358,10 +354,10 @@ export class DevzendaoService {
 	 * @param paramHash
 	 * @param value
 	 */
-	setParamAuto(paramHash, value): Observable<string> {
+	updateDaoParamsAuto(paramHash, value): Observable<string> {
 		return this.web3Service.getAccounts().pipe(
 			switchMap(accounts => this.txSenderService.send(
-				this.devZenDaoAutoContract.methods.setParamAuto, 
+				this.devZenDaoAutoContract.methods.updateDaoParamsAuto, 
 				[paramHash, value],
 				{ from: accounts[0] },
 				"Голосование 'Обновление параметра DAO' создано",

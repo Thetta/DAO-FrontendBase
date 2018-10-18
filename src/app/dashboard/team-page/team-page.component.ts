@@ -68,7 +68,7 @@ export class TeamPageComponent implements OnInit {
 	runMoveToNextEpisode() {
 		// convert to boolean
 		const guestHasCome = this.formMoveToNextEpisode.controls['guestHasCome'].value == "true" ? true : false;
-		this.devZenDaoService.moveToNextEpisode(guestHasCome).subscribe();
+		this.devZenDaoService.moveToNextEpisodeAuto(guestHasCome).subscribe();
 	}
 
 	/**
