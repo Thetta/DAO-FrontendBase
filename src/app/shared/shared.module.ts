@@ -1,16 +1,18 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { ReadableMethodSignPipe } from './pipes';
+import { ReadableMethodParamPipe, ReadableMethodSignPipe } from './pipes';
 
 @NgModule({
 	imports: [
 		CommonModule
 	],
 	declarations: [
+		ReadableMethodParamPipe,
 		ReadableMethodSignPipe
 	],
 	exports: [
+		ReadableMethodParamPipe,
 		ReadableMethodSignPipe
 	]
 })

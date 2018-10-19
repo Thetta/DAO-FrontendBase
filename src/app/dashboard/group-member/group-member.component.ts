@@ -5,7 +5,7 @@ import { switchMap } from 'rxjs/operators';
 import { forkJoin } from 'rxjs';
 
 import { GroupMember } from './group-member';
-import { DevzendaoService } from '../../shared';
+import { DevzendaoService, Web3Service } from '../../shared';
 
 @Component({
 	selector: 'app-group-member',
@@ -22,7 +22,8 @@ export class GroupMemberComponent implements OnInit {
 	constructor(
 		public devZenDaoService: DevzendaoService,
 		public formBuilder: FormBuilder,
-		public messageService: MessageService
+		public messageService: MessageService,
+		public web3Service: Web3Service
 	) {}
 
 	ngOnInit() {

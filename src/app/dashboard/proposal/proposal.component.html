@@ -17,7 +17,7 @@
 						<thead>
 							<tr>
 								<th>Название</th>
-								<!-- <th>Параметры</th> -->
+								<th>Параметры</th>
 								<th>За</th>
 								<th>Против</th>
 								<th>Всего</th>
@@ -29,9 +29,9 @@
 						<tbody>
 							<tr *ngFor="let proposal of proposals">
 								<td>{{ proposal.data[3] | readableMethodSign }}</td>
-								<!-- <td>
-									<div *ngFor="let paramValue of proposal.data[4]">{{ paramValue }}</div>
-								</td> -->
+								<td>
+									<div *ngFor="let paramValue of proposal.data[4]; let i = index">{{ paramValue | readableMethodParam:proposal.data[3]:i }}</div>
+								</td>
 								<td>{{ proposal.data[0].yesResults }}</td>
 								<td>{{ proposal.data[0].noResults }}</td>
 								<td>{{ +proposal.data[0].yesResults + +proposal.data[0].noResults }}/{{ proposal.data[0].votersTotal }}</td>

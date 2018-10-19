@@ -31,8 +31,8 @@
 						<tbody>
 							<tr *ngFor="let member of members">
 								<td>{{ member.address }}</td>
-								<td>{{ member.dztBalance }}</td>
-								<td>{{ member.dztRepBalance }}</td>
+								<td>{{ web3Service.fromWei(member.dztBalance,"ether") }}</td>
+								<td>{{ web3Service.fromWei(member.dztRepBalance,"ether") }}</td>
 								<td>
 									<button (click)="deleteGroupMember(member)" class="btn btn-danger">Удалить</button>
 								</td>

@@ -28,6 +28,15 @@ export class Web3Service {
 	}
 
 	/**
+	 * Returns address/hex from bytes32 hex
+	 * @param bytes32Hex 
+	 */
+	bytes32ToAddress(bytes32Hex): any {
+		const decimalNumber = this.hexToNumberString(bytes32Hex);
+		return this.numberToHex(decimalNumber);
+	}
+
+	/**
 	 * Returns hex from the bytes array
 	 * @param arrayOfBytes 
 	 */
@@ -118,11 +127,35 @@ export class Web3Service {
 	}
 
 	/**
+	 * Converts hex string to number
+	 * @param hex 
+	 */
+	hexToNumber(hex): any {
+		return web3.utils.hexToNumber(hex);
+	}
+
+	/**
+	 * Converts hex string to number string
+	 * @param hex 
+	 */
+	hexToNumberString(hex): any {
+		return web3.utils.hexToNumberString(hex);
+	}
+
+	/**
 	 * Converts hex to utf8 string
 	 * @param hex 
 	 */
 	hexToUtf8(hex): any {
 		return web3.utils.hexToUtf8(hex);
+	}
+
+	/**
+	 * Converts number to hex
+	 * @param n
+	 */
+	numberToHex(n): any {
+		return web3.utils.numberToHex(n);
 	}
 
 	/**
