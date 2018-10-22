@@ -12,6 +12,15 @@ export class ReadableMethodParamPipe implements PipeTransform {
 
 	transform(paramHex, methodSign, index) {
 		switch(methodSign) {
+            case "addGroupMemberGeneric(bytes32[])":
+                // group name
+                if(index == 0) {
+                    const readableGroupOfAddedAddress = this.web3Service.hexToUtf8(paramHex);
+                    return `Группа: ${readableGroupOfAddedAddress}`;
+                } else {
+                    const readableAddressToBeAdded = this.web3Service.bytes32ToAddress(paramHex);
+                    return `Адрес: ${readableAddressToBeAdded}`;
+                }
             case "changeTheGuestGeneric(bytes32[])":
                 const readableGuestAddress = this.web3Service.bytes32ToAddress(paramHex);
                 return `Адрес: ${readableGuestAddress}`;
@@ -22,6 +31,15 @@ export class ReadableMethodParamPipe implements PipeTransform {
                 const paramValue = this.web3Service.hexToNumberString(paramHex);
                 const readableParamValue = paramValue == 1 ? "Да" : "Нет";
                 return `Начислить репутацию гостю: ${readableParamValue}`;
+            case "removeGroupMemberGeneric(bytes32[])":
+                // group name
+                if(index == 0) {
+                    const readableGroupOfRemovedAddress = this.web3Service.hexToUtf8(paramHex);
+                    return `Группа: ${readableGroupOfRemovedAddress}`;
+                } else {
+                    const readableAddressToBeRemoved = this.web3Service.bytes32ToAddress(paramHex);
+                    return `Адрес: ${readableAddressToBeRemoved}`;
+                }
             case "selectNextHostGeneric(bytes32[])":
                 const readableHostAddress = this.web3Service.bytes32ToAddress(paramHex);
 				return `Адрес: ${readableHostAddress}`;

@@ -11,10 +11,8 @@ export class ReadableMethodSignPipe implements PipeTransform {
 			// standard dao base methods
 			case "addGroupMemberGeneric(bytes32[])":
 				return "Добавление участника";
-			case "issueTokensGeneric(bytes32[])":
-				return "Выпуск токенов";
-			case "upgradeDaoContractGeneric(bytes32[])":
-				return "Обновление контракта";
+			case "removeGroupMemberGeneric(bytes32[])":
+				return "Удаление участника";
 			// DevZenDao methods
 			case "updateDaoParamsGeneric(bytes32[])":
 				return "Обновление параметров DAO";
