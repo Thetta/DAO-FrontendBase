@@ -16,11 +16,11 @@ export const environment = {
 			daoBaseAddress: ""
 		},
 		kovan: {
-			devZenDaoAddress: "0x08544530b359730100cafe3f62b8906584adf8a5",
-			devZenDaoAutoAddress: "0xca74e98be84c5f76f41d9369af2e2ba65221a0b0",
-			devZenTokenAddress: "0x76299b1bcc36b0aad1ffcd52315a1396823b59a3",
-			devZenRepTokenAddress: "0xa872d4d6e8c20d3579a8f2c4727a3454460ab622",
-			daoBaseAddress: "0x0b6e6165d1de9d806672d6b240f3004d4fd24f8a"
+			devZenDaoAddress: "0xa1f250429fe35b27a2b4c8e2d02052b4af84758e",
+			devZenDaoAutoAddress: "0xd3172248a5c0ec9797cd839fda12ca90faad5d65",
+			devZenTokenAddress: "0x04a5e44478e2e958aa6b4d8bbcefa5b5ad29bd62",
+			devZenRepTokenAddress: "0xce5e1272f927f02f7c83a25082f8dac07066e440",
+			daoBaseAddress: "0x47e2c904863791944071347c47efa0257d7843f0"
 		},
 		rinkeby: {
 			devZenDaoAddress: "",
