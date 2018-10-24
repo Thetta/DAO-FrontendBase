@@ -115,8 +115,8 @@ export class DevzendaoService {
 				this.devZenDaoContract.methods.runAdsInTheNextEpisode,
 				[adText],
 				{ from: accounts[0] },
-				"Рекламное объявление успешно добавлено",
-				"Ошибка добавления рекламного объявления"
+				"Commercial added",
+				"Error on adding a commercial"
 			))
 		);
 	}
@@ -130,8 +130,8 @@ export class DevzendaoService {
 				this.devZenDaoContract.methods.becomeTheNextShowGuest,
 				[],
 				{ from: accounts[0] },
-				"Вы стали следующим гостем",
-				"Ошибка выбора следующего гостя"
+				"You became the next guest",
+				"Error on selecting the next guest"
 			))
 		);
 	}
@@ -150,8 +150,8 @@ export class DevzendaoService {
 				this.devZenDaoContract.methods.buyTokens,
 				[],
 				{ from: accounts[0], value: valueInWei },
-				"Успешная покупка DZT",
-				"Ошибка покупки DZT"
+				"You bought DZT",
+				"Error on buying DZT"
 			))
 		);
 	}
@@ -183,8 +183,8 @@ export class DevzendaoService {
 				baseContract.methods.approve,
 				[this.devZenDaoContract.options.address, amount],
 				{ from: accounts[0] },
-				`Успешный аппрув ${tokenName}`,
-				`Ошибка аппрува ${tokenName}`
+				`Approved ${tokenName}`,
+				`Error on approving ${tokenName}`
 			))
 		);
 	}
@@ -245,8 +245,8 @@ export class DevzendaoService {
 				this.devZenDaoAutoContract.methods.addGroupMemberAuto, 
 				[groupName, address], 
 				{ from: accounts[0] },
-				"Голосование о добавлении нового участника создано",
-				"Ошибка создания голосования о добавлении нового участника"
+				"Voting 'Adding a new group member' created",
+				"Error on creating a voting 'Adding a new group member'"
 			))
 		);
 	}
@@ -261,8 +261,8 @@ export class DevzendaoService {
 				this.devZenDaoAutoContract.methods.changeTheGuestAuto,
 				[guestAddress],
 				{ from: accounts[0] },
-				"Голосование 'Смена гостя' создано",
-				"Ошибка создания голосования 'Смена гостя'"
+				"Voting 'Change the guest' created",
+				"Error on creating a voting 'Change the guest'"
 			))
 		);
 	}
@@ -277,8 +277,8 @@ export class DevzendaoService {
 				this.devZenDaoAutoContract.methods.emergency_ChangeTheGuestAuto,
 				[guestAddress],
 				{ from: accounts[0] },
-				"Голосование 'Экстренная смена гостя' создано",
-				"Ошибка создания голосования 'Экстренная смена гостя'"
+				"Voting 'Emergency change the guest' created",
+				"Error on creating a voting 'Emergency change the guest'"
 			))
 		);
 	}
@@ -293,8 +293,8 @@ export class DevzendaoService {
 				this.devZenDaoAutoContract.methods.moveToNextEpisodeAuto,
 				[guestHasCome],
 				{ from: accounts[0] },
-				"Голосование 'Запуск нового эпизода' создано",
-				"Ошибка создания голосования 'Запуск нового эпизода'"
+				"Voting 'Move to next episode' created",
+				"Error on creating a voting 'Move to next episode'"
 			))
 		);
 	}
@@ -310,8 +310,8 @@ export class DevzendaoService {
 				this.devZenDaoAutoContract.methods.removeGroupMemberAuto,
 				[groupName, address],
 				{ from: accounts[0] },
-				"Голосование об удалении нового участника создано",
-				"Ошибка создания голосования об удалении нового участника"
+				"Voting 'Removing group member' created",
+				"Error on creating a voting 'Removing group member'"
 			))
 		);
 	}
@@ -326,8 +326,8 @@ export class DevzendaoService {
 				this.devZenDaoAutoContract.methods.selectNextHostAuto,
 				[nextHostAddress],
 				{ from: accounts[0] },
-				"Голосование 'Изменение организатора' создано",
-				"Ошибка создания голосования 'Изменение организатора'"
+				"Voting 'Change the next host' created",
+				"Error on creating a voting 'Change the next host'"
 			))
 		);
 	}
@@ -343,8 +343,8 @@ export class DevzendaoService {
 				this.devZenDaoAutoContract.methods.updateDaoParamsAuto, 
 				[paramHash, value],
 				{ from: accounts[0] },
-				"Голосование 'Обновление параметра DAO' создано",
-				"Ошибка создания голосования 'Обновление параметра DAO'"
+				"Voting 'Updating DAO params' created",
+				"Error on creating a voting 'Updating DAO params'"
 			))
 		);
 	}
@@ -359,8 +359,8 @@ export class DevzendaoService {
 				this.devZenDaoAutoContract.methods.withdrawEtherAuto, 
 				[outputAddress],
 				{ from: accounts[0] },
-				"Голосование 'Вывод средств' создано",
-				"Ошибка создания голосования 'Вывод средств'"
+				"Voting 'Withdraw all ETH' created",
+				"Error on creating a voting 'Withdraw all ETH'"
 			))
 		);
 	}
@@ -445,8 +445,8 @@ export class DevzendaoService {
 							voting.methods.vote, 
 							[vote], 
 							{ from: accounts[0] },
-							"Ваш голос добавлен",
-							"Ошибка голосования"
+							"Your vote was added",
+							"Error on voting"
 						);
 					})
 				);

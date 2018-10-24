@@ -49,7 +49,7 @@ export class DashboardComponent implements OnInit {
 				}
 			},
 			(err) => {
-				this.messageService.add({severity:'error', summary:'Ошибка', detail:'Ошибка соединения с Metamask'}); 
+				this.messageService.add({severity:'error', summary:'Error', detail:'Error on connecting to Metamask'}); 
 				console.error(err); 
 			}
 		);
@@ -76,7 +76,7 @@ export class DashboardComponent implements OnInit {
 				this.isToolbarLoading = false;
 			},
 			(err) => {
-				this.messageService.add({severity:'error', summary:'Ошибка', detail:'Ошибка обновления балансов'}); 
+				this.messageService.add({severity:'error', summary:'Error', detail:'Error on updating balances'}); 
 				this.isToolbarLoading = false;
 				console.error(err); 
 			}

@@ -64,7 +64,7 @@ export class GroupMemberComponent implements OnInit {
 				this.loading = false;
 			},
 			err => {
-				this.messageService.add({severity:'error', summary:'Ошибка', detail:'Ошибка при получении участников группы'});
+				this.messageService.add({severity:'error', summary:'Error', detail:'Error on getting team members'});
 				this.loading = false; 
 				console.error(err); 
 			}

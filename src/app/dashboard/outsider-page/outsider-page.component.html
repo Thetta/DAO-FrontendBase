@@ -1,5 +1,5 @@
 <header>
-	<h1 class="h3 display">Для слушателя</h1>
+	<h1 class="h3 display">For listener</h1>
 </header>
 
 <div class="row">
@@ -9,14 +9,14 @@
 				<div>
 					<form [formGroup]="formBuyTokens">
 						<div class="form-group row">
-							<label class="col-sm-12 col-md-3 form-control-label">Купить DZT</label>
+							<label class="col-sm-12 col-md-3 form-control-label">Buy DZT</label>
 							<div class="col-sm-12 col-md-9">
 								<div class="row">
 									<div class="col-md-4">
-										<input type="number" formControlName="ethSum" class="form-control" placeholder="Сумма в ETH">
+										<input type="number" formControlName="ethSum" class="form-control" placeholder="Amount in ETH">
 									</div>
 									<div class="col-md-4">
-										<button [disabled]="!formBuyTokens.valid" (click)="runBuyTokens()" type="button" class="btn btn-primary">Купить</button>
+										<button [disabled]="!formBuyTokens.valid" (click)="runBuyTokens()" type="button" class="btn btn-primary">Buy</button>
 									</div>
 								</div>
 							</div>
@@ -25,11 +25,11 @@
 				</div>
 				<div>
 					<div class="form-group row">
-						<label class="col-sm-12 col-md-3 form-control-label">Стать следующим гостем</label>
+						<label class="col-sm-12 col-md-3 form-control-label">Become the next guest</label>
 						<div class="col-sm-12 col-md-9">
 							<div class="row">
 								<div class="col-md-4">
-									<button (click)="displayBecomeTheNextShowGuestDialog = true" type="button" class="btn btn-primary">Выполнить</button>
+									<button (click)="displayBecomeTheNextShowGuestDialog = true" type="button" class="btn btn-primary">Execute</button>
 								</div>
 							</div>
 						</div>
@@ -41,10 +41,10 @@
 </div>
 
 <!-- become the next show guest dialog -->
-<p-dialog header="Стать следующим гостем" [visible]="displayBecomeTheNextShowGuestDialog" [modal]="true" [closable]="false">
-		<p>Чтобы стать гостем, вам нужно положить в стейк {{ becomeGuestStakeInEth }} DZT токенов. Вы уверены?</p>
+<p-dialog header="Become the next guest" [visible]="displayBecomeTheNextShowGuestDialog" [modal]="true" [closable]="false">
+		<p>To become a guest you need to put {{ becomeGuestStakeInEth }} DZT at stake. Are you sure?</p>
         <p-footer>
             <button type="button" (click)="runBecomeTheNextShowGuest()" class="btn btn-primary">Ok</button>
-            <button type="button" (click)="displayBecomeTheNextShowGuestDialog = false" class="btn">Отмена</button>
+            <button type="button" (click)="displayBecomeTheNextShowGuestDialog = false" class="btn">Cancel</button>
         </p-footer>
 </p-dialog>

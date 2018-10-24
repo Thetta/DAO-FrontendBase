@@ -4,30 +4,27 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class ReadableMethodSignPipe implements PipeTransform {
 
 	transform(methodSign: string) {
-
-		let result = "Перевод не найден";
-		
 		switch(methodSign) {
 			// standard dao base methods
 			case "addGroupMemberGeneric(bytes32[])":
-				return "Добавление участника";
+				return "Adding a new group member";
 			case "removeGroupMemberGeneric(bytes32[])":
-				return "Удаление участника";
+				return "Removing group member";
 			// DevZenDao methods
 			case "updateDaoParamsGeneric(bytes32[])":
-				return "Обновление параметров DAO";
+				return "Updating DAO params";
 			case "withdrawEtherGeneric(bytes32[])":
-				return "Вывод всех ETH";
+				return "Withdraw all ETH";
 			case "selectNextHostGeneric(bytes32[])":
-				return "Выбор следующего организатора";
+				return "Select the next host";
 			case "changeTheGuestGeneric(bytes32[])":
-				return "Смена гостя";
+				return "Change the guest";
 			case "emergency_ChangeTheGuestGeneric(bytes32[])":
-				return "Экстренная смена гостя";
+				return "Emergency change the guest";
 			case "moveToNextEpisodeGeneric(bytes32[])":
-				return "Выпуск нового эпизода";
+				return "Move to next episode";
 			default: 
-				return "Перевод не найден"
+				return "Translation not found"
 		}
 	}
 

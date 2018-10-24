@@ -1,5 +1,5 @@
 <header>
-	<h1 class="h3 display">Команда</h1>
+	<h1 class="h3 display">Team</h1>
 </header>
 
 <div class="row">
@@ -9,14 +9,14 @@
 				<div>
 					<form [formGroup]="formWithdrawEther">
 						<div class="form-group row">
-							<label class="col-sm-12 col-md-3 form-control-label">Вывести собранные ETH на адрес</label>
+							<label class="col-sm-12 col-md-3 form-control-label">Withdraw collected ETH to address</label>
 							<div class="col-sm-12 col-md-9">
 								<div class="row">
 									<div class="col-md-4">
-										<input class="form-control" type="text" formControlName="output" placeholder="Адрес">
+										<input class="form-control" type="text" formControlName="output" placeholder="Address">
 									</div>
 									<div class="col-md-4">
-										<button [disabled]="!formWithdrawEther.valid" (click)="runWithdrawEther()" type="button" class="btn btn-primary">Выполнить</button>
+										<button [disabled]="!formWithdrawEther.valid" (click)="runWithdrawEther()" type="button" class="btn btn-primary">Execute</button>
 									</div>
 								</div>
 							</div>
@@ -26,14 +26,14 @@
 				<div>
 					<form [formGroup]="formSelectNextHost">
 						<div class="form-group row">
-							<label class="col-sm-12 col-md-3 form-control-label">Установить следующего ведущего</label>
+							<label class="col-sm-12 col-md-3 form-control-label">Select the next host</label>
 							<div class="col-sm-12 col-md-9">
 								<div class="row">
 									<div class="col-md-4">
-										<input class="form-control" type="text" formControlName="host" placeholder="Адрес">
+										<input class="form-control" type="text" formControlName="host" placeholder="Address">
 									</div>
 									<div class="col-md-4">
-										<button [disabled]="!formSelectNextHost.valid" (click)="runSelectNextHost()" type="button" class="btn btn-primary">Выполнить</button>
+										<button [disabled]="!formSelectNextHost.valid" (click)="runSelectNextHost()" type="button" class="btn btn-primary">Execute</button>
 									</div>
 								</div>
 							</div>
@@ -43,20 +43,20 @@
 				<div>
 					<form [formGroup]="formChangeTheGuest">
 						<div class="form-group row">
-							<label class="col-sm-12 col-md-3 form-control-label">Сменить гостя</label>
+							<label class="col-sm-12 col-md-3 form-control-label">Change the guest</label>
 							<div class="col-sm-12 col-md-9">
 								<div class="row">
 									<div class="col-md-4">
 										<input
-											pTooltip="Позволяет изменить следующего гостя легальным путем. Если следующий гость уже выбран и у него есть DZT на кону, то используя данный метод с адресом нового гостя: старый гость получит DZT обратно, а новый станет следующим гостем. Этот метод можно вызвать только если следующий гость уже выбран и у нового гостя есть достаточно DZT."
+											pTooltip="Allows to change the next guest in 'legal' way. If the next guest is already selected and he has DZT at stake then using this method with address of a new guest: old guest will get DZT back and the new one will become the next guest. This method can be called only if the next guest is already selected and the next guest has enough DZT."
 											tooltipPosition="top"
 											class="form-control" 
 											type="text" 
 											formControlName="guest" 
-											placeholder="Адрес">
+											placeholder="Address">
 									</div>
 									<div class="col-md-4">
-										<button [disabled]="!formChangeTheGuest.valid" (click)="runChangeTheGuest()" type="button" class="btn btn-primary">Выполнить</button>
+										<button [disabled]="!formChangeTheGuest.valid" (click)="runChangeTheGuest()" type="button" class="btn btn-primary">Execute</button>
 									</div>
 								</div>
 							</div>
@@ -66,20 +66,20 @@
 				<div>
 					<form [formGroup]="formEmergencyChangeTheGuest">
 						<div class="form-group row">
-							<label class="col-sm-12 col-md-3 form-control-label">Экстренно сменить гостя</label>
+							<label class="col-sm-12 col-md-3 form-control-label">Emergency change the guest</label>
 							<div class="col-sm-12 col-md-9">
 								<div class="row">
 									<div class="col-md-4">
 										<input
-											pTooltip="Экстренный гость отличается от обычного гостя тем, что у обычного стоят DZT на кону. Если обычный гость не приходит на шоу, то его DZT сгорают. У экстренного гостя нет никаких DZT на кону. Этот метод можно вызвать только если следующий гость уже выбран."
+											pTooltip="The difference between emergency guest and ordinary guest is that ordinary guest has DZT at stake. If ordinary guest doesn't come to the show then his DZT at stake are burnt. Emergency guest doesn't have DZT at stake. This method can be called only if the next guest is already selected."
 											tooltipPosition="top"
 											class="form-control" 
 											type="text" 
 											formControlName="guest" 
-											placeholder="Адрес">
+											placeholder="Address">
 									</div>
 									<div class="col-md-4">
-										<button [disabled]="!formEmergencyChangeTheGuest.valid" (click)="runEmergencyChangeTheGuest()" type="button" class="btn btn-primary">Выполнить</button>
+										<button [disabled]="!formEmergencyChangeTheGuest.valid" (click)="runEmergencyChangeTheGuest()" type="button" class="btn btn-primary">Execute</button>
 									</div>
 								</div>
 							</div>
@@ -89,18 +89,18 @@
 				<div>
 					<form [formGroup]="formMoveToNextEpisode">
 						<div class="form-group row">
-							<label class="col-sm-12 col-md-3 form-control-label">Текущий эпизод завершился</label>
+							<label class="col-sm-12 col-md-3 form-control-label">Move to next episode</label>
 							<div class="col-sm-12 col-md-9">
 								<div class="row">
 									<div class="col-md-4">
-										<select formControlName="guestHasCome" class="form-control" placeholder="Начислить репутацию гостю?">
-											<option value="true">Да</option>
-											<option value="false">Нет</option>
+										<select formControlName="guestHasCome" class="form-control" placeholder="Mint DZTREP to guest?">
+											<option value="true">Yes</option>
+											<option value="false">No</option>
 										</select>
-										<span class="text-small text-gray help-block-none">Начислить репутацию гостю?</span>
+										<span class="text-small text-gray help-block-none">Mint DZTREP to guest?</span>
 									</div>
 									<div class="col-md-4">
-										<button [disabled]="!formMoveToNextEpisode.valid" (click)="runMoveToNextEpisode()" type="button" class="btn btn-primary">Выполнить</button>
+										<button [disabled]="!formMoveToNextEpisode.valid" (click)="runMoveToNextEpisode()" type="button" class="btn btn-primary">Execute</button>
 									</div>
 								</div>
 							</div>

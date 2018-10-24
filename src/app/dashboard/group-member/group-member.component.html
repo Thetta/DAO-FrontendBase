@@ -1,5 +1,5 @@
 <header>
-	<h1 class="h3 display">Участники группы DevZenTeam</h1>
+	<h1 class="h3 display">Members of group DevZenTeam</h1>
 </header>
 
 <div *ngIf="loading" class="row">
@@ -10,7 +10,7 @@
 
 <div *ngIf="!loading" class="row pb-2">
 	<div class="col-lg-12 text-right">
-		<button (click)="displayAddGroupMemberDialog = true" class="btn btn-primary">Добавить</button>
+		<button (click)="displayAddGroupMemberDialog = true" class="btn btn-primary">Add</button>
 	</div>
 </div>
 
@@ -22,7 +22,7 @@
 					<table class="table table-striped table-hover">
 						<thead>
 							<tr>
-								<th>Адрес</th>
+								<th>Address</th>
 								<th>DZT</th>
 								<th>DZTREP</th>
 								<th></th>
@@ -34,7 +34,7 @@
 								<td>{{ web3Service.fromWei(member.dztBalance,"ether") }}</td>
 								<td>{{ web3Service.fromWei(member.dztRepBalance,"ether") }}</td>
 								<td>
-									<button (click)="deleteGroupMember(member)" class="btn btn-danger">Удалить</button>
+									<button (click)="deleteGroupMember(member)" class="btn btn-danger">Delete</button>
 								</td>
 							</tr>
 						</tbody>
@@ -46,15 +46,15 @@
 </div>
 
 <!-- add group member dialog -->
-<p-dialog header="Добавление нового участника группы" [visible]="displayAddGroupMemberDialog" [modal]="true" [closable]="false">
+<p-dialog header="Adding a new team member" [visible]="displayAddGroupMemberDialog" [modal]="true" [closable]="false">
 		<div>
 			<form [formGroup]="formGroupMember">
 				<div class="form-group row">
-					<label class="col-md-12 form-control-label">Адрес</label>
+					<label class="col-md-12 form-control-label">Address</label>
 					<div class="col-md-12">
 						<div class="row">
 							<div class="col-md-12">
-								<input type="text" formControlName="address" class="form-control" placeholder="Адрес нового участника">
+								<input type="text" formControlName="address" class="form-control" placeholder="New member address">
 							</div>
 						</div>
 					</div>
@@ -62,7 +62,7 @@
 			</form>
 		</div>
         <p-footer>
-            <button type="button" (click)="addGroupMember()" class="btn btn-primary">Добавить</button>
-            <button type="button" (click)="displayAddGroupMemberDialog = false" class="btn">Отмена</button>
+            <button type="button" (click)="addGroupMember()" class="btn btn-primary">Add</button>
+            <button type="button" (click)="displayAddGroupMemberDialog = false" class="btn">Cancel</button>
         </p-footer>
 </p-dialog>

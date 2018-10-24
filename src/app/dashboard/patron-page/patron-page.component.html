@@ -1,5 +1,5 @@
 <header>
-	<h1 class="h3 display">Для рекламодателя</h1>
+	<h1 class="h3 display">For advertiser</h1>
 </header>
 
 <div class="row">
@@ -9,14 +9,14 @@
 				<div>
 					<form [formGroup]="formRunAdsInTheNextEpisode">
 						<div class="form-group row">
-							<label class="col-sm-12 col-md-3 form-control-label">Купить рекламное место</label>
+							<label class="col-sm-12 col-md-3 form-control-label">Buy ad slot</label>
 							<div class="col-sm-12 col-md-9">
 								<div class="row">
 									<div class="col-md-4">
-										<input type="text" formControlName="adText" class="form-control" placeholder="Текст рекламы">
+										<input type="text" formControlName="adText" class="form-control" placeholder="Ad text">
 									</div>
 									<div class="col-md-4">
-										<button [disabled]="!formRunAdsInTheNextEpisode.valid" (click)="runAdsInTheNextEpisode()" type="button" class="btn btn-primary">Купить</button>
+										<button [disabled]="!formRunAdsInTheNextEpisode.valid" (click)="runAdsInTheNextEpisode()" type="button" class="btn btn-primary">Buy</button>
 									</div>
 								</div>
 							</div>

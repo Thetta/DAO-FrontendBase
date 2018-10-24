@@ -54,7 +54,7 @@ export class HomeComponent implements OnInit {
 			},
 			(err) => {
 				this.loading = false;
-				this.messageService.add({severity:'error', summary:'Ошибка', detail:'Ошибка при получении параметров DAO'});
+				this.messageService.add({severity:'error', summary:'Error', detail:'Error on getting DAO params'});
 				console.error(err); 
 			}
 		);

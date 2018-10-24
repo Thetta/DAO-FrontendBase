@@ -1,5 +1,5 @@
 <header>
-	<h1 class="h3 display">Предложения</h1>
+	<h1 class="h3 display">Proposals</h1>
 </header>
 
 <div *ngIf="loading" class="row">
@@ -16,13 +16,13 @@
 					<table class="table table-striped table-hover">
 						<thead>
 							<tr>
-								<th>Название</th>
-								<th>Параметры</th>
-								<th>За</th>
-								<th>Против</th>
-								<th>Всего</th>
-								<th>Статус</th>
-								<th>Результат</th>
+								<th>Name</th>
+								<th>Params</th>
+								<th>Yes</th>
+								<th>No</th>
+								<th>Total</th>
+								<th>Status</th>
+								<th>Result</th>
 								<th></th>
 							</tr>
 						</thead>
@@ -35,12 +35,12 @@
 								<td>{{ proposal.data[0].yesResults }}</td>
 								<td>{{ proposal.data[0].noResults }}</td>
 								<td>{{ +proposal.data[0].yesResults + +proposal.data[0].noResults }}/{{ proposal.data[0].votersTotal }}</td>
-								<td>{{ proposal.data[1] ? 'Закончен' : 'Идет' }}</td>
+								<td>{{ proposal.data[1] ? 'Finished' : 'Not finished' }}</td>
 								<td>
-									<span *ngIf="proposal.data[1]">{{ proposal.data[2] ? 'Принято' : 'Отклонено' }}</span>
+									<span *ngIf="proposal.data[1]">{{ proposal.data[2] ? 'Accepted' : 'Discarded' }}</span>
 								</td>
 								<td>
-									<button *ngIf="!proposal.data[1]" (click)="showVoteDialog(proposal.address)" class="btn btn-primary">Голосовать</button>
+									<button *ngIf="!proposal.data[1]" (click)="showVoteDialog(proposal.address)" class="btn btn-primary">Vote</button>
 								</td>
 							</tr>
 						</tbody>
@@ -52,16 +52,16 @@
 </div>
 
 <!-- vote dialog -->
-<p-dialog header="Голосовать" [visible]="displayVoteDialog" [modal]="true" [closable]="false">
+<p-dialog header="Voting" [visible]="displayVoteDialog" [modal]="true" [closable]="false">
 		<form [formGroup]="formVote">
 			<div class="form-group row">
-				<label class="col-sm-12 form-control-label">Ваш выбор</label>
+				<label class="col-sm-12 form-control-label">Your choice</label>
 				<div class="col-sm-12">
 					<div class="row">
 						<div class="col-sm-12">
-							<select formControlName="vote" class="form-control" placeholder="Выш выбор">
-								<option value="true">За</option>
-								<option value="false">Против</option>
+							<select formControlName="vote" class="form-control" placeholder="Your choice">
+								<option value="true">Yes</option>
+								<option value="false">No</option>
 							</select>
 						</div>
 					</div>
@@ -69,7 +69,7 @@
 			</div>
 		</form>
         <p-footer>
-            <button [disabled]="!formVote.valid" type="button" (click)="vote()" class="btn btn-primary">Голосовать</button>
-            <button type="button" (click)="displayVoteDialog = false" class="btn">Отмена</button>
+            <button [disabled]="!formVote.valid" type="button" (click)="vote()" class="btn btn-primary">Vote</button>
+            <button type="button" (click)="displayVoteDialog = false" class="btn">Cancel</button>
         </p-footer>
 </p-dialog>

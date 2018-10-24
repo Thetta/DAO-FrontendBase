@@ -1,5 +1,5 @@
 <header> 
-	<h1 class="h3 display">Параметры DAO</h1>
+	<h1 class="h3 display">DAO params</h1>
 </header>
 
 <div class="row">
@@ -9,105 +9,105 @@
 				<div>
 					<form [formGroup]="formDaoParams">
 						<div class="form-group row">
-							<label class="col-sm-12 col-md-3 form-control-label">Кол-во DZT, создаваемых каждую неделю</label>
+							<label class="col-sm-12 col-md-3 form-control-label">Amount of DZT created each week</label>
 							<div class="col-sm-12 col-md-9">
 								<div class="row">
 									<div class="col-md-4">
-										<input type="number" formControlName="mintTokensPerWeekAmount" class="form-control" placeholder="Кол-во DZT, создаваемых каждую неделю">
+										<input type="number" formControlName="mintTokensPerWeekAmount" class="form-control" placeholder="Amount of DZT created each week">
 									</div>
 									<div class="col-md-4">
-										<button [disabled]="!formDaoParams.controls['mintTokensPerWeekAmount'].valid" (click)="runSetParam(devZenDaoService.PARAM_MINT_TOKENS_PER_WEEK_AMOUNT)" type="button" class="btn btn-primary">Обновить</button>
+										<button [disabled]="!formDaoParams.controls['mintTokensPerWeekAmount'].valid" (click)="runSetParam(devZenDaoService.PARAM_MINT_TOKENS_PER_WEEK_AMOUNT)" type="button" class="btn btn-primary">Update</button>
 									</div>
 								</div>
 							</div>
 						</div>
 						<div class="form-group row">
-							<label class="col-sm-12 col-md-3 form-control-label">Кол-во DZTREP, создаваемых каждую неделю</label>
+							<label class="col-sm-12 col-md-3 form-control-label">Amount of DZTREP created each week</label>
 							<div class="col-sm-12 col-md-9">
 								<div class="row">
 									<div class="col-md-4">
-										<input type="number" formControlName="mintReputationTokensPerWeekAmount" class="form-control" placeholder="Кол-во DZTREP, создаваемых каждую неделю">
+										<input type="number" formControlName="mintReputationTokensPerWeekAmount" class="form-control" placeholder="Amount of DZTREP created each week">
 									</div>
 									<div class="col-md-4">
-										<button [disabled]="!formDaoParams.controls['mintReputationTokensPerWeekAmount'].valid" (click)="runSetParam(devZenDaoService.PARAM_MINT_REPUTATION_TOKENS_PER_WEEK_AMOUNT)" type="button" class="btn btn-primary">Обновить</button>
+										<button [disabled]="!formDaoParams.controls['mintReputationTokensPerWeekAmount'].valid" (click)="runSetParam(devZenDaoService.PARAM_MINT_REPUTATION_TOKENS_PER_WEEK_AMOUNT)" type="button" class="btn btn-primary">Update</button>
 									</div>
 								</div>
 							</div>
 						</div>
 						<div class="form-group row">
-							<label class="col-sm-12 col-md-3 form-control-label">Цена за 1 DZT в ETH</label>
+							<label class="col-sm-12 col-md-3 form-control-label">Price for 1 DZT in ETH</label>
 							<div class="col-sm-12 col-md-9">
 								<div class="row">
 									<div class="col-md-4">
-										<input type="number" formControlName="oneTokenPriceInWei" class="form-control" placeholder="Цена за 1 DZT в ETH">
+										<input type="number" formControlName="oneTokenPriceInWei" class="form-control" placeholder="Price for 1 DZT in ETH">
 									</div>
 									<div class="col-md-4">
-										<button [disabled]="!formDaoParams.controls['oneTokenPriceInWei'].valid" (click)="runSetParam(devZenDaoService.PARAM_ONE_TOKEN_PRICE_IN_WEI)" type="button" class="btn btn-primary">Обновить</button>
+										<button [disabled]="!formDaoParams.controls['oneTokenPriceInWei'].valid" (click)="runSetParam(devZenDaoService.PARAM_ONE_TOKEN_PRICE_IN_WEI)" type="button" class="btn btn-primary">Update</button>
 									</div>
 								</div>
 							</div>
 						</div>
 						<div class="form-group row">
-							<label class="col-sm-12 col-md-3 form-control-label">Цена за 1 рекламный слот в DZT</label>
+							<label class="col-sm-12 col-md-3 form-control-label">Price for 1 ad slot in ETH</label>
 							<div class="col-sm-12 col-md-9">
 								<div class="row">
 									<div class="col-md-4">
-										<input type="number" formControlName="oneAdSlotPrice" class="form-control" placeholder="Цена за 1 рекламный слот в DZT">
+										<input type="number" formControlName="oneAdSlotPrice" class="form-control" placeholder="Price for 1 ad slot in ETH">
 									</div>
 									<div class="col-md-4">
-										<button [disabled]="!formDaoParams.controls['oneAdSlotPrice'].valid" (click)="runSetParam(devZenDaoService.PARAM_ONE_AD_SLOT_PRICE)" type="button" class="btn btn-primary">Обновить</button>
+										<button [disabled]="!formDaoParams.controls['oneAdSlotPrice'].valid" (click)="runSetParam(devZenDaoService.PARAM_ONE_AD_SLOT_PRICE)" type="button" class="btn btn-primary">Update</button>
 									</div>
 								</div>
 							</div>
 						</div>
 						<div class="form-group row">
-							<label class="col-sm-12 col-md-3 form-control-label">Залог гостя в DZT</label>
+							<label class="col-sm-12 col-md-3 form-control-label">Guest stake in DZT</label>
 							<div class="col-sm-12 col-md-9">
 								<div class="row">
 									<div class="col-md-4">
-										<input type="number" formControlName="becomeGuestStake" class="form-control" placeholder="Залог гостя в DZT">
+										<input type="number" formControlName="becomeGuestStake" class="form-control" placeholder="Guest stake in DZT">
 									</div>
 									<div class="col-md-4">
-										<button [disabled]="!formDaoParams.controls['becomeGuestStake'].valid" (click)="runSetParam(devZenDaoService.PARAM_BECOME_GUEST_STAKE)" type="button" class="btn btn-primary">Обновить</button>
+										<button [disabled]="!formDaoParams.controls['becomeGuestStake'].valid" (click)="runSetParam(devZenDaoService.PARAM_BECOME_GUEST_STAKE)" type="button" class="btn btn-primary">Update</button>
 									</div>
 								</div>
 							</div>
 						</div>
 						<div class="form-group row">
-							<label class="col-sm-12 col-md-3 form-control-label">Награда организатора за эпизод в DZTREP</label>
+							<label class="col-sm-12 col-md-3 form-control-label">Host reward for episode in DZTREP</label>
 							<div class="col-sm-12 col-md-9">
 								<div class="row">
 									<div class="col-md-4">
-										<input type="number" formControlName="repTokensRewardHost" class="form-control" placeholder="Награда организатора за эпизод в DZTREP">
+										<input type="number" formControlName="repTokensRewardHost" class="form-control" placeholder="Host reward for episode in DZTREP">
 									</div>
 									<div class="col-md-4">
-										<button [disabled]="!formDaoParams.controls['repTokensRewardHost'].valid" (click)="runSetParam(devZenDaoService.PARAM_REP_TOKENS_REWARD_HOST)" type="button" class="btn btn-primary">Обновить</button>
+										<button [disabled]="!formDaoParams.controls['repTokensRewardHost'].valid" (click)="runSetParam(devZenDaoService.PARAM_REP_TOKENS_REWARD_HOST)" type="button" class="btn btn-primary">Update</button>
 									</div>
 								</div>
 							</div>
 						</div>
 						<div class="form-group row">
-							<label class="col-sm-12 col-md-3 form-control-label">Награда гостя за эпизод в DZTREP</label>
+							<label class="col-sm-12 col-md-3 form-control-label">Guest reward for episode in DZTREP</label>
 							<div class="col-sm-12 col-md-9">
 								<div class="row">
 									<div class="col-md-4">
-										<input type="number" formControlName="repTokensRewardGuest" class="form-control" placeholder="Награда гостя за эпизод в DZTREP">
+										<input type="number" formControlName="repTokensRewardGuest" class="form-control" placeholder="Guest reward for episode in DZTREP">
 									</div>
 									<div class="col-md-4">
-										<button [disabled]="!formDaoParams.controls['repTokensRewardGuest'].valid" (click)="runSetParam(devZenDaoService.PARAM_REP_TOKENS_REWARD_GUEST)" type="button" class="btn btn-primary">Обновить</button>
+										<button [disabled]="!formDaoParams.controls['repTokensRewardGuest'].valid" (click)="runSetParam(devZenDaoService.PARAM_REP_TOKENS_REWARD_GUEST)" type="button" class="btn btn-primary">Update</button>
 									</div>
 								</div>
 							</div>
 						</div>
 						<div class="form-group row">
-							<label class="col-sm-12 col-md-3 form-control-label">Награда всех членов команды за эпизод в DZTREP</label>
+							<label class="col-sm-12 col-md-3 form-control-label">Reward of all team members for episode in DZTREP</label>
 							<div class="col-sm-12 col-md-9">
 								<div class="row">
 									<div class="col-md-4">
-										<input type="number" formControlName="repTokensRewardTeamMembers" class="form-control" placeholder="Награда всех членов команды за эпизод в DZTREP">
+										<input type="number" formControlName="repTokensRewardTeamMembers" class="form-control" placeholder="Reward of all team members for episode in DZTREP">
 									</div>
 									<div class="col-md-4">
-										<button [disabled]="!formDaoParams.controls['repTokensRewardTeamMembers'].valid" (click)="runSetParam(devZenDaoService.PARAM_REP_TOKENS_REWARD_TEAM_MEMBERS)" type="button" class="btn btn-primary">Обновить</button>
+										<button [disabled]="!formDaoParams.controls['repTokensRewardTeamMembers'].valid" (click)="runSetParam(devZenDaoService.PARAM_REP_TOKENS_REWARD_TEAM_MEMBERS)" type="button" class="btn btn-primary">Update</button>
 									</div>
 								</div>
 							</div>

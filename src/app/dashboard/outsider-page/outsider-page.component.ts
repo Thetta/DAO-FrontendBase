@@ -42,7 +42,7 @@ export class OutsiderPageComponent implements OnInit {
 				this.becomeGuestStakeInEth = this.web3Service.fromWei(String(this.params['becomeGuestStake']), "ether");
 			},
 			err => {
-				this.messageService.add({severity:'error', summary:'Ошибка', detail:'Ошибка при получении параметров DAO'});
+				this.messageService.add({severity:'error', summary:'Error', detail:'Error on getting DAO params'});
 				console.error(err);
 			}
 		)
