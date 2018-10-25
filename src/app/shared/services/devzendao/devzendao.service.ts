@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { EventEmitter, Injectable, Output } from '@angular/core';
+import { MessageService } from 'primeng/api';
 import { Observable, from, forkJoin, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
@@ -45,6 +46,7 @@ export class DevzendaoService {
 
 	constructor(
 		public http: HttpClient,
+		public messageService: MessageService,
 		public txSenderService: TxSenderService,
 		public web3Service: Web3Service
 	) {
@@ -240,7 +242,8 @@ export class DevzendaoService {
 	 * @param address 
 	 */
 	addGroupMemberAuto(groupName, address): Observable<string> {
-		return this.web3Service.getAccounts().pipe(
+		return this.hasActiveVoting().pipe(
+			switchMap(hasActiveVoting => this.hasActiveVotingHandler(hasActiveVoting)),
 			switchMap(accounts => this.txSenderService.send(
 				this.devZenDaoAutoContract.methods.addGroupMemberAuto, 
 				[groupName, address], 
@@ -256,7 +259,8 @@ export class DevzendaoService {
 	 * @param guestAddress 
 	 */
 	changeTheGuestAuto(guestAddress): Observable<any> {
-		return this.web3Service.getAccounts().pipe(
+		return this.hasActiveVoting().pipe(
+			switchMap(hasActiveVoting => this.hasActiveVotingHandler(hasActiveVoting)),
 			switchMap(accounts => this.txSenderService.send(
 				this.devZenDaoAutoContract.methods.changeTheGuestAuto,
 				[guestAddress],
@@ -272,7 +276,8 @@ export class DevzendaoService {
 	 * @param guestAddress 
 	 */
 	emergencyChangeTheGuestAuto(guestAddress): Observable<any> {
-		return this.web3Service.getAccounts().pipe(
+		return this.hasActiveVoting().pipe(
+			switchMap(hasActiveVoting => this.hasActiveVotingHandler(hasActiveVoting)),
 			switchMap(accounts => this.txSenderService.send(
 				this.devZenDaoAutoContract.methods.emergency_ChangeTheGuestAuto,
 				[guestAddress],
@@ -288,7 +293,8 @@ export class DevzendaoService {
 	 * @param guestHasCome whether guest visited the show
 	 */
 	moveToNextEpisodeAuto(guestHasCome): Observable<any> {
-		return this.web3Service.getAccounts().pipe(
+		return this.hasActiveVoting().pipe(
+			switchMap(hasActiveVoting => this.hasActiveVotingHandler(hasActiveVoting)),
 			switchMap(accounts => this.txSenderService.send(
 				this.devZenDaoAutoContract.methods.moveToNextEpisodeAuto,
 				[guestHasCome],
@@ -305,7 +311,8 @@ export class DevzendaoService {
 	 * @param address 
 	 */
 	removeGroupMemberAuto(groupName, address): Observable<void> {
-		return this.web3Service.getAccounts().pipe(
+		return this.hasActiveVoting().pipe(
+			switchMap(hasActiveVoting => this.hasActiveVotingHandler(hasActiveVoting)),
 			switchMap(accounts => this.txSenderService.send(
 				this.devZenDaoAutoContract.methods.removeGroupMemberAuto,
 				[groupName, address],
@@ -321,7 +328,8 @@ export class DevzendaoService {
 	 * @param nextHostAddress 
 	 */
 	selectNextHostAuto(nextHostAddress): Observable<any> {
-		return this.web3Service.getAccounts().pipe(
+		return this.hasActiveVoting().pipe(
+			switchMap(hasActiveVoting => this.hasActiveVotingHandler(hasActiveVoting)),
 			switchMap(accounts => this.txSenderService.send(
 				this.devZenDaoAutoContract.methods.selectNextHostAuto,
 				[nextHostAddress],
@@ -338,7 +346,8 @@ export class DevzendaoService {
 	 * @param value
 	 */
 	updateDaoParamsAuto(paramHash, value): Observable<string> {
-		return this.web3Service.getAccounts().pipe(
+		return this.hasActiveVoting().pipe(
+			switchMap(hasActiveVoting => this.hasActiveVotingHandler(hasActiveVoting)),
 			switchMap(accounts => this.txSenderService.send(
 				this.devZenDaoAutoContract.methods.updateDaoParamsAuto, 
 				[paramHash, value],
@@ -354,7 +363,8 @@ export class DevzendaoService {
 	 * @param outputAddress 
 	 */
 	withdrawEtherAuto(outputAddress): Observable<any> {
-		return this.web3Service.getAccounts().pipe(
+		return this.hasActiveVoting().pipe(
+			switchMap(hasActiveVoting => this.hasActiveVotingHandler(hasActiveVoting)),
 			switchMap(accounts => this.txSenderService.send(
 				this.devZenDaoAutoContract.methods.withdrawEtherAuto, 
 				[outputAddress],
@@ -502,6 +512,44 @@ export class DevzendaoService {
 		if(hash == this.PARAM_REP_TOKENS_REWARD_GUEST) return "repTokensRewardGuest";
 		if(hash == this.PARAM_REP_TOKENS_REWARD_TEAM_MEMBERS) return "repTokensRewardTeamMembers";
 		if(!name) throw Error(`param name not found for hash ${hash}`);
+	}
+
+	/**
+	 * Checks whether there are active votings
+	 */
+	hasActiveVoting() {
+		return this.getProposalsCount().pipe(
+			switchMap(proposalsCount => {
+				if(proposalsCount == 0) return of([]);
+				let requests = [];
+				for(let i = 0; i < proposalsCount; i++) {
+					requests.push(this.getProposalAtIndex(i));
+				}
+				return forkJoin(requests);
+			}),
+			switchMap(proposalAddresses => {
+				if(proposalAddresses.length == 0) return of([]);
+				let requests = [];
+				for(let i = 0; i < proposalAddresses.length; i++) {
+					requests.push(this.isFinished(proposalAddresses[i]));
+				}
+				return forkJoin(requests);
+			}),
+			switchMap(isFinishedArray => {
+				return isFinishedArray.includes(false) ? of(true) : of(false);
+			})
+		)
+	}
+
+	/**
+	 * Has active voting handler for auto methods
+	 */
+	hasActiveVotingHandler(hasActiveVoting) {
+		if(hasActiveVoting) {
+			this.messageService.add({severity:'error', summary:'Error', detail:'You can\'t start a new voting while there is at least one active voting'});
+			throw new Error('You can\'t start a new voting while there is at least one active voting');
+		}
+		return this.web3Service.getAccounts();
 	}
 
 }
