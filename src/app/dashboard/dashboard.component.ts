@@ -46,6 +46,9 @@ export class DashboardComponent implements OnInit {
 					if(errorCode == this.web3Service.CONNECTION_NOT_LOGGED_IN) {
 						this.router.navigate(['metamask-not-logged-in']);
 					}
+					if(errorCode == this.web3Service.CONNECTION_NOT_ALLOWED_NETWORK) {
+						this.router.navigate(['metamask-not-allowed-network']);
+					}
 				}
 			},
 			(err) => {

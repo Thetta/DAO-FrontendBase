@@ -16,6 +16,7 @@ export class Web3Service {
 	CONNECTION_NO_ERROR = 0;
 	CONNECTION_NO_PROVIDER = 1;
 	CONNECTION_NOT_LOGGED_IN = 2;
+	CONNECTION_NOT_ALLOWED_NETWORK = 3;
 
   	constructor() { }
 
@@ -95,10 +96,20 @@ export class Web3Service {
 		return Observable.create((observer) => {
 			this.getAccounts().subscribe(
 				(accounts) => {
-					observer.next(accounts.length > 0 ? this.CONNECTION_NO_ERROR : this.CONNECTION_NOT_LOGGED_IN);
-				},
-				(err) => { observer.error(err); },
-				() => { observer.complete(); }
+					if(accounts.length == 0) {
+						observer.next(this.CONNECTION_NOT_LOGGED_IN);
+					} else {
+						// check that user is connected to the allowed network
+						this.getNetwork().subscribe(
+							networkName => {
+								const allowedNetworks = ["main", "kovan", "private"];
+								observer.next(allowedNetworks.includes(networkName) ? this.CONNECTION_NO_ERROR : this.CONNECTION_NOT_ALLOWED_NETWORK);
+							},
+							(err) => { observer.error(err); },
+							() => { observer.complete(); }
+						);
+					}
+				}
 			);
 		});
 	}
