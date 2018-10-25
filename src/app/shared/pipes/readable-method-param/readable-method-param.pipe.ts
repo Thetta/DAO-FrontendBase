@@ -46,8 +46,8 @@ export class ReadableMethodParamPipe implements PipeTransform {
             case "updateDaoParamsGeneric(bytes32[])":
                 // param name
                 if(index == 0) {
-                    const readableParamName = this.devZenDaoService.getParamNameByHash(paramHex);
-                    return `Param: ${readableParamName}`;
+                    const paramInfo = this.devZenDaoService.getParamInfoByHash(paramHex);
+                    return `Param: ${paramInfo.desc}`;
                 } else {
                     // param value
                     const paramValueInWei = this.web3Service.hexToNumberString(paramHex);

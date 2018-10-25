@@ -501,17 +501,50 @@ export class DevzendaoService {
 	/**
 	 * Returns parameter name by hash
 	 */
-	getParamNameByHash(hash) {
+	getParamInfoByHash(hash) {
 		let name = null;
-		if(hash == this.PARAM_MINT_TOKENS_PER_WEEK_AMOUNT) return "mintTokensPerWeekAmount";
-		if(hash == this.PARAM_MINT_REPUTATION_TOKENS_PER_WEEK_AMOUNT) return "mintReputationTokensPerWeekAmount";
-		if(hash == this.PARAM_ONE_AD_SLOT_PRICE) return "oneAdSlotPrice";
-		if(hash == this.PARAM_ONE_TOKEN_PRICE_IN_WEI) return "oneTokenPriceInWei";
-		if(hash == this.PARAM_BECOME_GUEST_STAKE) return "becomeGuestStake";
-		if(hash == this.PARAM_REP_TOKENS_REWARD_HOST) return "repTokensRewardHost";
-		if(hash == this.PARAM_REP_TOKENS_REWARD_GUEST) return "repTokensRewardGuest";
-		if(hash == this.PARAM_REP_TOKENS_REWARD_TEAM_MEMBERS) return "repTokensRewardTeamMembers";
+		let desc = null;
+
+		if(hash == this.PARAM_MINT_TOKENS_PER_WEEK_AMOUNT) {
+			name = "mintTokensPerWeekAmount";
+			desc = "Amount of DZT created each week";
+		}
+		if(hash == this.PARAM_MINT_REPUTATION_TOKENS_PER_WEEK_AMOUNT) {
+			name = "mintReputationTokensPerWeekAmount";
+			desc = "Amount of DZTREP created each week";
+		}
+		if(hash == this.PARAM_ONE_AD_SLOT_PRICE) {
+			name = "oneAdSlotPrice";
+			desc = "Price for 1 ad slot in ETH";
+		}
+		if(hash == this.PARAM_ONE_TOKEN_PRICE_IN_WEI) {
+			name = "oneTokenPriceInWei";
+			desc = "Price for 1 DZT in ETH";
+		}
+		if(hash == this.PARAM_BECOME_GUEST_STAKE) {
+			name = "becomeGuestStake";
+			desc = "Guest stake in DZT";
+		}
+		if(hash == this.PARAM_REP_TOKENS_REWARD_HOST) {
+			name = "repTokensRewardHost";
+			desc = "Host reward for episode in DZTREP";
+		}
+		if(hash == this.PARAM_REP_TOKENS_REWARD_GUEST) {
+			name = "repTokensRewardGuest";
+			desc = "Guest reward for episode in DZTREP";
+		}
+		if(hash == this.PARAM_REP_TOKENS_REWARD_TEAM_MEMBERS) {
+			name = "repTokensRewardTeamMembers";
+			desc = "Reward of all team members for episode in DZTREP";
+		}
+
 		if(!name) throw Error(`param name not found for hash ${hash}`);
+		if(!desc) throw Error(`param desc not found for hash ${hash}`);
+
+		return {
+			name: name,
+			desc: desc
+		};
 	}
 
 	/**
