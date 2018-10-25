@@ -1,5 +1,6 @@
 <header>
 	<h1 class="h3 display">Team</h1>
+	<div><span class="text-small help-block-none">Each method creates a voting</span></div>
 </header>
 
 <div class="row">
@@ -9,7 +10,10 @@
 				<div>
 					<form [formGroup]="formWithdrawEther">
 						<div class="form-group row">
-							<label class="col-sm-12 col-md-3 form-control-label">Withdraw collected ETH to address</label>
+							<div class="col-sm-12 col-md-3">
+								<label class="form-control-label mb-0">Withdraw collected ETH to addressek</label>
+								<div><span class="text-small text-gray help-block-none">Withdraw all ETH to specific address</span></div>
+							</div>
 							<div class="col-sm-12 col-md-9">
 								<div class="row">
 									<div class="col-md-4">
@@ -26,7 +30,10 @@
 				<div>
 					<form [formGroup]="formSelectNextHost">
 						<div class="form-group row">
-							<label class="col-sm-12 col-md-3 form-control-label">Select the next host</label>
+							<div class="col-sm-12 col-md-3">
+								<label class="form-control-label mb-0">Select the next host</label>
+								<div><span class="text-small text-gray help-block-none">Change the next episode's host</span></div>
+							</div>
 							<div class="col-sm-12 col-md-9">
 								<div class="row">
 									<div class="col-md-4">
@@ -43,7 +50,10 @@
 				<div>
 					<form [formGroup]="formChangeTheGuest">
 						<div class="form-group row">
-							<label class="col-sm-12 col-md-3 form-control-label">Change the guest</label>
+							<div class="col-sm-12 col-md-3">
+								<label class="form-control-label mb-0">Change the guest</label>
+								<div><span class="text-small text-gray help-block-none">Change the next episode's guest(previous guest notified you that he wouldn't come to the show)</span></div>
+							</div>
 							<div class="col-sm-12 col-md-9">
 								<div class="row">
 									<div class="col-md-4">
@@ -66,7 +76,10 @@
 				<div>
 					<form [formGroup]="formEmergencyChangeTheGuest">
 						<div class="form-group row">
-							<label class="col-sm-12 col-md-3 form-control-label">Emergency change the guest</label>
+							<div class="col-sm-12 col-md-3">
+								<label class="form-control-label mb-0">Emergency change the guest</label>
+								<div><span class="text-small text-gray help-block-none">Change the next episode's guest in case of emergency(previous guest suddenly didn't come)</span></div>
+							</div>
 							<div class="col-sm-12 col-md-9">
 								<div class="row">
 									<div class="col-md-4">
@@ -89,7 +102,10 @@
 				<div>
 					<form [formGroup]="formMoveToNextEpisode">
 						<div class="form-group row">
-							<label class="col-sm-12 col-md-3 form-control-label">Move to next episode</label>
+							<div class="col-sm-12 col-md-3">
+								<label class="form-control-label mb-0">Move to next episode</label>
+								<div><span class="text-small text-gray help-block-none">Creates a new episode if 1 week passed</span></div>
+							</div>
 							<div class="col-sm-12 col-md-9">
 								<div class="row">
 									<div class="col-md-4">

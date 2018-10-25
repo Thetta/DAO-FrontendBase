@@ -515,7 +515,7 @@ export class DevzendaoService {
 		}
 		if(hash == this.PARAM_ONE_AD_SLOT_PRICE) {
 			name = "oneAdSlotPrice";
-			desc = "Price for 1 ad slot in ETH";
+			desc = "Price for 1 ad slot in DZT";
 		}
 		if(hash == this.PARAM_ONE_TOKEN_PRICE_IN_WEI) {
 			name = "oneTokenPriceInWei";
