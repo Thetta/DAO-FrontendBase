@@ -66,8 +66,8 @@ export class DaoParamPageComponent implements OnInit {
 	 * Updates DAO param
 	 */
 	runSetParam(hashedParamName) {
-		const paramName = this.devZenDaoService.getParamNameByHash(hashedParamName);
-		const value = this.web3Service.toWei(String(this.formDaoParams.controls[paramName].value), "ether");
+		const paramInfo = this.devZenDaoService.getParamInfoByHash(hashedParamName);
+		const value = this.web3Service.toWei(String(this.formDaoParams.controls[paramInfo.name].value), "ether");
 		this.devZenDaoService.updateDaoParamsAuto(hashedParamName, value).subscribe();
 	}
 
