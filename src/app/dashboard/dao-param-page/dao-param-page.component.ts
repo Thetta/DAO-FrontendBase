@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { forkJoin } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
 import { DevzendaoService, Web3Service } from '../../shared';
@@ -12,6 +13,7 @@ import { DevzendaoService, Web3Service } from '../../shared';
 export class DaoParamPageComponent implements OnInit {
 
 	formDaoParams: FormGroup;
+	isTeamMember = false;
 
 	constructor(
 		public devZenDaoService: DevzendaoService,
@@ -25,15 +27,23 @@ export class DaoParamPageComponent implements OnInit {
 
 		let sub;
 		if(this.devZenDaoService.isInitialized) {
-			sub = this.devZenDaoService.getAllParams()
+			sub = forkJoin(
+				this.devZenDaoService.getAllParams(),
+				this.devZenDaoService.isTeamMember()
+			);
 		} else {
 			sub = this.devZenDaoService.init.pipe(
-				switchMap(() => this.devZenDaoService.getAllParams())
+				switchMap(() => forkJoin(
+					this.devZenDaoService.getAllParams(),
+					this.devZenDaoService.isTeamMember()
+				))
 			);
 		}
 
 		sub.subscribe(
-			(params) => {
+			(data) => {
+				const params = data[0];
+				const isTeamMember = data[1];
 				// assign values from params to form
 				Object.keys(params).map(key => {
 					if(this.formDaoParams.controls[key]) {
@@ -41,6 +51,8 @@ export class DaoParamPageComponent implements OnInit {
 						this.formDaoParams.controls[key].setValue(value);
 					}
 				});
+				// assign isTeamMember
+				this.isTeamMember = isTeamMember;
 			},
 			(err) => { console.error(err); }
 		);

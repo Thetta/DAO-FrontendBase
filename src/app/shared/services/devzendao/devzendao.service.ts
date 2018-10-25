@@ -232,6 +232,15 @@ export class DevzendaoService {
 		return from(this.daoBaseContract.methods.getProposalsCount().call());
 	}
 
+	/**
+	 * Checks whether user is in group
+	 * @param groupName
+	 * @param userAddress
+	 */
+	isGroupMember(groupName, userAddress): Observable<boolean> {
+		return from(this.daoBaseContract.methods.isGroupMember(groupName, userAddress).call());
+	}
+
 	//====================
 	// DevZenDaoAuto methods
 	//====================
@@ -583,6 +592,16 @@ export class DevzendaoService {
 			throw new Error('You can\'t start a new voting while there is at least one active voting');
 		}
 		return this.web3Service.getAccounts();
+	}
+
+	/**
+	 * Checks whether current user is DevZenTeam member
+	 */
+	isTeamMember(): Observable<boolean> {
+		return this.web3Service.getAccounts().pipe(
+			switchMap(accounts => this.isGroupMember(this.GROUP_DEV_ZEN_TEAM, accounts[0])),
+			switchMap(isTeamMember => isTeamMember ? of(true) : of(false))
+		);
 	}
 
 }

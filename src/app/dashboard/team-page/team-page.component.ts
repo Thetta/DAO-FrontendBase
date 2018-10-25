@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MessageService } from 'primeng/api';
+import { switchMap } from 'rxjs/operators';
 
 import { DevzendaoService } from '../../shared';
 
@@ -15,13 +17,32 @@ export class TeamPageComponent implements OnInit {
 	formMoveToNextEpisode: FormGroup;
 	formSelectNextHost: FormGroup;
 	formWithdrawEther: FormGroup;
+	isTeamMember = false;
 
 	constructor(
 		public devZenDaoService: DevzendaoService,
-		public formBuilder: FormBuilder
+		public formBuilder: FormBuilder,
+		public messageService: MessageService
 	) { }
 
 	ngOnInit() {
+		let sub;
+		if(this.devZenDaoService.isInitialized) {
+			sub = this.devZenDaoService.isTeamMember();
+		} else {
+			sub = this.devZenDaoService.init.pipe(
+				switchMap(() => this.devZenDaoService.isTeamMember())
+			);
+		}
+
+		sub.subscribe(
+			(isTeamMember) => { this.isTeamMember = isTeamMember; },
+			(err) => { 
+				this.messageService.add({severity:'error', summary:'Error', detail:'Error on getting team member status'});
+				console.error(err); 
+			}
+		);
+
 		this.initForms();
 	}
 
