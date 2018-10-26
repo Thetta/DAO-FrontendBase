@@ -10,7 +10,7 @@
 
 <div *ngIf="!loading" class="row pb-2">
 	<div class="col-lg-12 text-right">
-		<button (click)="displayAddGroupMemberDialog = true" class="btn btn-primary">Add</button>
+		<button (click)="displayAddGroupMemberDialog = true" [disabled]="!isTeamMember" class="btn btn-primary">Add</button>
 	</div>
 </div>
 
@@ -34,7 +34,7 @@
 								<td>{{ web3Service.fromWei(member.dztBalance,"ether") }}</td>
 								<td>{{ web3Service.fromWei(member.dztRepBalance,"ether") }}</td>
 								<td>
-									<button (click)="deleteGroupMember(member)" class="btn btn-danger">Delete</button>
+									<button (click)="deleteGroupMember(member)" [disabled]="!isTeamMember" class="btn btn-danger">Delete</button>
 								</td>
 							</tr>
 						</tbody>

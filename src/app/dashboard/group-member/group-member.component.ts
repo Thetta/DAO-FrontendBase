@@ -16,6 +16,7 @@ export class GroupMemberComponent implements OnInit {
 
 	displayAddGroupMemberDialog = false;
 	formGroupMember: FormGroup;
+	isTeamMember = false;
 	loading = false;
 	members: GroupMember[] = [];
 
@@ -32,18 +33,26 @@ export class GroupMemberComponent implements OnInit {
 		let sub;
 		// if DevZenDaoService initialized then we don't need to wait for it to load the contracts
 		if(this.devZenDaoService.isInitialized) {
-			sub = this.devZenDaoService.getGroupMembers(this.devZenDaoService.GROUP_DEV_ZEN_TEAM);
+			sub = forkJoin(
+				this.devZenDaoService.getGroupMembers(this.devZenDaoService.GROUP_DEV_ZEN_TEAM),
+				this.devZenDaoService.isTeamMember()
+			); 
 		} else {
 			// wait for the DevZenDaoService to be initialized
 			sub = this.devZenDaoService.init.pipe(
 				switchMap(() => {
-					return this.devZenDaoService.getGroupMembers(this.devZenDaoService.GROUP_DEV_ZEN_TEAM);
+					return forkJoin(
+						this.devZenDaoService.getGroupMembers(this.devZenDaoService.GROUP_DEV_ZEN_TEAM),
+						this.devZenDaoService.isTeamMember()
+					); 
 				})
 			);
 		}
 
 		sub.pipe(
-			switchMap(members => {
+			switchMap(data => {
+				const members = data[0];
+				this.isTeamMember = data[1];
 				let requests = [];
 				Object.keys(members).map(
 					index => {
