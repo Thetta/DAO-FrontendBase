@@ -20,19 +20,19 @@
 						<tbody>
 							<tr>
 								<th scope="row">Next host address</th>
-								<td>{{ nextEpisode.nextShowHost }}</td>
+								<td>{{ nextEpisode.nextShowHost | readableEmptyValue }}</td>
 							</tr>
 							<tr>
 								<th scope="row">Next guest address</th>
-								<td>{{ nextEpisode.nextShowGuest }}</td>
+								<td>{{ nextEpisode.nextShowGuest | readableEmptyValue }}</td>
 							</tr>
 							<tr>
 								<th scope="row">Previous host address</th>
-								<td>{{ nextEpisode.prevShowHost }}</td>
+								<td>{{ nextEpisode.prevShowHost | readableEmptyValue }}</td>
 							</tr>
 							<tr>
 								<th scope="row">Previous guest address</th>
-								<td>{{ nextEpisode.prevShowGuest }}</td>
+								<td>{{ nextEpisode.prevShowGuest | readableEmptyValue }}</td>
 							</tr>
 							<tr>
 								<th scope="row">Used ad slots</th>
