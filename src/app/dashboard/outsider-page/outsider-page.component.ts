@@ -15,6 +15,7 @@ export class OutsiderPageComponent implements OnInit {
 	becomeGuestStakeInEth = null;
 	displayBecomeTheNextShowGuestDialog = false;
 	formBuyTokens: FormGroup;
+	oneTokenPriceInEth = 0;
 	params = {};
 
 	constructor(
@@ -40,6 +41,7 @@ export class OutsiderPageComponent implements OnInit {
 			params => { 
 				this.params = params;
 				this.becomeGuestStakeInEth = this.web3Service.fromWei(String(this.params['becomeGuestStake']), "ether");
+				this.oneTokenPriceInEth = this.web3Service.fromWei(String(this.params['oneTokenPriceInWei']), "ether");
 			},
 			err => {
 				this.messageService.add({severity:'error', summary:'Error', detail:'Error on getting DAO params'});
@@ -55,7 +57,7 @@ export class OutsiderPageComponent implements OnInit {
 	 */
 	initForms() {
 		this.formBuyTokens = this.formBuilder.group({
-			ethSum: ['0.001', [Validators.required, Validators.min(1 / (10 ** 18))]]
+			ethSum: ['0.1', [Validators.required, Validators.min(1 / (10 ** 18))]]
 		});
 	}
 
