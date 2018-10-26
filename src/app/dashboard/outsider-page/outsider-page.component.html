@@ -16,7 +16,7 @@
 							<div class="col-sm-12 col-md-9">
 								<div class="row">
 									<div class="col-md-4">
-										<input type="number" formControlName="ethSum" class="form-control" placeholder="Amount in ETH">
+										<input type="number" formControlName="ethSum" class="form-control" placeholder="Amount in ETH" min="0">
 										<span class="text-small text-gray help-block-none">You will get {{ formBuyTokens.controls['ethSum'].value / oneTokenPriceInEth }} DZT for {{ formBuyTokens.controls['ethSum'].value }} ETH</span>
 									</div>
 									<div class="col-md-4">
