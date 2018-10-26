@@ -20,7 +20,7 @@
 										<input class="form-control" type="text" formControlName="output" placeholder="Address">
 									</div>
 									<div class="col-md-4">
-										<button [disabled]="!formWithdrawEther.valid || !isTeamMember" (click)="runWithdrawEther()" type="button" class="btn btn-primary">Execute</button>
+										<button [disabled]="!formWithdrawEther.valid" (click)="runWithdrawEther()" type="button" class="btn btn-primary">Execute</button>
 									</div>
 								</div>
 							</div>
@@ -40,7 +40,7 @@
 										<input class="form-control" type="text" formControlName="host" placeholder="Address">
 									</div>
 									<div class="col-md-4">
-										<button [disabled]="!formSelectNextHost.valid || !isTeamMember" (click)="runSelectNextHost()" type="button" class="btn btn-primary">Execute</button>
+										<button [disabled]="!formSelectNextHost.valid" (click)="runSelectNextHost()" type="button" class="btn btn-primary">Execute</button>
 									</div>
 								</div>
 							</div>
@@ -66,7 +66,7 @@
 											placeholder="Address">
 									</div>
 									<div class="col-md-4">
-										<button [disabled]="!formChangeTheGuest.valid || !isTeamMember" (click)="runChangeTheGuest()" type="button" class="btn btn-primary">Execute</button>
+										<button [disabled]="!formChangeTheGuest.valid" (click)="runChangeTheGuest()" type="button" class="btn btn-primary">Execute</button>
 									</div>
 								</div>
 							</div>
@@ -92,7 +92,7 @@
 											placeholder="Address">
 									</div>
 									<div class="col-md-4">
-										<button [disabled]="!formEmergencyChangeTheGuest.valid || !isTeamMember" (click)="runEmergencyChangeTheGuest()" type="button" class="btn btn-primary">Execute</button>
+										<button [disabled]="!formEmergencyChangeTheGuest.valid" (click)="runEmergencyChangeTheGuest()" type="button" class="btn btn-primary">Execute</button>
 									</div>
 								</div>
 							</div>
@@ -116,7 +116,7 @@
 										<span class="text-small text-gray help-block-none">Mint DZTREP to guest?</span>
 									</div>
 									<div class="col-md-4">
-										<button [disabled]="!formMoveToNextEpisode.valid || !isTeamMember" (click)="runMoveToNextEpisode()" type="button" class="btn btn-primary">Execute</button>
+										<button [disabled]="!formMoveToNextEpisode.valid" (click)="runMoveToNextEpisode()" type="button" class="btn btn-primary">Execute</button>
 									</div>
 								</div>
 							</div>

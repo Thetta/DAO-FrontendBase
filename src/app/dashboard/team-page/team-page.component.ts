@@ -17,7 +17,6 @@ export class TeamPageComponent implements OnInit {
 	formMoveToNextEpisode: FormGroup;
 	formSelectNextHost: FormGroup;
 	formWithdrawEther: FormGroup;
-	isTeamMember = false;
 
 	constructor(
 		public devZenDaoService: DevzendaoService,
@@ -36,7 +35,7 @@ export class TeamPageComponent implements OnInit {
 		}
 
 		sub.subscribe(
-			(isTeamMember) => { this.isTeamMember = isTeamMember; },
+			(isTeamMember) => { if(isTeamMember) this.enableAllForms(); },
 			(err) => { 
 				this.messageService.add({severity:'error', summary:'Error', detail:'Error on getting team member status'});
 				console.error(err); 
@@ -44,6 +43,29 @@ export class TeamPageComponent implements OnInit {
 		);
 
 		this.initForms();
+		this.disableAllForms();
+	}
+
+	/**
+	 * Disables all forms
+	 */
+	disableAllForms() {
+		this.formWithdrawEther.disable();
+		this.formSelectNextHost.disable();
+		this.formChangeTheGuest.disable();
+		this.formEmergencyChangeTheGuest.disable();
+		this.formMoveToNextEpisode.disable();
+	}
+
+	/**
+	 * Enables all forms
+	 */
+	enableAllForms() {
+		this.formWithdrawEther.enable();
+		this.formSelectNextHost.enable();
+		this.formChangeTheGuest.enable();
+		this.formEmergencyChangeTheGuest.enable();
+		this.formMoveToNextEpisode.enable();
 	}
 
 	/**

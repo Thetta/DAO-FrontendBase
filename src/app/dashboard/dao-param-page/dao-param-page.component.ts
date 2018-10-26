@@ -13,7 +13,6 @@ import { DevzendaoService, Web3Service } from '../../shared';
 export class DaoParamPageComponent implements OnInit {
 
 	formDaoParams: FormGroup;
-	isTeamMember = false;
 
 	constructor(
 		public devZenDaoService: DevzendaoService,
@@ -51,8 +50,8 @@ export class DaoParamPageComponent implements OnInit {
 						this.formDaoParams.controls[key].setValue(value);
 					}
 				});
-				// assign isTeamMember
-				this.isTeamMember = isTeamMember;
+				// enable form if team member
+				if(isTeamMember) this.formDaoParams.enable();
 			},
 			(err) => { console.error(err); }
 		);
@@ -72,6 +71,7 @@ export class DaoParamPageComponent implements OnInit {
 			repTokensRewardGuest: ['', [Validators.required, Validators.min(1 / (10 ** 18))]],
 			repTokensRewardTeamMembers: ['', [Validators.required, Validators.min(1 / (10 ** 18))]]
 		});
+		this.formDaoParams.disable();
 	}
 
 	/**
