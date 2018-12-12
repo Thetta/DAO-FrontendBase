@@ -18,6 +18,8 @@
 							<tr>
 								<th>Name</th>
 								<th>Params</th>
+								<th>Created by</th>
+								<th>Created at</th>
 								<th>Yes</th>
 								<th>No</th>
 								<th>Total</th>
@@ -32,6 +34,8 @@
 								<td>
 									<div *ngFor="let paramValue of proposal.data[4]; let i = index">{{ paramValue | readableMethodParam:proposal.data[3]:i }}</div>
 								</td>
+								<td>{{ proposal.data[5][0] }}</td>
+								<td>{{ proposal.data[5][1] * 1000 | date:'short' }}</td>
 								<td>{{ proposal.data[0].yesResults }}</td>
 								<td>{{ proposal.data[0].noResults }}</td>
 								<td>{{ +proposal.data[0].yesResults + +proposal.data[0].noResults }}/{{ proposal.data[0].votersTotal }}</td>
