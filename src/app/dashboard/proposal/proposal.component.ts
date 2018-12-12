@@ -52,7 +52,8 @@ export class ProposalComponent implements OnInit {
 								this.devZenDaoService.isFinished(proposalAddress),
 								this.devZenDaoService.isYes(proposalAddress),
 								this.devZenDaoService.getMethodSig(proposalAddress),
-								this.devZenDaoService.getProposalParams(proposalAddress)
+								this.devZenDaoService.getProposalParams(proposalAddress),
+								// this.devZenDaoService.getVotingInfo(proposalAddress)
 							);
 						})
 					);

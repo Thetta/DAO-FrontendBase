@@ -407,6 +407,20 @@ export class DevzendaoService {
 	}
 
 	/**
+	 * Returns voting info with creator address and created at timestamp
+	 * @param proposalAddress 
+	 */
+	getVotingInfo(proposalAddress): Observable<any> {
+		const proposal = this.web3Service.getContract(this.contractsData[this.ABI_INDEX_GENERIC_PROPOSAL].abi, proposalAddress);
+		return from(proposal.methods.getVoting().call()).pipe(
+			switchMap(votingAddress => {
+				const voting = this.web3Service.getContract(this.contractsData[this.ABI_INDEX_VOTING].abi, votingAddress);
+				return from(voting.methods.getVotingInfo().call());
+			})
+		)
+	}
+
+	/**
 	 * Returns voting status with counts of yes, no, total
 	 * @param proposalAddress 
 	 */
